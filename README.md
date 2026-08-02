@@ -5,6 +5,118 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.0.1:START -->
+## v1.0.1
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+
+#### 핵심 및 메뉴
+
+- Riot 공식 챔피언 캐시와 네 챔피언의 핵심 피해 상수·계수·사거리·시전 시간을 자동 대조하는 회귀 검사를 추가했습니다.
+- 파밍과 CC 판정에 사용하는 스킬 도착 시간을 공식 castFrame과 투사체 속도 기준으로 교정했습니다.
+
+#### Locke
+
+- R의 다중 적중 판정과 실제 시전이 동일한 예측 착지점을 사용하도록 통합했습니다.
+- R 가장자리 적은 35유닛 안전 여유 또는 충분한 하드 CC가 있을 때만 계산하며, 선택한 대상은 중앙 단일 조준을 유지합니다.
+
+#### Teemo
+
+- Q 파밍 체력 예측에 공식 0.493초 시전시간과 투사체 이동시간을 반영했습니다.
+- Semi R은 기본적으로 챔피언에게만 사용하며, 챔피언이 없을 때 정글 몬스터에 사용하는 동작을 별도 기본 OFF 옵션으로 분리했습니다.
+- 샤드를 다시 불러온 뒤에도 실제 아군 버섯을 검사해 기존 버섯 주변에 중복 설치하지 않도록 수정했습니다.
+
+#### Malphite
+
+- 현재 방관 규칙에 맞게 구형 레벨 비례 물리 관통 계산을 제거해 W 피해 예측을 교정했습니다.
+- 자동 R과 Semi Multi R의 최소 적중값을 2명으로 고정하고, R 착지시간·하드 CC·이동 여유·선택 타겟 중앙 조준을 반영했습니다.
+- Tower Combat 토글을 두 Semi R 경로에도 적용하고 Q 파밍 예측 시간을 공식 0.333초로 교정했습니다.
+
+#### Soraka
+
+- Q-only 자동 Combo/Harass 계약에 맞게 킬 가능 원과 체력바 예상 피해를 Q 단독 피해로 수정했습니다.
+- Q 시전시간을 공식 0.283초로 교정하고, 거리별 투사체 이동시간을 하드 CC·예측·스테이시스 판정에 반영했습니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+
+#### Core & Menu
+
+- Added an automated regression check that compares the four champions' core damage constants, ratios, ranges, and cast timings against the local Riot-authoritative cache.
+- Corrected farm and crowd-control impact timing to use official cast frames and missile speeds.
+
+#### Locke
+
+- Unified R multi-hit evaluation and casting so both use the same predicted landing point.
+- Edge targets now count only with a 35-unit safety margin or sufficient hard CC, while a selected target stays centered as a single-target cast.
+
+#### Teemo
+
+- Updated Q farm-health prediction to include the official 0.493-second cast time and missile travel.
+- Semi R is champion-only by default; jungle fallback is now a separate opt-in option that remains disabled by default.
+- Live allied mushrooms are checked after shard reloads to prevent duplicate trap placement near existing mushrooms.
+
+#### Malphite
+
+- Removed the obsolete level-scaled lethality conversion so W physical-damage prediction follows the current penetration rule.
+- Enforced a two-target minimum for Auto R and Semi Multi R and added landing-time, hard-CC, movement-margin, and selected-target centering checks.
+- Applied Tower Combat gating to both Semi R paths and corrected Q farm prediction to the official 0.333-second cast time.
+
+#### Soraka
+
+- Aligned the killable circle and health-bar estimate with the Q-only automatic Combo/Harass contract.
+- Corrected Q to the official 0.283-second cast time and included distance-based missile travel in hard-CC, prediction, and stasis timing.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+
+#### 核心与菜单
+
+- 新增自动回归检查，将四名英雄的核心伤害常量、系数、距离与施法时间和本地 Riot 官方缓存进行对照。
+- 清线与控制判定的命中时间现在使用官方施法帧和飞行速度。
+
+#### Locke
+
+- R 的多目标判定与实际施放现在共用同一个预测落点。
+- 边缘目标只有在保留 35 单位安全距离或拥有足够硬控时才会计入；选定目标时保持中央单目标施放。
+
+#### Teemo
+
+- Q 的补刀生命预测现在包含官方 0.493 秒施法时间和飞行时间。
+- Semi R 默认只对英雄使用；无英雄时对野怪使用的逻辑已拆分为独立选项，并默认关闭。
+- 重新载入分片后会直接检查场上的友方蘑菇，避免在已有蘑菇附近重复放置。
+
+#### Malphite
+
+- 移除过时的等级缩放穿甲换算，使 W 的物理伤害预测符合当前穿甲规则。
+- Auto R 与 Semi Multi R 最少要求命中两名敌人，并加入落地时间、硬控、移动余量与选定目标中央瞄准判定。
+- 两种 Semi R 都会遵守 Tower Combat 开关，Q 补刀预测时间修正为官方 0.333 秒。
+
+#### Soraka
+
+- 按照自动 Combo/Harass 只使用 Q 的规则，将可击杀圆圈与血条预估改为仅计算 Q 伤害。
+- Q 施法时间修正为官方 0.283 秒，并在硬控、预测和凝滞计时中加入按距离计算的飞行时间。
+<!-- MESH-AIO:RELEASE:v1.0.1:END -->
+
 <!-- MESH-AIO:RELEASE:v1.0.0:START -->
 ## v1.0.0
 
