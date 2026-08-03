@@ -5,6 +5,79 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.14:START -->
+## v1.1.14
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+- Pyke
+
+#### 핵심 및 메뉴
+
+- 진 W 자동 사용 조건을 CC 우선과 표식 폴백으로 분리하고, 실제 유효 사거리 안전 여유를 세부 조절할 수 있게 했습니다.
+- W 드로우가 메뉴 최대치가 아닌 안전 여유를 반영한 실제 자동 시전 범위를 표시하도록 동기화했습니다.
+
+#### Jhin
+
+- 자동 W는 투사체 도착까지 유지되는 하드 CC 대상을 먼저 전수 검사합니다. 시전 가능한 CC 대상이 없을 때만 진 표식(`jhinespotteddebuff`)이 있는 적에게 즉시 폴백합니다.
+- 기존 안전 계약을 유지해 자동·Combo·Harass·Killsteal W는 평타 사거리 안에서 사용하지 않으며, Semi W만 해당 제한을 우회합니다.
+- 공식 3000 사거리 끝에서 발생하는 실패를 줄이도록 25~200유닛, 기본 75유닛의 `Edge safety buffer` 옵션을 추가했습니다.
+- 최근 0.5초 안에 경로를 바꾸고 예측 이동량이 120유닛 이하인 잔무빙 대상은 과하게 앞을 예측하지 않고 현재 위치 정중앙에 W를 조준합니다. 돌진이나 확실한 장거리 이동에는 기존 선형 예측을 유지합니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+- Pyke
+
+#### Core & Menu
+
+- Split Jhin's automatic W policy into hard-CC priority and a mark fallback, with a configurable effective-range safety margin.
+- Synchronized the W drawing with the real automatic cast range after applying the edge buffer.
+
+#### Jhin
+
+- Automatic W first scans every target for hard CC that lasts through impact. It falls back immediately to an enemy carrying Jhin's mark (`jhinespotteddebuff`) only when no connectable CC target exists.
+- Preserved the established safety rule: automatic, Combo, Harass, and Killsteal W remain blocked inside auto-attack range, while directly held Semi W may bypass it.
+- Added an `Edge safety buffer` of 25-200 units, default 75, to prevent failures at the edge of the official 3000 range.
+- A target that changed path within the last 0.5 seconds with no more than 120 units of predicted lead is aimed at its current center, preventing over-leading against short jitter movement. Dashes and committed long movement retain linear prediction.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+- Pyke
+
+#### 核心与菜单
+
+- 将烬的自动 W 逻辑拆分为硬控优先和标记后备，并加入可调节的实际施法距离安全边距。
+- W 范围绘制现在会扣除边缘安全值，与自动施法的真实有效范围保持一致。
+
+#### Jhin
+
+- 自动 W 会先检查所有目标，优先选择硬控持续时间足以覆盖命中时刻的敌人。只有没有可命中的硬控目标时，才会立即改为攻击带有烬标记（`jhinespotteddebuff`）的敌人。
+- 保留既有安全规则：自动、连招、消耗和斩杀 W 在普攻范围内仍被禁止，只有按住 Semi W 时可以绕过该限制。
+- 新增 25~200 单位、默认 75 单位的 `Edge safety buffer`，减少在官方 3000 最大距离边缘施放失败的情况。
+- 若目标在最近 0.5 秒内改变路径，且预测提前量不超过 120 单位，则 W 会瞄准目标当前位置中心，避免对小幅来回移动过度预判；冲刺和明确的长距离移动仍使用线性预测。
+<!-- MESH-AIO:RELEASE:v1.1.14:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.13:START -->
 ## v1.1.13
 
