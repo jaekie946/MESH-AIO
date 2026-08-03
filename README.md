@@ -5,6 +5,70 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.7:START -->
+## v1.1.7
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 핵심 및 메뉴
+
+- 진의 일반탄 감지는 정상이나 정지 명령이 windup을 끊지 못하던 런타임 문제를 실제 이동 취소 경로로 교체했습니다.
+
+#### Jhin
+
+- 새 F12 로그에서 일반탄 감지와 임계값 통과는 정상이나, `player:stop()` 이후 `attack_cancel` 없이 매번 0.2초 timeout이 발생하는 것을 확인했습니다. 메뉴 옵션 문제가 아니라 Hanbot Stop 명령이 진의 평타 windup을 끊지 못한 것이 원인이었습니다.
+- 일반탄의 실제 `cb.spell` 시점부터 공격만 짧게 막고 마우스 방향 이동 명령을 반복해 windup을 취소합니다. 취소 확인 후 공격 pause가 자연 만료되면 같은 대상을 다시 공격합니다.
+- 비평타 주문에서 남아 있던 이전 `cur_attack_name` 때문에 Q가 4타로 기록되던 진단 오분류도 수정했습니다. 이제 실제 기본 공격 이벤트에서만 보조 이름을 사용하며 Crit과 보장 4타 보호는 유지합니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### Core & Menu
+
+- Replaced Jhin's ineffective windup Stop path with real movement cancellation after confirming that ordinary-round detection itself was correct.
+
+#### Jhin
+
+- New F12 logs confirmed that ordinary-round detection and the threshold gate worked, but every `player:stop()` reached the 200 ms timeout without `attack_cancel`. The menu setup was correct; Hanbot's Stop command did not cancel Jhin's attack windup.
+- Starting at the real ordinary-attack `cb.spell`, the script now briefly pauses attacks and repeatedly issues a movement order toward the mouse to cancel the windup. It reattacks the same target only after cancellation is confirmed and the attack pause expires naturally.
+- Fixed stale `cur_attack_name` making Q appear as a fourth shot in diagnostics. The auxiliary orb attack name is now trusted only on a real basic-attack event, while random crit and guaranteed fourth-shot protection remains intact.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 核心与菜单
+
+- 在确认普通子弹识别正常后，将无法中断前摇的 Stop 流程改为真实移动取消流程。
+
+#### Jhin
+
+- 新的 F12 日志确认普通子弹识别和阈值判断都正常，但每次 `player:stop()` 都没有触发 `attack_cancel`，并在 200 毫秒后超时。菜单设置没有问题，原因是 Hanbot 的 Stop 命令无法中断烬的攻击前摇。
+- 从真实普通攻击的 `cb.spell` 开始，现在会短暂暂停攻击并持续向鼠标方向发送移动命令来取消前摇。只有确认取消且攻击暂停自然结束后，才会重新攻击同一个目标。
+- 修复旧的 `cur_attack_name` 导致 Q 在诊断中被误记为第四发的问题。现在仅在真实基本攻击事件中使用该辅助名称，同时继续保护随机暴击和必定暴击第四发。
+<!-- MESH-AIO:RELEASE:v1.1.7:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.6:START -->
 ## v1.1.6
 
