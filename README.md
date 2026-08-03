@@ -5,6 +5,88 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.13:START -->
+## v1.1.13
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+- Pyke
+
+#### 핵심 및 메뉴
+
+- 신규 지원 챔피언 Pyke를 추가하고 실제 스킬 아이콘이 있는 세부 메뉴를 구성했습니다.
+- 공식 Riot 16.15.1/16.15 Pyke 수치 21개와 챔피언 레벨별 처형 breakpoint를 자동 회귀 검사에 연결했습니다.
+
+#### Pyke
+
+- 기본 Combo를 차징 Q → 평타 → E로 구현했습니다. Harass는 차징 Q만 사용하고, 짧은 Q는 공식 400 사거리 안에서 Q 한 발로 처치 가능한 경우에만 사용합니다.
+- W 접근 → E → Q 기습 콤보와 커서 방향으로 빠진 뒤 Q로 당기는 Delivery E → Q 전용 키를 추가했습니다.
+- Q-Flash 키는 현재 차징 사거리와 점멸 400을 함께 계산하고, 직접 Q가 맞으면 점멸을 낭비하지 않습니다. 점멸 후 위치에서 예측·충돌을 다시 계산해 Q를 해제합니다.
+- E-Flash 키는 공식 1초 그림자 회수 직전 기본 50ms에만 점멸합니다. 기존 E 선에는 안 맞고 원점→점멸 착지 선에는 맞는 대상만 선택하며 포탑 안전 옵션을 적용합니다.
+- Flee는 E와 W가 모두 준비됐을 때 반드시 E를 먼저 사용한 뒤 W를 사용합니다.
+- R은 공식 챔피언 레벨 처형 기준과 0.8 추가 공격력·1.5 물리 관통력 계수를 사용합니다. 보호 버프가 없는 처형 대상만 예측하며, Q 차징 중에도 Q를 중단하고 R을 매 틱 최우선 시도합니다.
+- Farm MMB의 Q 막타·선택적 라인 클리어·정글 클리어와 실시간 Q 차징/E/R 범위, 처형 표시, Q+E 체력바 피해 표시를 추가했습니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+- Pyke
+
+#### Core & Menu
+
+- Added Pyke as a newly supported champion with detailed collapsible menus and live spell icons.
+- Connected 21 official Riot 16.15.1/16.15 Pyke values and his champion-level execute breakpoints to the automatic regression gate.
+
+#### Pyke
+
+- Implemented the standard charged Q → auto attack → E Combo. Harass uses charged Q only, while tap Q is reserved for a target killable by one Q inside the official 400 range.
+- Added the W approach → E → Q ambush and a dedicated Delivery E → Q key that dashes toward the cursor before pulling the stored target.
+- Q-Flash combines live charge range with the 400 Flash range, avoids wasting Flash when Q already connects, then recalculates prediction and collision from the post-Flash position before release.
+- E-Flash casts only during the final 50 ms by default before the official one-second shadow return. It requires a target missed by the original E line but crossed by the origin-to-Flash segment and respects turret safety.
+- Flee always uses E first and W second when both abilities are ready.
+- R uses the official champion-level execute base plus 0.8 bonus AD and 1.5 lethality. It skips protected targets and interrupts a charged Q to retry an executable R target every pre-tick.
+- Added Farm MMB tap-Q last hit, optional lane clear and jungle clear, plus live Q-charge/E/R ranges, execute markers, and Q+E health-bar damage.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+- Pyke
+
+#### 核心与菜单
+
+- 新增派克支持，并加入带实时技能图标的详细折叠菜单。
+- 将 Riot 16.15.1/16.15 的 21 项派克官方数据及按英雄等级变化的斩杀 breakpoint 接入自动回归检查。
+
+#### Pyke
+
+- 实现标准蓄力 Q → 普攻 → E 连招。消耗模式仅使用蓄力 Q；短 Q 只会在官方 400 范围内且一发 Q 能击杀目标时使用。
+- 新增 W 接近 → E → Q 突袭连招，以及向鼠标方向位移后拉回已记录目标的 Delivery E → Q 专用按键。
+- Q-Flash 会同时计算实时蓄力距离与 400 闪现距离；Q 本身能够命中时不会浪费闪现，并在闪现后位置重新进行预测与碰撞检测再释放 Q。
+- E-Flash 默认只在官方一秒影子返回前最后 50 毫秒使用。目标必须不会被原 E 线命中、但会被起点到闪现落点的线段命中，并遵守防御塔安全设置。
+- 当 E 与 W 都可用时，逃跑模式始终先使用 E，再使用 W。
+- R 使用官方按英雄等级计算的斩杀基础值，以及 0.8 额外攻击力和 1.5 穿甲系数。它会跳过受保护目标，并在 Q 蓄力期间中断 Q，每个 pre-tick 优先重试可斩杀目标。
+- 新增 Farm MMB 的短 Q 补刀、可选清线与打野，并加入实时 Q 蓄力/E/R 范围、斩杀标记和 Q+E 血条伤害显示。
+<!-- MESH-AIO:RELEASE:v1.1.13:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.11:START -->
 ## v1.1.11
 
