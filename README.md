@@ -5,6 +5,61 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.0.2:START -->
+## v1.0.2
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+
+#### 핵심 및 메뉴
+
+- 기존 메뉴 설정과 사용자 X/Y 보정값을 유지하면서 티모 화면 표시 위치를 교정했습니다.
+
+#### Teemo
+
+- 패시브 `STEALTH`·공격 속도·은신 대기시간 표시가 체력바에 붙던 문제를 수정해, 다시 챔피언 머리 위 전용 위치에 표시되도록 했습니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+
+#### Core & Menu
+
+- Corrected Teemo's on-screen indicator position while preserving existing menu settings and user X/Y offsets.
+
+#### Teemo
+
+- Fixed the passive `STEALTH`, attack-speed, and stealth-countdown text appearing on the health bar; it now uses the dedicated above-champion position again.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+
+#### 核心与菜单
+
+- 在保留现有菜单设置与用户 X/Y 偏移的同时，修正了提莫屏幕提示的位置。
+
+#### Teemo
+
+- 修复被动 `STEALTH`、攻速与隐身倒计时文字贴在生命条上的问题，现在会重新显示在英雄头顶的专用位置。
+<!-- MESH-AIO:RELEASE:v1.0.2:END -->
+
 <!-- MESH-AIO:RELEASE:v1.0.1:START -->
 ## v1.0.1
 
