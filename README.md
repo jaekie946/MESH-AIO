@@ -5,6 +5,70 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.6:START -->
+## v1.1.6
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 핵심 및 메뉴
+
+- 진의 일반 평타 취소 감지를 애니메이션 이벤트에서 실제 공격 시작 이벤트로 교체했습니다.
+
+#### Jhin
+
+- F12 로그에서 일반 평타의 `Attack1/2/3` 애니메이션 이벤트가 한 번도 오지 않고 `Reload_Recoil`만 들어오는 것을 확인했습니다. 애니메이션 콜백은 이제 진단 로그만 남기며 취소 상태를 변경하지 않습니다.
+- 자기 `cb.spell`의 공식 공격 이름으로 일반탄을 감지해 80ms 전체 정지와 `player:stop()`을 즉시 발행합니다. 실제 `spell.target`만 저장하며, 대상이 없는 이벤트는 안전하게 무시합니다.
+- `JhinCritAttack`, `JhinPassiveAttack`, `JhinBasicAttack4`, 현재 4타 버프와 오브워커 공격 이름을 함께 확인해 확률 치명타와 보장 4타는 절대 중단하지 않습니다. 80ms 재공격보다 길었던 120ms 제한도 제거해 성공 또는 안전 제한까지 연속 재시도할 수 있습니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### Core & Menu
+
+- Replaced Jhin's ordinary-attack cancellation trigger from animation events to the real attack-start event.
+
+#### Jhin
+
+- F12 logs confirmed that ordinary attacks never emitted `Attack1/2/3` animation events and only emitted `Reload_Recoil`. Animation callbacks are now diagnostic-only and cannot mutate retry state.
+- Ordinary rounds are detected from Jhin's official attack names in his own `cb.spell`; the script immediately applies an 80 ms full pause and `player:stop()`. Only the exact `spell.target` is retained, and targetless events fail safely.
+- `JhinCritAttack`, `JhinPassiveAttack`, `JhinBasicAttack4`, the live fourth-shot buff, and the orbwalker attack name jointly protect random crits and the guaranteed fourth shot. The obsolete 120 ms gate that blocked the 80 ms retry chain was removed so retries can continue until success or a safety cap.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 核心与菜单
+
+- 将烬的普通攻击取消触发方式从动画事件改为真实的攻击开始事件。
+
+#### Jhin
+
+- F12 日志确认普通攻击从未触发 `Attack1/2/3` 动画事件，只出现了 `Reload_Recoil`。动画回调现在仅用于诊断日志，不再修改重试状态。
+- 现在通过烬自身 `cb.spell` 中的官方攻击名称识别普通子弹，并立即执行 80 毫秒整体暂停与 `player:stop()`。只保存准确的 `spell.target`，没有目标的事件会安全忽略。
+- 同时检查 `JhinCritAttack`、`JhinPassiveAttack`、`JhinBasicAttack4`、当前第四发增益和走砍攻击名称，确保随机暴击及必定暴击第四发绝不被中断。已移除会阻断 80 毫秒重试链的旧 120 毫秒限制，使其能够持续重试直到成功或触发安全上限。
+<!-- MESH-AIO:RELEASE:v1.1.6:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.5:START -->
 ## v1.1.5
 
