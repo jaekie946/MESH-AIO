@@ -5,6 +5,2575 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v2.0.0:START -->
+## v2.0.0
+
+### 한국어
+
+#### 지원 챔피언
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### 핵심 및 메뉴
+
+- Riot 16.15.1 Data Dragon과 패치 고정 16.15 클라이언트 원본을 기준으로 173챔피언 전체를 인식하고, 기존 6개 전용 모듈을 제외한 167챔피언에 공용 AIO를 추가했습니다.
+- 현재 스킬 슬롯 이름을 공식 raw 형태 1,002개(재시전 268·변신/강화 23·충전 23·평타 리셋 75)와 매 틱 대조하고, 동일 alias는 정확한 mScriptName을 우선해 각 시전 방식으로 분기합니다.
+- Elise·Jayce·Nidalee 양방향 변신, Rek'Sai 잠복, Aphelios 무기 전환, Hwei 팔레트뿐 아니라 Sylas의 훔친 궁과 Viego 빙의 슬롯도 공식 전체 카탈로그에서 현재 이름으로 찾습니다.
+- 공식 타게팅 계약이 불명확한 형태는 자동 시전을 막고 세미키만 허용하며, 궁극기와 변신 자동 사용은 기본 OFF로 두었습니다.
+- 공식 평타 리셋 태그가 있는 형태는 평타 선딜을 보존한 뒤 첫 유효 백스윙에서 요청하고, 거부된 유효 요청만 1ms 스크립트 하한으로 재시도합니다.
+- OP.GG 16.15 공개 페이지의 173챔피언 스킬 우선순위와 사용자 팁을 robots.txt 허용 확인 후 별도 보조 캐시에 저장했으며, 수치와 시전 형태는 Riot 원본만 기준으로 사용합니다.
+
+#### Annie
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Olaf
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Galio
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 1·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### TwistedFate
+
+- 공식 형태 8개(재시전 6·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### XinZhao
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 W→E→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Urgot
+
+- 공식 형태 6개(재시전 4·변신/강화 0·충전 0·평타 리셋 0)와 W→E→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Leblanc
+
+- 공식 형태 10개(재시전 8·변신/강화 5·충전 0·평타 리셋 0)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Vladimir
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 1·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Fiddlesticks
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Kayle
+
+- 공식 형태 7개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### MasterYi
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Alistar
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Ryze
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Sion
+
+- 공식 형태 5개(재시전 3·변신/강화 0·충전 2·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Sivir
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Tristana
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Warwick
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 2·평타 리셋 0)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Nunu
+
+- 공식 형태 7개(재시전 5·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### MissFortune
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Ashe
+
+- 공식 형태 6개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Tryndamere
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Jax
+
+- 공식 형태 4개(재시전 1·변신/강화 0·충전 0·평타 리셋 1)와 W→E→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Morgana
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Zilean
+
+- 공식 형태 7개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Singed
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Evelynn
+
+- 공식 형태 6개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Twitch
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Karthus
+
+- 공식 형태 15개(재시전 3·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Chogath
+
+- 공식 형태 6개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Amumu
+
+- 공식 형태 4개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Rammus
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Anivia
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Shaco
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### DrMundo
+
+- 공식 형태 6개(재시전 2·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Sona
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Kassadin
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 E→W→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Irelia
+
+- 공식 형태 8개(재시전 5·변신/강화 0·충전 1·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Janna
+
+- 공식 형태 6개(재시전 3·변신/강화 0·충전 0·평타 리셋 0)와 W→E→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Gangplank
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Corki
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Karma
+
+- 공식 형태 4개(재시전 0·변신/강화 1·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Taric
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Veigar
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Trundle
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Swain
+
+- 공식 형태 6개(재시전 3·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Caitlyn
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Blitzcrank
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Katarina
+
+- 공식 형태 8개(재시전 0·변신/강화 0·충전 0·평타 리셋 2)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Nocturne
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Maokai
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Renekton
+
+- 공식 형태 6개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### JarvanIV
+
+- 공식 형태 4개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Elise
+
+- 공식 형태 11개(재시전 5·변신/강화 2·충전 0·평타 리셋 1)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Orianna
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### MonkeyKing
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Brand
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### LeeSin
+
+- 공식 형태 7개(재시전 6·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Vayne
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Rumble
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Cassiopeia
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Skarner
+
+- 공식 형태 6개(재시전 2·변신/강화 0·충전 0·평타 리셋 1)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Heimerdinger
+
+- 공식 형태 9개(재시전 1·변신/강화 1·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Nasus
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Nidalee
+
+- 공식 형태 7개(재시전 1·변신/강화 1·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Udyr
+
+- 공식 형태 4개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Poppy
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 1·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Gragas
+
+- 공식 형태 7개(재시전 4·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Pantheon
+
+- 공식 형태 7개(재시전 4·변신/강화 0·충전 1·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Ezreal
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Mordekaiser
+
+- 공식 형태 4개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Yorick
+
+- 공식 형태 6개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Akali
+
+- 공식 형태 10개(재시전 5·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Kennen
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Garen
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 1)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Leona
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 W→E→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Malzahar
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Talon
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Riven
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### KogMaw
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Shen
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Lux
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Xerath
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 1·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Shyvana
+
+- 공식 형태 6개(재시전 0·변신/강화 1·충전 0·평타 리셋 3)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Ahri
+
+- 공식 형태 4개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Graves
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Fizz
+
+- 공식 형태 7개(재시전 4·변신/강화 0·충전 0·평타 리셋 1)와 E→W→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Volibear
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 2)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Rengar
+
+- 공식 형태 8개(재시전 3·변신/강화 0·충전 0·평타 리셋 2)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Varus
+
+- 공식 형태 4개(재시전 1·변신/강화 0·충전 1·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Nautilus
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Viktor
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Sejuani
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Fiora
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Ziggs
+
+- 공식 형태 7개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Lulu
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 E→W→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Draven
+
+- 공식 형태 7개(재시전 4·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Hecarim
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Khazix
+
+- 공식 형태 10개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Darius
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Jayce
+
+- 공식 형태 8개(재시전 3·변신/강화 2·충전 0·평타 리셋 1)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Lissandra
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Diana
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Quinn
+
+- 공식 형태 6개(재시전 2·변신/강화 3·충전 0·평타 리셋 1)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Syndra
+
+- 공식 형태 9개(재시전 4·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### AurelionSol
+
+- 공식 형태 6개(재시전 2·변신/강화 0·충전 1·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Kayn
+
+- 공식 형태 6개(재시전 3·변신/강화 3·충전 1·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Zoe
+
+- 공식 형태 16개(재시전 8·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Zyra
+
+- 공식 형태 6개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Kaisa
+
+- 공식 형태 7개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Seraphine
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Gnar
+
+- 공식 형태 7개(재시전 6·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Zac
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 2·평타 리셋 2)와 E→W→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Yasuo
+
+- 공식 형태 13개(재시전 10·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Velkoz
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 1·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Taliyah
+
+- 공식 형태 9개(재시전 6·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Camille
+
+- 공식 형태 8개(재시전 6·변신/강화 0·충전 0·평타 리셋 2)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Akshan
+
+- 공식 형태 7개(재시전 4·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Belveth
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Braum
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Kindred
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 2)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Zeri
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Jinx
+
+- 공식 형태 4개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### TahmKench
+
+- 공식 형태 6개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Briar
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 1·평타 리셋 3)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Viego
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 1·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Senna
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Lucian
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Zed
+
+- 공식 형태 8개(재시전 6·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Kled
+
+- 공식 형태 8개(재시전 3·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Ekko
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Qiyana
+
+- 공식 형태 7개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Vi
+
+- 공식 형태 4개(재시전 1·변신/강화 0·충전 1·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Aatrox
+
+- 공식 형태 7개(재시전 4·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Nami
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 W→E→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Azir
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Yuumi
+
+- 공식 형태 13개(재시전 10·변신/강화 0·충전 1·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Samira
+
+- 공식 형태 7개(재시전 3·변신/강화 0·충전 0·평타 리셋 2)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Thresh
+
+- 공식 형태 8개(재시전 5·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Illaoi
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### RekSai
+
+- 공식 형태 10개(재시전 3·변신/강화 3·충전 0·평타 리셋 2)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Ivern
+
+- 공식 형태 6개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Kalista
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 E→Q→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Bard
+
+- 공식 형태 14개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Rakan
+
+- 공식 형태 8개(재시전 5·변신/강화 0·충전 0·평타 리셋 0)와 W→E→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Xayah
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 E→W→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Ornn
+
+- 공식 형태 7개(재시전 4·변신/강화 0·충전 0·평타 리셋 0)와 W→Q→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Sylas
+
+- 공식 형태 6개(재시전 3·변신/강화 0·충전 0·평타 리셋 3)와 W→E→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Neeko
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Aphelios
+
+- 공식 형태 11개(재시전 5·변신/강화 1·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Rell
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 1)와 W→E→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Vex
+
+- 공식 형태 6개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Yone
+
+- 공식 형태 6개(재시전 4·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Ambessa
+
+- 공식 형태 4개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Mel
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Yunara
+
+- 공식 형태 5개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Sett
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 2)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Lillia
+
+- 공식 형태 7개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Gwen
+
+- 공식 형태 10개(재시전 7·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Renata
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 E→W→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Aurora
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Nilah
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 1)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### KSante
+
+- 공식 형태 13개(재시전 3·변신/강화 0·충전 2·평타 리셋 1)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Smolder
+
+- 공식 형태 4개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→W→E→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Milio
+
+- 공식 형태 5개(재시전 2·변신/강화 0·충전 0·평타 리셋 0)와 E→W→Q→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Zaahen
+
+- 공식 형태 6개(재시전 3·변신/강화 0·충전 0·평타 리셋 2)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Hwei
+
+- 공식 형태 14개(재시전 0·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+#### Naafiri
+
+- 공식 형태 5개(재시전 1·변신/강화 0·충전 0·평타 리셋 0)와 Q→E→W→R 우선순위의 공용 콤보·하레스·팜·도주·세미키 로직을 추가했습니다.
+
+### English
+
+#### Supported Champions
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### Core & Menu
+
+- Added full 173-champion recognition from Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client export, preserving the six hand-tuned modules and adding the shared AIO baseline to the other 167 champions.
+- Matches each live slot name against 1,002 official raw forms (recast 268, transform/upgrade 23, charge 23, attack reset 75) every tick, preferring an exact mScriptName when aliases overlap.
+- Covers both directions of Elise, Jayce, and Nidalee transformations, Rek'Sai burrow, Aphelios weapon swaps, Hwei palettes, Sylas stolen ultimates, and Viego possession slots through the full official catalog.
+- Forms with an ambiguous official targeting contract stay semi-manual only, while automatic ultimates and transformations remain disabled by default.
+- Official attack-reset forms preserve the auto-attack windup, cast on the first valid backswing callback, and retry only valid rejected requests with a 1 ms script-local floor.
+- Archived skill priorities and user-tip summaries for all 173 champions from OP.GG 16.15 after verifying robots.txt permission; Riot data remains the sole authority for numbers and cast forms.
+
+#### Annie
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Olaf
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Galio
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 1, attack reset 0) and Q→W→E→R priority.
+
+#### TwistedFate
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 8 official forms (recast 6, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### XinZhao
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and W→E→Q→R priority.
+
+#### Urgot
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 4, transform/upgrade 0, charge 0, attack reset 0) and W→E→Q→R priority.
+
+#### Leblanc
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 10 official forms (recast 8, transform/upgrade 5, charge 0, attack reset 0) and W→Q→E→R priority.
+
+#### Vladimir
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 1, attack reset 0) and Q→E→W→R priority.
+
+#### Fiddlesticks
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and W→Q→E→R priority.
+
+#### Kayle
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and E→Q→W→R priority.
+
+#### MasterYi
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Alistar
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Ryze
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Sion
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 3, transform/upgrade 0, charge 2, attack reset 0) and Q→W→E→R priority.
+
+#### Sivir
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→W→E→R priority.
+
+#### Tristana
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Warwick
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 2, attack reset 0) and W→Q→E→R priority.
+
+#### Nunu
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 5, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### MissFortune
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Ashe
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and W→Q→E→R priority.
+
+#### Tryndamere
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Jax
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 1) and W→E→Q→R priority.
+
+#### Morgana
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Zilean
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Singed
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Evelynn
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Twitch
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Karthus
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 15 official forms (recast 3, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Chogath
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and E→Q→W→R priority.
+
+#### Amumu
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Rammus
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Anivia
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Shaco
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### DrMundo
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Sona
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and W→Q→E→R priority.
+
+#### Kassadin
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and E→W→Q→R priority.
+
+#### Irelia
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 8 official forms (recast 5, transform/upgrade 0, charge 1, attack reset 0) and Q→W→E→R priority.
+
+#### Janna
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 3, transform/upgrade 0, charge 0, attack reset 0) and W→E→Q→R priority.
+
+#### Gangplank
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Corki
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Karma
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 1, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Taric
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Veigar
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Trundle
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→W→E→R priority.
+
+#### Swain
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 3, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Caitlyn
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Blitzcrank
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Katarina
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 8 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 2) and Q→E→W→R priority.
+
+#### Nocturne
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Maokai
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Renekton
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### JarvanIV
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Elise
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 11 official forms (recast 5, transform/upgrade 2, charge 0, attack reset 1) and Q→W→E→R priority.
+
+#### Orianna
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### MonkeyKing
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Brand
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and W→Q→E→R priority.
+
+#### LeeSin
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 6, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Vayne
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→W→E→R priority.
+
+#### Rumble
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Cassiopeia
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Skarner
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 1) and Q→W→E→R priority.
+
+#### Heimerdinger
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 9 official forms (recast 1, transform/upgrade 1, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Nasus
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→W→E→R priority.
+
+#### Nidalee
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 1, transform/upgrade 1, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Udyr
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Poppy
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 1, attack reset 0) and Q→E→W→R priority.
+
+#### Gragas
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 4, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Pantheon
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 4, transform/upgrade 0, charge 1, attack reset 0) and Q→W→E→R priority.
+
+#### Ezreal
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Mordekaiser
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Yorick
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Akali
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 10 official forms (recast 5, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Kennen
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Garen
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 1) and E→Q→W→R priority.
+
+#### Leona
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and W→E→Q→R priority.
+
+#### Malzahar
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Talon
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and W→Q→E→R priority.
+
+#### Riven
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### KogMaw
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and W→Q→E→R priority.
+
+#### Shen
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Lux
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Xerath
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 1, attack reset 0) and Q→W→E→R priority.
+
+#### Shyvana
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 0, transform/upgrade 1, charge 0, attack reset 3) and Q→W→E→R priority.
+
+#### Ahri
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Graves
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Fizz
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 4, transform/upgrade 0, charge 0, attack reset 1) and E→W→Q→R priority.
+
+#### Volibear
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 2) and W→Q→E→R priority.
+
+#### Rengar
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 8 official forms (recast 3, transform/upgrade 0, charge 0, attack reset 2) and Q→E→W→R priority.
+
+#### Varus
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 1, transform/upgrade 0, charge 1, attack reset 0) and Q→W→E→R priority.
+
+#### Nautilus
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→W→E→R priority.
+
+#### Viktor
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Sejuani
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and W→Q→E→R priority.
+
+#### Fiora
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Ziggs
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Lulu
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and E→W→Q→R priority.
+
+#### Draven
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 4, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Hecarim
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Khazix
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 10 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Darius
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Jayce
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 8 official forms (recast 3, transform/upgrade 2, charge 0, attack reset 1) and Q→W→E→R priority.
+
+#### Lissandra
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Diana
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Quinn
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 2, transform/upgrade 3, charge 0, attack reset 1) and Q→W→E→R priority.
+
+#### Syndra
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 9 official forms (recast 4, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### AurelionSol
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 2, transform/upgrade 0, charge 1, attack reset 0) and Q→E→W→R priority.
+
+#### Kayn
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 3, transform/upgrade 3, charge 1, attack reset 0) and Q→W→E→R priority.
+
+#### Zoe
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 16 official forms (recast 8, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Zyra
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Kaisa
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Seraphine
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Gnar
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 6, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Zac
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 2, attack reset 2) and E→W→Q→R priority.
+
+#### Yasuo
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 13 official forms (recast 10, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Velkoz
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 1, attack reset 0) and Q→W→E→R priority.
+
+#### Taliyah
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 9 official forms (recast 6, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Camille
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 8 official forms (recast 6, transform/upgrade 0, charge 0, attack reset 2) and Q→E→W→R priority.
+
+#### Akshan
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 4, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Belveth
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Braum
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Kindred
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 2) and Q→W→E→R priority.
+
+#### Zeri
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Jinx
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### TahmKench
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Briar
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 1, attack reset 3) and W→Q→E→R priority.
+
+#### Viego
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 1, attack reset 1) and Q→E→W→R priority.
+
+#### Senna
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Lucian
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Zed
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 8 official forms (recast 6, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Kled
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 8 official forms (recast 3, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Ekko
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Qiyana
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Vi
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 1, transform/upgrade 0, charge 1, attack reset 1) and Q→E→W→R priority.
+
+#### Aatrox
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 4, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Nami
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and W→E→Q→R priority.
+
+#### Azir
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and W→Q→E→R priority.
+
+#### Yuumi
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 13 official forms (recast 10, transform/upgrade 0, charge 1, attack reset 0) and Q→E→W→R priority.
+
+#### Samira
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 3, transform/upgrade 0, charge 0, attack reset 2) and Q→E→W→R priority.
+
+#### Thresh
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 8 official forms (recast 5, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Illaoi
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and E→Q→W→R priority.
+
+#### RekSai
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 10 official forms (recast 3, transform/upgrade 3, charge 0, attack reset 2) and Q→E→W→R priority.
+
+#### Ivern
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Kalista
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and E→Q→W→R priority.
+
+#### Bard
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 14 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Rakan
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 8 official forms (recast 5, transform/upgrade 0, charge 0, attack reset 0) and W→E→Q→R priority.
+
+#### Xayah
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and E→W→Q→R priority.
+
+#### Ornn
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 4, transform/upgrade 0, charge 0, attack reset 0) and W→Q→E→R priority.
+
+#### Sylas
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 3, transform/upgrade 0, charge 0, attack reset 3) and W→E→Q→R priority.
+
+#### Neeko
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Aphelios
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 11 official forms (recast 5, transform/upgrade 1, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Rell
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 1) and W→E→Q→R priority.
+
+#### Vex
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Yone
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 4, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Ambessa
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Mel
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Yunara
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Sett
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 2) and Q→W→E→R priority.
+
+#### Lillia
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 7 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Gwen
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 10 official forms (recast 7, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### Renata
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and E→W→Q→R priority.
+
+#### Aurora
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Nilah
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 1) and Q→E→W→R priority.
+
+#### KSante
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 13 official forms (recast 3, transform/upgrade 0, charge 2, attack reset 1) and Q→W→E→R priority.
+
+#### Smolder
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 4 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→W→E→R priority.
+
+#### Milio
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 2, transform/upgrade 0, charge 0, attack reset 0) and E→W→Q→R priority.
+
+#### Zaahen
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 6 official forms (recast 3, transform/upgrade 0, charge 0, attack reset 2) and Q→E→W→R priority.
+
+#### Hwei
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 14 official forms (recast 0, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+#### Naafiri
+
+- Added the shared Combo, Harass, Farm, Flee, and Semi-key baseline with 5 official forms (recast 1, transform/upgrade 0, charge 0, attack reset 0) and Q→E→W→R priority.
+
+### 简体中文
+
+#### 支持英雄
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### 核心与菜单
+
+- 依据 Riot Data Dragon 16.15.1 和固定版本的 16.15 客户端原始数据支持全部 173 位英雄；保留 6 个手工专用模块，并为其余 167 位英雄加入通用 AIO 基线。
+- 每个 tick 将当前技能槽名称与 1,002 个官方 raw 形态（再施法 268、变身/强化 23、蓄力 23、普攻重置 75）匹配；别名重叠时优先精确 mScriptName。
+- 通过完整官方目录覆盖伊莉丝、杰斯、奈德丽双向变身、雷克塞遁地、厄斐琉斯换枪、慧的画板、塞拉斯偷取终极技能和佛耶戈附身后的技能槽。
+- 官方目标类型不明确的形态只允许半自动按键，自动使用终极技能和自动变身默认关闭。
+- 带官方普攻重置标签的形态会保留普攻前摇，在第一个有效后摇回调施法，并仅对有效但被拒绝的请求按 1 毫秒脚本下限重试。
+- 在确认 robots.txt 允许后，离线保存 OP.GG 16.15 的 173 位英雄技能优先级和用户技巧摘要；技能数值与施法形态仍只以 Riot 原始数据为准。
+
+#### Annie
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Olaf
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Galio
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 1、普攻重置 0）。
+
+#### TwistedFate
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 8 个官方形态（再施法 6、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### XinZhao
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→E→Q→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Urgot
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→E→Q→R 优先级处理 6 个官方形态（再施法 4、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Leblanc
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 10 个官方形态（再施法 8、变身/强化 5、蓄力 0、普攻重置 0）。
+
+#### Vladimir
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 1、普攻重置 0）。
+
+#### Fiddlesticks
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Kayle
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 7 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### MasterYi
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Alistar
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Ryze
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Sion
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 5 个官方形态（再施法 3、变身/强化 0、蓄力 2、普攻重置 0）。
+
+#### Sivir
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Tristana
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Warwick
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 2、普攻重置 0）。
+
+#### Nunu
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 7 个官方形态（再施法 5、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### MissFortune
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Ashe
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 6 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Tryndamere
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Jax
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→E→Q→R 优先级处理 4 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Morgana
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Zilean
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 7 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Singed
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Evelynn
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 6 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Twitch
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Karthus
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 15 个官方形态（再施法 3、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Chogath
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 6 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Amumu
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 4 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Rammus
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Anivia
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Shaco
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### DrMundo
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 6 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Sona
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Kassadin
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→W→Q→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Irelia
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 8 个官方形态（再施法 5、变身/强化 0、蓄力 1、普攻重置 0）。
+
+#### Janna
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→E→Q→R 优先级处理 6 个官方形态（再施法 3、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Gangplank
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Corki
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Karma
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 1、蓄力 0、普攻重置 0）。
+
+#### Taric
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Veigar
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Trundle
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Swain
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 6 个官方形态（再施法 3、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Caitlyn
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Blitzcrank
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Katarina
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 8 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 2）。
+
+#### Nocturne
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Maokai
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Renekton
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 6 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### JarvanIV
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Elise
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 11 个官方形态（再施法 5、变身/强化 2、蓄力 0、普攻重置 1）。
+
+#### Orianna
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### MonkeyKing
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Brand
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### LeeSin
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 7 个官方形态（再施法 6、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Vayne
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Rumble
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Cassiopeia
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Skarner
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 6 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Heimerdinger
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 9 个官方形态（再施法 1、变身/强化 1、蓄力 0、普攻重置 0）。
+
+#### Nasus
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Nidalee
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 7 个官方形态（再施法 1、变身/强化 1、蓄力 0、普攻重置 1）。
+
+#### Udyr
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Poppy
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 1、普攻重置 0）。
+
+#### Gragas
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 7 个官方形态（再施法 4、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Pantheon
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 7 个官方形态（再施法 4、变身/强化 0、蓄力 1、普攻重置 0）。
+
+#### Ezreal
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Mordekaiser
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Yorick
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 6 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Akali
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 10 个官方形态（再施法 5、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Kennen
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Garen
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Leona
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→E→Q→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Malzahar
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Talon
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Riven
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### KogMaw
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Shen
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Lux
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Xerath
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 1、普攻重置 0）。
+
+#### Shyvana
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 6 个官方形态（再施法 0、变身/强化 1、蓄力 0、普攻重置 3）。
+
+#### Ahri
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Graves
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Fizz
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→W→Q→R 优先级处理 7 个官方形态（再施法 4、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Volibear
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 2）。
+
+#### Rengar
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 8 个官方形态（再施法 3、变身/强化 0、蓄力 0、普攻重置 2）。
+
+#### Varus
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 1、变身/强化 0、蓄力 1、普攻重置 0）。
+
+#### Nautilus
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Viktor
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Sejuani
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Fiora
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Ziggs
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 7 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Lulu
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→W→Q→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Draven
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 7 个官方形态（再施法 4、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Hecarim
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Khazix
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 10 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Darius
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Jayce
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 8 个官方形态（再施法 3、变身/强化 2、蓄力 0、普攻重置 1）。
+
+#### Lissandra
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Diana
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Quinn
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 6 个官方形态（再施法 2、变身/强化 3、蓄力 0、普攻重置 1）。
+
+#### Syndra
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 9 个官方形态（再施法 4、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### AurelionSol
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 6 个官方形态（再施法 2、变身/强化 0、蓄力 1、普攻重置 0）。
+
+#### Kayn
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 6 个官方形态（再施法 3、变身/强化 3、蓄力 1、普攻重置 0）。
+
+#### Zoe
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 16 个官方形态（再施法 8、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Zyra
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 6 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Kaisa
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 7 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Seraphine
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Gnar
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 7 个官方形态（再施法 6、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Zac
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→W→Q→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 2、普攻重置 2）。
+
+#### Yasuo
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 13 个官方形态（再施法 10、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Velkoz
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 1、普攻重置 0）。
+
+#### Taliyah
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 9 个官方形态（再施法 6、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Camille
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 8 个官方形态（再施法 6、变身/强化 0、蓄力 0、普攻重置 2）。
+
+#### Akshan
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 7 个官方形态（再施法 4、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Belveth
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Braum
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Kindred
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 2）。
+
+#### Zeri
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Jinx
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### TahmKench
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 6 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Briar
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 1、普攻重置 3）。
+
+#### Viego
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 1、普攻重置 1）。
+
+#### Senna
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Lucian
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Zed
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 8 个官方形态（再施法 6、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Kled
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 8 个官方形态（再施法 3、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Ekko
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Qiyana
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 7 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Vi
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 1、变身/强化 0、蓄力 1、普攻重置 1）。
+
+#### Aatrox
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 7 个官方形态（再施法 4、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Nami
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→E→Q→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Azir
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Yuumi
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 13 个官方形态（再施法 10、变身/强化 0、蓄力 1、普攻重置 0）。
+
+#### Samira
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 7 个官方形态（再施法 3、变身/强化 0、蓄力 0、普攻重置 2）。
+
+#### Thresh
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 8 个官方形态（再施法 5、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Illaoi
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### RekSai
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 10 个官方形态（再施法 3、变身/强化 3、蓄力 0、普攻重置 2）。
+
+#### Ivern
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 6 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Kalista
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→Q→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Bard
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 14 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Rakan
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→E→Q→R 优先级处理 8 个官方形态（再施法 5、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Xayah
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→W→Q→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Ornn
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→Q→E→R 优先级处理 7 个官方形态（再施法 4、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Sylas
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→E→Q→R 优先级处理 6 个官方形态（再施法 3、变身/强化 0、蓄力 0、普攻重置 3）。
+
+#### Neeko
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Aphelios
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 11 个官方形态（再施法 5、变身/强化 1、蓄力 0、普攻重置 0）。
+
+#### Rell
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 W→E→Q→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Vex
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 6 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Yone
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 6 个官方形态（再施法 4、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Ambessa
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Mel
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Yunara
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Sett
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 2）。
+
+#### Lillia
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 7 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Gwen
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 10 个官方形态（再施法 7、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### Renata
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→W→Q→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Aurora
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Nilah
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 1）。
+
+#### KSante
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 13 个官方形态（再施法 3、变身/强化 0、蓄力 2、普攻重置 1）。
+
+#### Smolder
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→W→E→R 优先级处理 4 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Milio
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 E→W→Q→R 优先级处理 5 个官方形态（再施法 2、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Zaahen
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 6 个官方形态（再施法 3、变身/强化 0、蓄力 0、普攻重置 2）。
+
+#### Hwei
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 14 个官方形态（再施法 0、变身/强化 0、蓄力 0、普攻重置 0）。
+
+#### Naafiri
+
+- 新增通用连招、消耗、清线、逃跑和半自动按键逻辑，按 Q→E→W→R 优先级处理 5 个官方形态（再施法 1、变身/强化 0、蓄力 0、普攻重置 0）。
+<!-- MESH-AIO:RELEASE:v2.0.0:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.15:START -->
 ## v1.1.15
 
