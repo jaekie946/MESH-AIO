@@ -5,6 +5,593 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v2.1.0:START -->
+## v2.1.0
+
+### 한국어
+
+#### 지원 챔피언
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### 핵심 및 메뉴
+
+- 버전: v2.1.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원을 유지합니다. 전용 13챔피언의 동작은 이번 버전에서 바뀌지 않았고, 공용 엔진을 쓰는 일반 160챔피언에 아래 세 가지 반응 기능이 추가됐습니다.
+- 스테이시스 저격을 추가했습니다(General, 기본 ON). 존야/초시계/바드 R/리산드라 자기 R로 얼어 있는 적은 대상 지정이 불가능하지만 움직일 수도 없으므로, 시전 시간과 투사체 이동 시간을 역산해 무적이 풀리는 순간 정확히 착탄하도록 논타겟 대미지 스킬을 미리 발사합니다. 대상 지정형·돌진·충전·미니언 충돌 스킬은 확정 명중을 보장할 수 없어 제외되며, R은 사용자가 R Combo 옵션을 켠 경우에만 참여합니다.
+- 채널링/차징 인터럽트를 추가했습니다(별도 Interrupt 메뉴, 기본 ON). 전 챔피언 전수 조사 인터럽트 DB에서 하드 CC로 실제로 끊기는 채널(갈리오 R, 쉔 R, 카타리나 R, 미스 포츈 R 등)을 감지하면 준비된 하드 CC 스킬을 자동 시전합니다. 고정 채널은 정중앙으로, 이동 가능한 채널과 미니언 충돌형 스킬샷(아리 E류)은 예측 경로로 시전해 중간 웨이브 차단을 검사합니다. 부분 충전 시 CC가 보장되지 않는 충전형 CC(사이온 Q류)와 돌진형은 제외합니다. R 사용은 별도 옵션(기본 OFF), 텔레포트/귀환 인터럽트도 별도 옵션(기본 OFF)입니다.
+- 자동 스킬샷 신뢰도 게이트를 추가했습니다(General, 기본 ON). 대상이 도착 전에 걸어서 명중 범위를 벗어날 수 있는 예측 샷은 예측 trace가 확정 경로를 보증할 때만 발사하고, 원형 스킬의 예측 착지점이 대상의 히트 원 밖으로 벗어난 경우는 낡은 경로 리드로 보고 기각합니다. 세미 수동키·Flee·팜 정중앙 시전·AA reset 위빙·충전 해제는 게이트를 거치지 않아 수동 입력과 리셋 창을 잡아먹지 않습니다.
+- 충전 스킬은 시작 시 유효한 착지점이 없으면 충전을 시작하지 않으며, 이미 잡고 있는 충전은 게이트와 무관하게 항상 해제됩니다.
+
+#### Ahri
+
+- 매혹(E)이 채널링 인터럽트에 참여합니다. 미니언에 막히는 스킬이므로 정중앙 우회 없이 예측·충돌 검사를 거쳐, 중간 웨이브가 있으면 발사하지 않고 쿨다운을 아낍니다. 콤보/하레스의 Q·E 자동 시전은 신뢰도 게이트를 통과할 때만 발사됩니다.
+
+#### Sion
+
+- 결의의 강타(Q)는 하드 CC 스킬이지만 부분 충전 시 에어본이 보장되지 않아 자동 인터럽트에서 의도적으로 제외했습니다. 수동 사용은 기존과 동일합니다.
+
+### English
+
+#### Supported Champions
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### Core & Menu
+
+- Version: v2.1.0. 173-champion support stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data. The 13 bespoke champions are unchanged in this release; the three reactive features below were added to the shared engine used by the 160 generic champions.
+- Added stasis sniping (General, default ON). An enemy frozen by Zhonya/Stopwatch/Bard R/Lissandra self-R is untargetable but cannot move, so the engine back-times cast delay plus projectile travel and fires a non-targeted damage form to land the instant the stasis breaks. Targeted, dash, charge, and minion-collision forms are excluded because they cannot promise the hit, and R joins only when the user has enabled R in Combo.
+- Added channel/charge interrupting (its own Interrupt menu, default ON). When an enemy channels something the all-champion interrupt database confirms hard CC actually cancels (Galio R, Shen R, Katarina R, Miss Fortune R and more), the first ready hard-CC form fires automatically. Stationary channels take a dead-center cast; movable channels and minion-collision skillshots (the Ahri E class) go through prediction so a blocking wave is respected. Charge-hold CC (the Sion Q class) is excluded since a partial charge does not guarantee its CC; using R is a separate option (default OFF), and Teleport/Recall interrupting is a separate option (default OFF).
+- Added a reliability gate for automatic skillshots (General, default ON). A predicted shot the target can simply walk out of before impact fires only when the prediction trace confirms a committed path, and circular landings that drifted off the target's own hit circle are rejected as stale-path leads. Semi keys, Flee, farm center-casts, AA-reset weaves, and charge releases bypass the gate, so no manual intent or reset window is ever eaten by it.
+- Charge spells no longer start charging without a valid landing point, and a held charge always releases regardless of the gate.
+
+#### Ahri
+
+- Charm (E) now participates in channel interrupting. As a minion-collision skillshot it goes through prediction and the collision check instead of a dead-center bypass, so it holds its cooldown when a wave is in the way. Automatic Q/E casts in Combo/Harass fire only after passing the reliability gate.
+
+#### Sion
+
+- Decimating Smash (Q) is a hard-CC spell, but a partial charge does not guarantee the knock-up, so it is deliberately excluded from automatic interrupts. Manual use is unchanged.
+
+### 简体中文
+
+#### 支持英雄
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### 核心与菜单
+
+- 版本：v2.1.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄。本版本 13 位专属英雄的行为没有变化；以下三项反应功能加入了 160 位通用英雄共用的引擎。
+- 新增凝滞狙击（General，默认开启）。被中娅沙漏/秒表/巴德 R/丽桑卓自身 R 冻结的敌人无法被选取但也无法移动，引擎会倒推施法时间与弹道飞行时间，提前发射非指向性伤害技能，让其在无敌解除的瞬间准确命中。指向性、突进、蓄力与会被小兵阻挡的技能因无法保证命中而被排除；只有当用户在 Combo 中启用了 R，R 才会参与。
+- 新增引导/蓄力打断（独立 Interrupt 菜单，默认开启）。当敌人引导的技能在全英雄打断数据库中确认可被硬控打断（加里奥 R、慎 R、卡特琳娜 R、厄运小姐 R 等）时，自动施放第一个就绪的硬控技能。静止引导直接命中中心；可移动引导与会被小兵阻挡的技能（阿狸 E 类）走预测路径，以尊重中间兵线的阻挡。部分蓄力无法保证控制效果的蓄力型硬控（塞恩 Q 类）与突进型被排除；使用 R 为独立选项（默认关闭），打断传送/回城也是独立选项（默认关闭）。
+- 新增自动技能弹道可靠性门槛（General，默认开启）。目标在命中前能够走出判定范围的预测弹道，只有在预测轨迹确认其路径已锁定时才会发射；圆形技能的预测落点偏离目标自身判定圆时视为过期路径提前量并被拒绝。半手动键、逃跑、补刀中心施放、平A重置衔接与蓄力释放不经过该门槛，不会吞掉任何手动意图或重置窗口。
+- 蓄力技能在没有有效落点时不再开始蓄力；已经握住的蓄力无论门槛如何都会始终释放。
+
+
+#### Ahri
+
+- 魅惑（E）现已参与引导打断。作为会被小兵阻挡的技能，它经过预测与碰撞检查而不是直接命中中心，兵线挡路时会保留冷却不发射。连招/骚扰中的 Q/E 自动施放只有通过可靠性门槛后才会发射。
+
+#### Sion
+
+- 破魂斩（Q）虽是硬控技能，但部分蓄力无法保证击飞效果，因此被有意排除在自动打断之外。手动使用不受影响。
+<!-- MESH-AIO:RELEASE:v2.1.0:END -->
+
 <!-- MESH-AIO:RELEASE:v2.0.1:START -->
 ## v2.0.1
 
