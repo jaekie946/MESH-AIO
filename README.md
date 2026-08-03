@@ -5,6 +5,79 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.11:START -->
+## v1.1.11
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 핵심 및 메뉴
+
+- 진의 궁극기 조준과 치명타 재시도 안전 조건을 함께 개선했습니다.
+
+#### Jhin
+
+- R 채널 중 일반 한 발 피해로 처치 가능한 적을 먼저 찾습니다. 선형 예측과 챔피언·벽 충돌 계산을 통과해 실제로 맞힐 수 있을 때만 키 입력 없이 자동 발사하며 공식 1초 로컬 간격도 유지합니다.
+- 처치 대상이 없으면 Semi R 또는 Combo 키를 누르는 동안에만 발사하며, 충돌 없이 맞힐 수 있는 적 중 마우스에 가장 가까운 대상을 선택합니다. 처치 가능 적이 있으면 수동 대상보다 항상 우선합니다.
+- R 채널 최초 시작은 기존처럼 Semi R로만 수행하며 시작 방향도 마우스에 가장 가까운 적을 기준으로 합니다. 기존 전체 자동 조준 옵션은 `Auto-fire R on one-shot kill` 옵션으로 교체했습니다.
+- 치명타 재시도 간격은 메뉴 설정 없이 1ms로 고정했습니다. `Anti-stuck timeout`은 100~500ms만 설정할 수 있고 기본값은 100ms이며, 제한에 도달하면 진행 중인 취소·재공격 상태도 즉시 종료합니다.
+- 치명타 재시도 활성 기준을 30~100%로 확장하고 기본값을 30%로 낮췄습니다. 이전 저장값과 충돌하지 않도록 새 설정 키를 사용합니다.
+- 일반 평타 한 발의 온힛 포함 실제 피해로 현재 체력과 공용·물리 보호막을 모두 제거할 수 있으면 치명타 재시도를 건너뛰고 그 평타로 바로 처치합니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### Core & Menu
+
+- Improved both Jhin's Curtain Call targeting and critical-retry safety rules.
+
+#### Jhin
+
+- While Curtain Call is active, the script first searches for an enemy killable by one conservative regular shot. It auto-fires without a key only when linear prediction plus champion/wall collision confirms the shot can connect, while preserving the conservative local one-second gate.
+- Without a killable target, shots fire only while Semi R or Combo is held and select the collision-free hittable enemy closest to the mouse. A killable target always takes priority over the manual target.
+- Curtain Call still starts only from Semi R, now aimed toward the enemy closest to the mouse. The former full auto-aim option was replaced by `Auto-fire R on one-shot kill`.
+- The critical-retry pulse is now fixed at 1 ms with no menu setting. `Anti-stuck timeout` is limited to 100-500 ms and defaults to 100 ms; reaching it immediately clears any active cancel/retry state.
+- The critical-retry activation threshold now ranges from 30% to 100% and defaults to 30%. A new setting key prevents an older saved threshold from overriding it.
+- If one ordinary auto attack's actual damage, including on-hit effects, can remove the target's current health and all/physical shields, that attack is allowed to land instead of being cancelled for a critical retry.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 核心与菜单
+
+- 同时改进烬的大招瞄准与暴击重试安全规则。
+
+#### Jhin
+
+- 大招引导期间，脚本会优先寻找能被一发保守普通大招子弹击杀的敌人。只有线性预测以及英雄、墙体碰撞检测确认能够命中时，才会无需按键自动发射，并保留保守的本地一秒间隔。
+- 没有可击杀目标时，仅在按住 Semi R 或 Combo 键期间发射，并选择鼠标附近能够无碰撞命中的最近敌人。可击杀目标始终优先于手动目标。
+- 大招仍然只能通过 Semi R 开始，现在会朝鼠标附近最近的敌人开启。原来的完整自动瞄准选项已替换为 `Auto-fire R on one-shot kill`。
+- 暴击重试 pulse 现在固定为 1 毫秒，不再提供菜单设置。`Anti-stuck timeout` 只能设置为 100~500 毫秒，默认 100 毫秒；达到限制时会立即清除正在进行的取消与重试状态。
+- 暴击重试启用阈值现已扩展为 30%~100%，默认值降至 30%。使用新的设置键，避免旧保存值覆盖新默认值。
+- 如果一次普通攻击包含攻击特效后的实际伤害足以清空目标当前生命值以及通用、物理护盾，则不会为了暴击重试而取消这次攻击，而是直接完成击杀。
+<!-- MESH-AIO:RELEASE:v1.1.11:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.10:START -->
 ## v1.1.10
 
