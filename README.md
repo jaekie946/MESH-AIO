@@ -5,6 +5,778 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v2.0.1:START -->
+## v2.0.1
+
+### 한국어
+
+#### 지원 챔피언
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### 핵심 및 메뉴
+
+- 버전: v2.0.1. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원을 유지합니다.
+- 챔피언 173명을 모두 `mesh/<champion>/` 개별 폴더로 분리했습니다. 각 폴더에는 해당 챔피언의 공식 스킬 프로필과 진입 파일이 있어 수치·폼·오류 경로를 챔피언 단위로 추적할 수 있습니다. 일반 160개는 중복 없는 공용 내부 엔진을 호출하고, 전용 13개는 챔피언별 세부 로직을 사용합니다. 루트 디스패처와 샤드 등록표도 같은 생성 라우팅을 사용해 현재 챔피언 폴더 하나만 로드합니다.
+- 공식 생성기는 173개 프로필에서 1,004개 exact form과 269개 재시전 형태를 생성·검증합니다. Rengar 강화 W와 Talon R 재시전처럼 기본 슬롯명만으로 구분할 수 없는 형태도 명시적으로 라우팅하며, 동일 이름이 여러 형태에 걸치거나 live 이름이 확인되지 않은 자동 경로는 추측하지 않고 닫힙니다. 지형 전용 Talon E/E2와 시전 폼이 아닌 `RengarEMis` 미사일 객체도 수동·비안전 형태로 고정해 공용/빌린 폼 경로가 전용 안전 검사를 우회하지 못합니다.
+- self형 평타 reset 버프는 위빙 옵션이 켜져 있고 실제 대상이 현재 AA 사거리 안에 있을 때만 첫 평타 뒤로 미룹니다. Kayle E처럼 사거리 확장·접근에 쓰는 버프의 AA 사거리 밖 선시전은 유지합니다. 미룬 reset은 windup이 끝난 첫 백스윙에서 즉시 요청하고, 성공한 요청 뒤에만 오브워커 공격 타이머를 reset합니다.
+- 평타 대상을 영웅, 라인 미니언, 정글 몬스터, 적 타워로 상호 배타 분류해 Farm 토글, 마나 제한, Lane/Jungle 옵션, 식물 제외 조건이 다른 대상 경로로 새지 않도록 수정했습니다.
+- windup 중에는 0.25초 콜백 간격 폴백이 가짜 백스윙을 만들지 않습니다. 별도 windup-transition 신호를 보존해 `cb.spell` 이벤트가 누락돼도 실제 windup 종료 뒤 첫 콜백을 복구하며, 0.12초 신선도 창, 1ms 로컬 재시도 하한, spell-lock 및 server pause를 함께 유지합니다.
+- 타워 평타 reset은 AttackReset 태그 전체가 아니라 exact live 스킬 7개만 허용합니다. 해당 스킬 메뉴에 적 타워용 옵션을 기본 ON으로 추가했고 Tower Combat T와 분리했습니다. Riot raw의 구조물 modifier는 Fizz W, Jax W, Rengar Q, Skarner Q에서 확인됐습니다. Fiora E, Jayce 캐논 W, Malphite W는 사용자 제공 동작 계약으로 허용했으며 실제 타워 적용·타이밍은 연습 도구/F12 검증이 남아 있습니다. 억제기와 넥서스도 별도 실측 전까지 제외됩니다.
+- 구형 Hanbot 챔피언 예제 7개를 읽기 전용으로 감사해 콤보·재시전·구체·귀환 지점 아이디어만 추출했습니다. 구형 API·2019 수치·orb 교체·동적 로드 코드는 가져오지 않았고, Akali/Leblanc/Qiyana/Rengar/Talon/Syndra/Riven을 Riot 16.15 공식 수치와 현재 안전 계약으로 독립 구현했습니다. 각 메뉴에는 실제 Q/W/E/R 이미지와 연결된 옵션만 표시합니다.
+- 새 전용 7명은 자동 처치 시 무적·불사·주문 방어막을 거르고, 팜에서 라인 미니언/실제 몬스터만 세며 와드·트랩·식물을 제외합니다. Tower Combat T는 Combo/Harass/세미처럼 명시된 전투 경로에만 적용되고 Farm/Flee/자동 처치에는 새지 않습니다. 돌진은 공식 의도 종점과 네비게이션이 돌려준 실제 스냅 종점을 각각 검사하고 진행 방향·횡오차가 일치할 때만 통행 가능 위치, 벽/구조물, 사용자 지정 최대 적 수와 Evade `is_action_safe`를 통과시킵니다. Evade가 활성인 틱에는 수동키를 포함한 모든 샤드 이동·시전이 양보하며, Dance `1`/Laugh `2`는 기본 50ms·최소 10ms로 통일했습니다.
+
+#### Akali
+
+- Q, W 조건부 생존, E1/E2 표식 추적, R1/R2 처형을 exact live form으로 분리했습니다. 공식 targeter 기준 Q 폭 145와 선형 R2 거리 750·폭 90을 고정했습니다. Q/R2 다중 적중은 주 대상이 가장자리 35유닛 안쪽이거나 실제 도착 때까지 하드 CC일 때만 후보를 채택하고, 조건을 못 채우면 주 대상 중심으로 복귀합니다. E와 R은 의도 종점·스냅 종점의 방향 일치까지 검사하며, R1은 live 종점이 확정되기 전까지 대상 뒤 150유닛과 공식 715유닛 두 가설이 모두 안전할 때만 자동 사용합니다. E 표식 버프명과 실제 R1 착지 모델은 F12 검증 대상으로 남겼습니다.
+
+#### Leblanc
+
+- Q/W/E와 RQ/RW/RE를 각각 판정하고 W/RW 원점을 따로 보존해 안전 복귀, 형태별 킬스틸, 콤보·하레스·팜·도주·세미 R을 구현했습니다. Q/RQ 표식은 미사일 예상 도착 전에는 소비하지 않고 W/E의 예상 적중까지 pending 상태로 유지합니다. W/RW 다중 적중은 주 대상이 반경 35유닛 안쪽이거나 도착까지 하드 CC일 때만 후보를 채택하고, 아니면 원래 주 대상 중심으로 복귀합니다. 복귀는 원점이 현재 위치보다 실제로 안전할 때만 허용합니다. 공식 cast frame을 반영한 W 0.25초 예측과 실제 return 이벤트/버프 노출은 F12 검증이 남아 있습니다.
+
+#### Qiyana
+
+- E 대상 상태를 보존해 수동 W 뒤 강화 Q로 이어가고, Q/W/E/R은 확인된 exact live 이름으로만 판정합니다. W는 지형 선택 사거리 1,100과 실제 돌진 거리 300을 분리해 계산하고, 300유닛 착지점과 스냅 종점의 거리·방향·횡오차 및 벽/구조물·포탑·적 수·Evade 안전을 모두 확인합니다. 공식 Q 기본/강화 폭 60/80과 R 폭 140을 사용하며, Q 팜과 R 다중 적중은 35유닛 안쪽 여유 또는 도착 시점 하드 CC를 요구합니다. E 실제 종점과 지형 W/R 서버 타이밍은 인게임 검증이 남아 있습니다.
+
+#### Talon
+
+- 패시브 중첩 평타 우선, 근접 AA-Q-AA 0.12초/1ms 위빙, R 은신 중 평타 보존, 수동/Flee E 벽넘기를 구현했습니다. W는 exact `TalonW`일 때만 시전하고 공식 출발탄 2500 속도·75 폭과 복귀탄 3000 속도를 분리하며, 다중 적중은 주 대상의 35유닛 안쪽 여유 또는 도착 시점 하드 CC를 요구합니다. E는 의도 종점과 스냅 종점 모두에서 전방성·횡오차·최대 사거리·실제 벽 횡단을 확인합니다. 라인 팜 Q는 마나 제한을 지키고 Last Hit에서는 근접 Q로 죽는 미니언에만 사용합니다. R 시작 대상을 저장해 은신 종료 후 우선 복귀하되 안전하지 않으면 정상 후보로 폴백합니다. Wall Hop 기본키는 `X1MB`이며 Q reset은 구조물에 금지됩니다.
+
+#### Syndra
+
+- 구체를 provisional/confirmed/held 상태로 추적하고 W 집기·던지기, 다음 틱 Q→E, 기존 구체 E 기절, 인터럽트·안티갭을 구현했습니다. Q/W 전투와 팜은 중심·쌍 중점·원 교점 후보를 적중 수→총 체력 순으로 평가합니다. W1은 구체를 우선 집고, 고정된 W2 팜 착지 반경 안에 이미 센 미니언/몬스터는 집지 않아 선택한 다중 적중 수를 W2까지 보존합니다. 자동 반응과 킬스틸은 평타 windup보다 먼저 처리하며, R은 화이트리스트·구체 수·타워·주문 방어막·과잉 사용을 확인합니다. 구체 callback과 QE 서버 시점은 F12 검증이 남아 있습니다.
+
+#### Riven
+
+- Q1/Q2/Q3 복합 상태, AA-Q-AA 0.12초/1ms 위빙, E→R1→W→Q, AA→Q→W→E 하레스, 실제 E→Flash→W/Q G키, Flee와 팜을 구현했습니다. Q는 검증된 스냅 착지점으로만 시전하고, R2는 각 대상의 `0.25초 + 거리/1450` 실제 도착 시점을 예측합니다. 다중 적중은 주 대상의 35유닛 안쪽 여유 또는 도착까지 하드 CC를 요구하며 실패하면 주 대상 중심으로 복귀합니다. after-attack은 Flee/세미/E-Flash/Evade에서 즉시 닫고 T 허용은 Combo/Harass로만 제한합니다. Q 이동 취소와 E-Flash 서버 타이밍은 F12 검증이 남아 있습니다.
+
+#### Teemo
+
+- Q AA 위빙이 평타 windup 중 콜백 간격 폴백으로 잘못 시작되지 않도록 막고, 실제 백스윙 첫 콜백의 빠른 시전만 유지했습니다.
+
+#### Jax
+
+- W의 exact live form에 적 타워 AA reset 옵션을 추가했습니다. 다른 Jax 형태나 일반 AttackReset 태그는 이 타워 경로를 열 수 없습니다.
+
+#### Malphite
+
+- W 메뉴에 적 타워 AA-W-AA reset 옵션을 기본 ON으로 추가하고, 방금 공격한 실제 타워를 확인한 뒤 오브워커 모드 키가 눌린 동안만 1ms fast path를 사용합니다. 사용자 제공 동작 계약을 구현한 것이며 실제 타워 적용·타이밍은 연습 도구/F12 검증이 남아 있습니다.
+- W 팜 위빙은 실제 공격한 라인 미니언 또는 식물이 아닌 정글 몬스터만 허용합니다. E는 계속 평캔이나 after-attack 스킬이 아닙니다.
+
+#### Skarner
+
+- Q의 공식 TurretDamageMod와 exact live form을 기준으로 적 타워 AA reset 옵션을 추가했습니다.
+
+#### Fizz
+
+- W의 공식 TurretMod와 exact live form을 기준으로 적 타워 AA reset 옵션을 추가했습니다.
+
+#### Rengar
+
+- 기본 Q의 공식 TowerMod와 exact live form에만 적 타워 AA reset 옵션을 추가했습니다. 강화 Q는 별도 실측 전까지 제외합니다.
+- 4 Ferocity에서는 해제/생존이 필요하면 W, 평타 밖이면 E, 근접이면 Q를 우선하고, R 위장 중에는 도약 전 자동 스킬을 억제한 뒤 도약이 시작된 경우에만 E를 허용합니다. 기본/강화 Q·W·E와 R self-cast는 exact live 이름 allowlist를 통과해야 합니다. 확인되지 않은 `RengarQEmpowered`와 미사일 객체 `RengarEMis`는 F12에서 실제 live slot이 확인될 때까지 자동 시전을 닫고, 수동 E는 대상이 없거나 예측이 거부돼도 그 틱을 소비해 다음 틱에 안전하게 재시도합니다. R 탐색/드로우는 공식 랭크별 2500/3000/3500을 사용하며 도약은 스냅 방향·통행 가능 위치·벽/구조물·포탑·최대 적 수·Evade 안전을 통과해야 합니다.
+
+#### Fiora
+
+- E의 exact live form에 적 타워 AA reset 옵션을 추가했습니다. self 스킬 raw 반경과 무관하게 실제 타워 평타 뒤에만 시전합니다. 사용자 제공 동작 계약을 구현한 것이며 실제 타워 적용·타이밍은 연습 도구/F12 검증이 남아 있습니다.
+
+#### Jayce
+
+- 캐논폼 W Hyper Charge에만 적 타워 AA reset 옵션을 추가했습니다. 해머폼 W Static Field는 exact form 대조에서 제외되며, 캐논 평타 거리에서 raw self 반경 285 때문에 시전이 막히던 문제도 수정했습니다. 사용자 제공 동작 계약을 구현한 것이며 실제 타워 적용·타이밍은 연습 도구/F12 검증이 남아 있습니다.
+
+#### Pyke
+
+- Q 이후 AA-E 위빙이 평타 windup 중 가짜 백스윙으로 시작되지 않도록 막고, 실제 백스윙 첫 콜백의 빠른 E만 유지했습니다.
+
+#### Locke
+
+- Q AA 위빙이 평타 windup을 취소하지 않도록 콜백 간격 폴백을 windup 종료 뒤로 제한하면서 기존 1ms fast path를 유지했습니다.
+
+### English
+
+#### Supported Champions
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### Core & Menu
+
+- Version: v2.0.1. Support remains pinned to all 173 champions from Riot Data Dragon 16.15.1 and the patch-fixed 16.15 client export.
+- All 173 champions now have separate `mesh/<champion>/` folders. Each folder owns that champion's official spell profile and entry files, making values, forms, and error paths traceable per champion. The 160 generated modules call one shared internal engine without code duplication, while 13 champions use hand-tuned logic. The root dispatcher and shard manifest use the same generated routes and load only the current champion folder.
+- The official generator now creates and verifies 1,004 exact forms and 269 recast forms across all 173 profiles. Forms that cannot be distinguished from their base slot name, including empowered Rengar W and the Talon R toggle, have explicit routes; ambiguous names and unverified live forms fail closed instead of being guessed for automatic casts. Terrain-only Talon E/E2 and the non-cast `RengarEMis` missile object are fixed as manual/unsafe so shared or borrowed-form paths cannot bypass bespoke safety.
+- Self-cast attack-reset buffs are deferred only when a real target is already inside the current AA radius. Reach or engage buffs such as Kayle E keep their pre-cast path outside that radius. A deferred reset is requested on the first post-windup callback, and the orbwalker timer is reset only after a successful cast.
+- Attack targets are now classified exclusively as champion, lane minion, jungle monster, or enemy turret. Farm toggle, mana, Lane/Jungle switches, and plant filtering can no longer fall through into another target path.
+- The 0.25-second callback-gap fallback can no longer create a false backswing during windup. A separate windup-transition signal recovers the first post-windup callback even when `cb.spell` is missing, while the 0.12-second freshness window, 1 ms local retry floor, spell lock, and server pause remain enforced together.
+- Turret attack resets are no longer inferred from every AttackReset tag. Only seven exact live forms are allowed, each with a default-on enemy-turret option separate from Tower Combat T. Riot raw structure modifiers exist for Fizz W, Jax W, Rengar Q, and Skarner Q. Fiora E, Jayce cannon W, and Malphite W are enabled from the user-provided behavior contract, with live turret application and timing still pending Practice Tool/F12 verification. Inhibitors and the Nexus stay excluded until separately verified.
+- Seven legacy Hanbot champion examples were audited read-only for combo, recast, sphere, and return-point ideas. Old APIs, 2019 values, orbwalker replacement, and dynamic loading were not imported; Akali, Leblanc, Qiyana, Rengar, Talon, Syndra, and Riven were independently implemented against Riot 16.15 data and the current safety contract. Each menu exposes only connected options and live Q/W/E/R icons.
+- The seven promoted modules reject invulnerability, death protection, and spell shields for automatic executes; farm paths accept only lane minions or real monsters and exclude wards, traps, and plants. Tower Combat T is restricted to explicit Combo/Harass/Semi paths and cannot leak into Farm, Flee, or automatic killsteal. Dashes validate both the intended endpoint and the navigation-snapped endpoint, require direction and lateral-error agreement, then check passability, walls/structures, the configurable enemy cap, and Evade `is_action_safe`. While Evade owns a tick, every shard movement or cast yields, including manual hotkeys. Dance `1` and Laugh `2` use a shared 50 ms default and 10 ms minimum.
+
+#### Akali
+
+- Split Q, conditional defensive W, marked E1/E2, and R1/R2 execute paths by exact live form. Official targeters pin Q width to 145 and linear R2 to 750 range/90 width. Q/R2 multi-hit candidates are accepted only when the primary target is 35 units inside the edge or remains hard-CC'd through impact; otherwise aim returns to the primary center. E and R validate intended-versus-snapped direction, and automatic R1 conservatively requires both the target-plus-150 and official 715-unit endpoint hypotheses to be safe until the live model is known. The E mark name and live R1 landing model still require F12 validation.
+
+#### Leblanc
+
+- Distinguishes Q/W/E from RQ/RW/RE and stores W and RW origins separately for safe return, form-specific killsteal, Combo, Harass, Farm, Flee, and Semi R. Q/RQ marks cannot be consumed before estimated missile impact, and W/E consumption remains pending until expected impact. W/RW multi-hit candidates require the primary target to be 35 units inside the radius or hard-CC'd through impact; otherwise they fall back to the primary center. Return is allowed only when the origin is actually safer. The official-cast-frame 0.25-second W prediction, live return events, and exposed buffs still need F12 validation.
+
+#### Qiyana
+
+- Preserves the E target for a manual W into empowered Q, while Q/W/E/R accept only verified exact live names. W separates the 1,100 terrain-selection range from the real 300-unit dash and verifies distance, direction, lateral error, walls/structures, turret policy, enemy cap, and Evade safety on the 300-unit and snapped endpoints. Official targeters drive base/empowered Q widths of 60/80 and R width 140; Q farm and R multi-hit require a 35-unit inner margin or hard CC through impact. The live E endpoint and terrain W/R server timing remain pending validation.
+
+#### Talon
+
+- Added passive-stack AA priority, melee AA-Q-AA with the 0.12-second/1 ms weave contract, AA preservation during R stealth, and manual/Flee-only safe E wall hops. W casts only on exact `TalonW`, separates the official 2500-speed/75-width outbound missile from the 3000-speed return, and requires a 35-unit primary margin or hard CC through arrival for multi-hit. E validates forward direction, lateral error, maximum range, and actual wall crossing on both intended and snapped endpoints. Lane Q respects mana and Last Hit uses melee Q only when lethal. R stores and reacquires its start target after stealth when still safe, with normal fallback otherwise. Wall Hop defaults to `X1MB`, and Q reset remains blocked on structures.
+
+#### Syndra
+
+- Tracks spheres as provisional, confirmed, or held and implements W pickup/throw, next-tick Q→E, existing-sphere E stuns, interrupts, and anti-gapclose. Combat and farm Q/W evaluate centers, pair midpoints, and circle intersections by hit count then total health. W1 prioritizes a sphere and excludes minions or monsters already counted inside the fixed W2 farm radius, so pickup cannot lower the planned hit count before the stored W2 landing. Reactive actions and killsteal run before the attack-windup gate; R checks whitelist, sphere count, turret safety, spell shields, and overkill. Sphere callbacks and live QE timing still require F12 validation.
+
+#### Riven
+
+- Added composite Q1/Q2/Q3 state, 0.12-second/1 ms AA-Q-AA weaving, E→R1→W→Q, AA→Q→W→E harass, a real E→Flash→W/Q G key, Flee, and farming. Q casts only at the validated snapped landing. R2 predicts each target at the real `0.25 s + distance / 1450` arrival and accepts multi-hit only with a 35-unit primary margin or hard CC through impact, otherwise falling back to the primary center. After-attack closes immediately for Flee/Semi/E-Flash/Evade, and T permission remains exact Combo/Harass only. Q move-cancel and E-Flash timing remain pending F12 validation.
+
+#### Teemo
+
+- Q weaving can no longer start from the callback-gap fallback during attack windup; only the fast first valid backswing cast remains.
+
+#### Jax
+
+- Added an enemy-turret AA-reset option to the exact live W form. Other Jax forms and generic AttackReset tags cannot open this turret path.
+
+#### Malphite
+
+- Added a default-on enemy-turret AA-W-AA option. It verifies the actual attacked turret and uses the 1 ms fast path only while an orbwalker mode key is active. This implements the user-provided behavior contract; live turret application and timing still require Practice Tool/F12 verification.
+- Farm W now accepts only the lane minion or non-plant jungle monster that was actually attacked. E remains excluded from all after-attack and AA-reset logic.
+
+#### Skarner
+
+- Added an enemy-turret AA-reset option to the exact Q form backed by Riot's TurretDamageMod data.
+
+#### Fizz
+
+- Added an enemy-turret AA-reset option to the exact W form backed by Riot's TurretMod data.
+
+#### Rengar
+
+- Added an enemy-turret AA-reset option only to the base Q form backed by Riot's TowerMod data. Empowered Q remains excluded pending separate validation.
+- At four Ferocity, W is prioritized for cleanse/survival, E outside AA range, and Q in melee. Automatic spells are held before an R leap and only E is allowed after the leap starts. Base/empowered Q, W, E, and R self-casts require exact live-name allowlists. Unverified `RengarQEmpowered` and the `RengarEMis` missile object stay closed to automatic casts until F12 confirms a live slot, and manual E consumes a rejected/no-target tick so it retries safely on the next tick. R uses the official rank values 2500/3000/3500; leap landings require snapped-direction, passability, wall/structure, turret, enemy-cap, and Evade safety checks.
+
+#### Fiora
+
+- Added an enemy-turret AA-reset option to the exact E form. The self-spell raw radius no longer blocks a cast after a confirmed turret attack. This implements the user-provided behavior contract; live turret application and timing still require Practice Tool/F12 verification.
+
+#### Jayce
+
+- Added the enemy-turret AA-reset option only to cannon-form W Hyper Charge. Hammer-form W Static Field is rejected by exact-form matching, and the raw 285-unit self radius no longer blocks a valid ranged turret weave. This implements the user-provided behavior contract; live turret application and timing still require Practice Tool/F12 verification.
+
+#### Pyke
+
+- The post-Q AA-E weave can no longer begin from a false backswing during windup; only the fast first valid backswing E remains.
+
+#### Locke
+
+- Q weaving now delays the callback-gap fallback until windup has ended, preserving the existing 1 ms fast path without cancelling the attack.
+
+### 简体中文
+
+#### 支持英雄
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### 核心与菜单
+
+- 版本：v2.0.1。继续支持 Riot Data Dragon 16.15.1 与固定 16.15 客户端数据中的全部 173 名英雄。
+- 现已将 173 名英雄全部拆分到独立的 `mesh/<champion>/` 文件夹。每个文件夹都拥有该英雄的官方技能配置与入口文件，便于按英雄追踪数值、技能形态和错误路径。160 个生成模块共用一套内部引擎且不复制代码，13 名英雄使用精调逻辑。根分发器与 shard 清单共用同一份生成路由，每局只加载当前英雄文件夹。
+- 官方生成器会为 173 份配置生成并验证 1,004 个精确技能形态与 269 个再施法形态。Rengar 强化 W、Talon R 再施法等无法仅靠基础槽位名区分的形态也有显式路由；重名或尚未确认实时名称的自动施法路径会安全关闭，不进行猜测。仅用于地形翻墙的 Talon E/E2 与非施法形态的 `RengarEMis` 飞行物被固定为手动/不安全，防止共享或借用形态路径绕过精调安全检查。
+- 自身施放型普攻重置增益只会在真实目标已处于当前普攻范围内时延后；Kayle E 这类扩展距离或接近用增益在普攻范围外仍保留预施放路径。延后的重置会在前摇结束后的首个回调立即请求，并且仅在施法成功后重置走砍计时。
+- 普攻目标现在互斥分类为英雄、线上小兵、野怪或敌方防御塔，清线开关、法力限制、线上/野区选项以及植物过滤不会再串入其他目标路径。
+- 普攻前摇期间，0.25 秒回调间隔后备逻辑不再制造错误的后摇。独立的前摇转换信号会在 `cb.spell` 事件缺失时恢复真实前摇结束后的首个回调，同时保留 0.12 秒新鲜度窗口、1 毫秒本地重试下限、技能锁与服务器暂停保护。
+- 防御塔普攻重置不再根据全部 AttackReset 标签推断，只允许 7 个精确实时技能形态；每个技能都有默认开启的敌方防御塔选项，并与 Tower Combat T 分离。Riot 原始数据只为 Fizz W、Jax W、Rengar Q、Skarner Q 提供结构物修正值。Fiora E、Jayce 炮形态 W、Malphite W 按用户提供的行为契约启用，真实防御塔效果与时序仍需训练模式/F12 验证。高地塔后建筑与水晶枢纽在独立实测前保持排除。
+- 以只读方式审计了 7 份旧 Hanbot 英雄示例，仅提取连招、再施法、法球与返回点思路。未引入旧 API、2019 数值、走砍替换或动态加载代码；Akali、Leblanc、Qiyana、Rengar、Talon、Syndra、Riven 均基于 Riot 16.15 数据和当前安全契约独立实现。每个菜单只显示已连接的选项与真实 Q/W/E/R 图标。
+- 这 7 个精调模块会在自动斩杀时排除无敌、死亡保护与法术护盾；清线只接受线上小兵或真实野怪，并排除眼、陷阱与植物。Tower Combat T 仅作用于明确的连招/消耗/半自动路径，不会泄漏到清线、逃跑或自动抢杀。位移会分别验证意图终点与导航吸附终点，要求方向和横向误差一致，再检查可通行位置、墙体/建筑、最大敌人数和 Evade `is_action_safe`。Evade 接管当前 tick 时，包括手动热键在内的所有 shard 移动与施法都会让路。Dance `1` 与 Laugh `2` 统一为默认 50 毫秒、最小 10 毫秒。
+
+#### Akali
+
+- 按精确实时形态拆分 Q、条件防御 W、带标记的 E1/E2 与 R1/R2 斩杀。官方 targeter 将 Q 宽度固定为 145，并将线性 R2 固定为 750 距离/90 宽度。Q/R2 多目标候选只有在主目标位于边缘内侧 35 单位，或硬控持续到命中时才会采用，否则回到主目标中心。E/R 会验证意图终点与吸附终点方向；在实时模型确认前，自动 R1 必须同时通过“目标后 150”与官方 715 两种终点假设的安全检查。E 标记名与 R1 实际落点模型仍需 F12 验证。
+
+#### Leblanc
+
+- 分别识别 Q/W/E 与 RQ/RW/RE，并独立保存 W/RW 原点，用于安全返回、形态化抢杀、连招、消耗、清线、逃跑和半自动 R。Q/RQ 标记在预计弹道命中前不会被消费，W/E 的消费会保持 pending 直到预计命中。W/RW 多目标候选要求主目标位于半径内侧 35 单位或硬控持续到命中，否则回退到主目标中心；只有原点确实更安全时才允许返回。基于官方施法帧的 0.25 秒 W 预测、实时返回事件与增益暴露仍待 F12 验证。
+
+#### Qiyana
+
+- 保存 E 目标，使手动 W 后可衔接强化 Q，并且 Q/W/E/R 只接受已确认的精确实时名称。W 将 1,100 地形选择距离与实际 300 位移分开，针对 300 位移终点及吸附终点检查距离、方向、横向误差、墙体/建筑、防塔、敌人数和 Evade 安全。官方 targeter 提供基础/强化 Q 宽度 60/80 与 R 宽度 140；Q 清线和 R 多目标均要求 35 单位内侧余量或硬控持续到命中。E 实际终点及地形 W/R 服务器时序仍待验证。
+
+#### Talon
+
+- 新增被动层数普攻优先、遵循 0.12 秒/1 毫秒契约的近战 AA-Q-AA、R 隐身期间保留普攻，以及仅手动/逃跑使用的安全 E 翻墙。W 只在精确 `TalonW` 形态施放，分开预测官方 2500 速度/75 宽度出发弹与 3000 速度回程弹，多目标必须满足主目标 35 单位余量或命中时硬控。E 在意图与吸附终点都检查前向性、横向误差、最大距离和真实穿墙。线上 Q 遵守法力限制，Last Hit 只在近战 Q 可击杀时使用。R 会记录开大目标，隐身结束后安全时优先重新锁定，否则正常回退。Wall Hop 默认 `X1MB`，Q 重置仍禁止用于建筑。
+
+#### Syndra
+
+- 将法球追踪为临时、确认或持有状态，实现 W 抓取/投掷、下一 tick Q→E、已有法球 E 眩晕、打断与反突进。战斗与清线 Q/W 会按命中数→总生命值评估中心、两点中点和圆交点。W1 优先抓球，并排除固定 W2 清线半径内已计数的小兵/野怪，避免抓取动作减少计划命中数，再将落点保存到 W2。反应动作与抢杀会先于普攻前摇门槛处理；R 会检查白名单、法球数、防塔、法术护盾与过度消耗。法球回调与 QE 实际时序仍需 F12 验证。
+
+#### Riven
+
+- 新增 Q1/Q2/Q3 复合状态、0.12 秒/1 毫秒 AA-Q-AA、E→R1→W→Q、AA→Q→W→E 消耗、真实 E→Flash→W/Q 的 G 键、逃跑和清线。Q 只会朝验证后的吸附落点施放；R2 按每个目标真实的 `0.25 秒 + 距离/1450` 到达时刻预测，多目标必须满足主目标 35 单位余量或硬控持续到命中，否则回退到主目标中心。Flee/半自动/E-Flash/Evade 会立即关闭 after-attack，T 权限仍仅限连招/消耗。Q 移动取消与 E-Flash 时序仍待 F12 验证。
+
+#### Teemo
+
+- Q 普攻编织不会再在普攻前摇期间由回调间隔后备逻辑错误启动，只保留首个有效后摇回调的快速施法。
+
+#### Jax
+
+- 为 W 的精确实时形态加入敌方防御塔普攻重置选项，其他 Jax 形态和通用 AttackReset 标签不能开启该路径。
+
+#### Malphite
+
+- 新增默认开启的敌方防御塔 AA-W-AA 选项；确认刚刚攻击的真实防御塔后，仅在走砍模式键生效时使用 1 毫秒快速路径。该功能按用户提供的行为契约实现，真实防御塔效果与时序仍需训练模式/F12 验证。
+- W 清线编织只接受实际攻击的线上小兵或非植物野怪；E 仍然不是平取消、普攻重置或 after-attack 技能。
+
+#### Skarner
+
+- 根据 Riot 官方 TurretDamageMod 与精确 Q 形态加入敌方防御塔普攻重置选项。
+
+#### Fizz
+
+- 根据 Riot 官方 TurretMod 与精确 W 形态加入敌方防御塔普攻重置选项。
+
+#### Rengar
+
+- 仅为带有 Riot 官方 TowerMod 的基础 Q 精确形态加入敌方防御塔普攻重置；强化 Q 在独立实测前保持排除。
+- 4 层残暴值时，解控/生存优先 W，普攻范围外优先 E，近战优先 Q；R 伪装跳跃前抑制自动技能，跳跃开始后仅允许 E。基础/强化 Q、W、E 与 R 自施法都必须通过精确实时名称白名单；尚未确认的 `RengarQEmpowered` 与飞行物对象 `RengarEMis` 在 F12 证明为实时槽位前禁止自动施法。手动 E 即使无目标或预测被拒，也会消费当前 tick 并在下一 tick 安全重试。R 使用官方等级距离 2500/3000/3500；跳跃落点必须通过吸附方向、可通行、墙体/建筑、防御塔、最大敌人数和 Evade 安全检查。
+
+#### Fiora
+
+- 为 E 的精确实时形态加入敌方防御塔普攻重置选项；确认防御塔普攻后，自身技能的原始半径不再阻止施法。该功能按用户提供的行为契约实现，真实防御塔效果与时序仍需训练模式/F12 验证。
+
+#### Jayce
+
+- 仅为炮形态 W Hyper Charge 加入敌方防御塔普攻重置。锤形态 W Static Field 会被精确形态检查排除，原始 285 范围也不再阻止远程防御塔编织。该功能按用户提供的行为契约实现，真实防御塔效果与时序仍需训练模式/F12 验证。
+
+#### Pyke
+
+- Q 后 AA-E 编织不会再在普攻前摇期间产生错误后摇，只保留首个有效后摇回调的快速 E。
+
+#### Locke
+
+- Q 普攻编织把回调间隔后备逻辑限制在前摇结束后，保留原有 1 毫秒快速路径且不会取消普攻。
+<!-- MESH-AIO:RELEASE:v2.0.1:END -->
+
 <!-- MESH-AIO:RELEASE:v2.0.0:START -->
 ## v2.0.0
 
