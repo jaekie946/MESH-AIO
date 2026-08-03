@@ -5,6 +5,67 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.2:START -->
+## v1.1.2
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 핵심 및 메뉴
+
+- 진의 체력바를 가리던 상단 패시브/치명타 상태 표시와 해당 설정 메뉴를 제거했습니다.
+
+#### Jhin
+
+- 챔피언 위에 표시되던 `CRIT xx% | E n | R ...` 텍스트를 제거해 체력바와 겹치지 않게 했습니다.
+- 챔피언 아래의 기존 세로 핫키/상태 목록은 그대로 유지됩니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### Core & Menu
+
+- Removed Jhin's upper passive/critical status display and its settings menu because it overlapped the health bar.
+
+#### Jhin
+
+- Removed the `CRIT xx% | E n | R ...` text previously drawn above Jhin so it no longer covers the health bar.
+- Kept the existing vertical hotkey/status list below the champion unchanged.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 核心与菜单
+
+- 移除了会遮挡烬生命条的上方被动/暴击状态显示及其设置菜单。
+
+#### Jhin
+
+- 移除了原先显示在烬上方的 `CRIT xx% | E n | R ...` 文本，使其不再遮挡生命条。
+- 保留英雄下方现有的纵向快捷键/状态列表。
+<!-- MESH-AIO:RELEASE:v1.1.2:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.1:START -->
 ## v1.1.1
 
