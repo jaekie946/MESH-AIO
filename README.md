@@ -5,6 +5,70 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.8:START -->
+## v1.1.8
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 핵심 및 메뉴
+
+- 진의 일반탄 취소 후 재공격 대기 시간을 대폭 줄이고 고정 12회 제한을 제거했습니다.
+
+#### Jhin
+
+- 인게임에서 이동 취소가 정상 작동하는 것을 확인한 뒤, 취소 확인과 재공격을 기다리던 최소 시간을 80ms에서 10ms로 줄였습니다. 실제로는 다음 pre-tick에서 바로 같은 대상을 다시 공격합니다.
+- 공격 잠금 pulse도 80/50ms에서 10ms로 줄이고 취소 실패 제한을 200ms에서 120ms로 단축해 실패 상태에서도 오래 멈추지 않습니다.
+- 고정 12회 재시도 제한을 제거했습니다. 이제 성공할 때까지 빠르게 반복하며, 비정상 고착만 막는 대상별 전체 3초 제한을 유지합니다. Crit과 보장 4타는 계속 즉시 통과합니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### Core & Menu
+
+- Greatly reduced Jhin's post-cancel reattack delay and removed the fixed 12-attempt limit.
+
+#### Jhin
+
+- After in-game confirmation that movement cancellation works, the minimum cancellation-to-reattack wait was reduced from 80 ms to 10 ms. The same target is now reattacked on the next available pre-tick.
+- The attack-lock pulse was reduced from 80/50 ms to 10 ms, and the failed-cancellation timeout from 200 ms to 120 ms, preventing unnecessary stalls even on failure.
+- Removed the fixed 12-attempt retry cap. Retries now continue rapidly until success, with only a three-second per-target anti-stuck timeout. Random crits and the guaranteed fourth shot still pass immediately.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 核心与菜单
+
+- 大幅缩短烬取消普通子弹后的重新攻击延迟，并移除固定 12 次限制。
+
+#### Jhin
+
+- 在游戏内确认移动取消正常工作后，将取消到重新攻击的最短等待时间从 80 毫秒缩短到 10 毫秒。现在会在下一个可用 pre-tick 立即重新攻击同一目标。
+- 攻击锁定 pulse 从 80/50 毫秒缩短到 10 毫秒，取消失败超时从 200 毫秒缩短到 120 毫秒，即使失败也不会长时间停顿。
+- 移除固定 12 次重试上限。现在会高速重试直到成功，仅保留每个目标 3 秒的防卡死总超时。随机暴击和必定暴击第四发仍会立即放行。
+<!-- MESH-AIO:RELEASE:v1.1.8:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.7:START -->
 ## v1.1.7
 
