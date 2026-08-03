@@ -5,6 +5,124 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.15:START -->
+## v1.1.15
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+- Pyke
+
+#### 핵심 및 메뉴
+
+- 실제 평타 위빙 경로를 전수 점검해 평타 선딜은 보존하고, 선딜 종료가 확인된 첫 백스윙 콜백에서 스킬을 즉시 요청하도록 통일했습니다.
+- 위빙 전용 fast-cast는 기존 90ms 공통 시전 제한만 우회하고, 서버 스킬 잠금·쿨다운·사거리·대상 안전·서버 pause는 그대로 유지합니다.
+- 첫 요청이 잠금 등으로 거부되면 스크립트 내부 최소 1ms 간격으로 재시도합니다. 실제 요청 속도는 Hanbot 틱/콜백과 게임 서버 처리 주기의 제한을 받습니다.
+- 새 챔피언의 평타 위빙도 같은 안전·속도 계약을 따르도록 전용 정적 검사와 CI 게이트를 추가했습니다.
+
+#### Locke
+
+- Combo/Harass AA→Q 위빙이 최근 다른 스킬 사용 때문에 90ms 동안 막히지 않고 첫 유효 백스윙 콜백에서 즉시 Q를 요청합니다.
+- Q 요청이 일시적으로 거부될 때만 0.12초의 신선도 창 안에서 1ms 최소 간격으로 재시도하며, 옵션 OFF·도주·Evade·대상 소실 시 콜백 스트림을 즉시 닫습니다.
+
+#### Teemo
+
+- Combo/Harass와 정글 AA→Q→AA가 첫 유효 백스윙 콜백에서 즉시 Q를 요청하도록 변경했습니다.
+- Q가 준비되지 않았거나 Farm/도주/대상 조건이 끝나면 재호출 스트림을 즉시 종료해 늦은 백스윙에서 Q가 낭비되는 상황을 막았습니다.
+
+#### Malphite
+
+- 실제 평타 리셋인 AA→W→AA가 백스윙 첫 콜백에서 즉시 W를 요청하고, 성공 직후 `orb.core.reset()`을 실행하도록 가속했습니다.
+- E는 기존 계약대로 평타 위빙·캔슬·리셋에 포함하지 않았으며, W가 불가능한 상황에서는 after-attack 스트림을 즉시 닫습니다.
+
+#### Pyke
+
+- 기본 Q→평타→E 콤보의 E를 첫 유효 백스윙 콜백에서 즉시 요청하도록 가속했습니다.
+- Q 대상·Combo 상태·E 준비·타워 안전 조건이 무효가 되면 재호출을 즉시 종료하고, 유효한 거부만 1ms 최소 간격으로 재시도합니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+- Pyke
+
+#### Core & Menu
+
+- Audited every real auto-attack weave path and standardized it to preserve the attack windup, then request the spell on the first callback that confirms the backswing has begun.
+- The weave-only fast-cast path bypasses only the former 90 ms generic cast throttle; server spell lock, cooldown, range, target safety, and server pause remain enforced.
+- A rejected first request is retried with a 1 ms script-local minimum interval. Actual issue speed remains bounded by Hanbot's tick/callback rate and the game server.
+- Added a dedicated static contract test and CI gate so future champion weaves must keep the same speed and safety rules.
+
+#### Locke
+
+- Combo/Harass AA-to-Q weaving no longer waits behind the 90 ms generic throttle after another recent spell and requests Q on the first valid backswing callback.
+- Only temporarily rejected Q requests retry inside the 0.12-second freshness window with a 1 ms floor; disabled weaving, escape/Evade modes, or a lost target close the callback stream immediately.
+
+#### Teemo
+
+- Combo/Harass and jungle AA-to-Q-to-AA now request Q on the first valid backswing callback.
+- The re-invoke stream closes immediately when Q, Farm, escape, or target conditions are unavailable, preventing a late Q from being wasted near the end of recovery.
+
+#### Malphite
+
+- The real AA-to-W-to-AA reset now requests W on the first backswing callback and calls `orb.core.reset()` immediately after a successful cast.
+- E remains excluded from weaving, animation-cancel, and reset logic, while an unusable W now closes the after-attack stream immediately.
+
+#### Pyke
+
+- Accelerated the E in the normal charged-Q-to-AA-to-E combo so it is requested on the first valid backswing callback.
+- Invalid Q target, Combo state, E readiness, or turret safety closes the stream immediately; only valid transient rejections retry with the 1 ms local floor.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+- Pyke
+
+#### 核心与菜单
+
+- 全面检查了所有真正的普攻穿插路径：保留普攻前摇，并在确认进入后摇的第一个回调中立即请求技能。
+- 穿插专用 fast-cast 只绕过原有 90 毫秒通用施法限制，服务器技能锁、冷却、距离、目标安全和服务器 pause 仍然保留。
+- 首次请求被拒绝时，脚本内部以最低 1 毫秒间隔重试；实际请求速度仍受 Hanbot tick/回调频率和游戏服务器限制。
+- 新增专用静态契约检查和 CI 门禁，今后新增英雄的普攻穿插也必须遵守相同的速度与安全规则。
+
+#### Locke
+
+- 连招/消耗的普攻接 Q 不再因近期其他技能触发的 90 毫秒通用限制而等待，会在第一个有效后摇回调中立即请求 Q。
+- 只有暂时被拒绝的 Q 才会在 0.12 秒新鲜度窗口内以最低 1 毫秒间隔重试；关闭穿插、逃跑/Evade 或目标丢失时会立即关闭回调流。
+
+#### Teemo
+
+- 连招/消耗和打野的普攻→Q→普攻现在都会在第一个有效后摇回调中立即请求 Q。
+- 当 Q、Farm、逃跑或目标条件不成立时立即结束重复回调，防止 Q 在后摇末段过晚释放。
+
+#### Malphite
+
+- 真正的普攻→W→普攻重置现在会在第一个后摇回调中立即请求 W，并在施法成功后立刻执行 `orb.core.reset()`。
+- E 依旧不属于普攻穿插、动画取消或普攻重置；W 无法使用时会立即关闭 after-attack 回调流。
+
+#### Pyke
+
+- 加速了标准蓄力 Q→普攻→E 连招中的 E，使其在第一个有效后摇回调中立即请求。
+- Q 目标、连招状态、E 准备状态或防御塔安全条件失效时立即停止回调；只有有效的临时拒绝才按最低 1 毫秒间隔重试。
+<!-- MESH-AIO:RELEASE:v1.1.15:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.14:START -->
 ## v1.1.14
 
