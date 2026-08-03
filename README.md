@@ -5,6 +5,67 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.4:START -->
+## v1.1.4
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 핵심 및 메뉴
+
+- 진의 치명타 애니메이션 취소 후 재공격이 빠졌던 문제를 긴급 수정했습니다.
+
+#### Jhin
+
+- 일반 Attack1~3 모션을 취소한 뒤 다음 공격을 발행하지 않아 재시도가 멈추던 문제를 수정했습니다. 실제 `attack_cancel` 확인 50ms 뒤 첫 안전한 틱에서 오브워커를 초기화하고 같은 유효 대상을 재공격합니다.
+- 진 본인의 취소 이벤트만 허용하고 대상별 한 체인을 최대 12회·1.5초로 제한하며, 한도 이후에는 초기화 조건까지 일반 공격을 허용합니다. Crit과 보장 4타 Attack4는 계속 보존합니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### Core & Menu
+
+- Hotfixed Jhin's missing reattack after a critical-animation cancellation.
+
+#### Jhin
+
+- Fixed the retry stopping after cancelling an ordinary Attack1-3 animation because no replacement attack was issued. The first safe tick 50 ms after a confirmed `attack_cancel` now resets the orbwalker and reattacks the same valid target.
+- Only Jhin's own cancel event is accepted. Each target-specific chain is capped at 12 attempts or 1.5 seconds, after which ordinary attacks are allowed until a reset condition. `Crit` and the guaranteed fourth-shot `Attack4` remain protected.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 核心与菜单
+
+- 紧急修复烬取消暴击动画后没有重新发起普攻的问题。
+
+#### Jhin
+
+- 修复取消普通 Attack1-3 动画后未发出替代攻击，导致重试停止的问题。现在会在确认 `attack_cancel` 后 50 毫秒的第一个安全 tick 重置走砍，并重新攻击同一个有效目标。
+- 仅接受烬自身的取消事件。每个目标的重试链最多 12 次或 1.5 秒，达到上限后会允许普通攻击，直到满足重置条件。继续保护 `Crit` 与必定暴击的第四发 `Attack4`。
+<!-- MESH-AIO:RELEASE:v1.1.4:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.3:START -->
 ## v1.1.3
 
