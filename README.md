@@ -5,6 +5,67 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.5:START -->
+## v1.1.5
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 핵심 및 메뉴
+
+- 진의 일반 평타 취소 방식을 실제 전체 행동 정지 명령으로 교체했습니다.
+
+#### Jhin
+
+- 이동 명령으로는 일반 Attack1~3 평타가 취소되지 않던 문제를 수정했습니다. 이제 전체 오브워커를 잠깐 정지하고 `player:stop()`을 발행해 현재 행동을 직접 중단합니다.
+- 진 본인의 `attack_cancel` 또는 Stop 원점 80ms 뒤 windup 종료로 취소를 확인합니다. 유한 전체 정지가 자연 만료되면 reset 후 같은 유효 대상을 재공격하며, 중간 사용자 주문·200ms Stop 실패·사망·R 채널에서는 재공격하지 않습니다. Crit과 보장 4타 Attack4는 그대로 공격합니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### Core & Menu
+
+- Replaced Jhin's ordinary-attack cancellation with the actual full action-stop command path.
+
+#### Jhin
+
+- Fixed ordinary Attack1-3 attacks not cancelling when only a movement order was used. The script now briefly pauses the full orbwalker and issues `player:stop()` to stop the current action directly.
+- Cancellation is confirmed by Jhin's own `attack_cancel` or a stopped windup 80 ms from the original Stop. Once the finite full pause expires naturally, it resets and reattacks the same valid target; a manual user order, 200 ms stop failure, death, or Curtain Call discards the retry. `Crit` and guaranteed fourth-shot `Attack4` continue normally.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 核心与菜单
+
+- 将烬的普通攻击取消方式改为实际的“停止所有行动”命令流程。
+
+#### Jhin
+
+- 修复仅使用移动命令时无法取消普通 Attack1-3 攻击的问题。现在会短暂暂停整个走砍系统，并发送 `player:stop()` 直接停止当前行动。
+- 通过烬自身的 `attack_cancel`，或从原始 Stop 起 80 毫秒后攻击前摇已经结束来确认取消。有限的整体暂停自然结束后，脚本会重置走砍并重新攻击同一个有效目标；若期间出现玩家手动命令、200 毫秒内 Stop 失败、角色死亡或开启大招，则放弃重试。`Crit` 与必定暴击的第四发 `Attack4` 会正常放行。
+<!-- MESH-AIO:RELEASE:v1.1.5:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.4:START -->
 ## v1.1.4
 
