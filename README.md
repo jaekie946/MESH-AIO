@@ -5,6 +5,70 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.3:START -->
+## v1.1.3
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 핵심 및 메뉴
+
+- 진의 궁 재사용, 치명타 재시도, W 평타 사거리 규칙을 실제 입력 상태에 맞게 교정했습니다.
+
+#### Jhin
+
+- R2 슬롯이 준비되지 않은 요청 때문에 다음 탄환이 약 2초까지 늦어질 수 있던 문제를 수정했습니다. 서버 강제 공식 1초는 유지하며, Auto는 보수적 간격을 지키고 Semi R 또는 Combo 키를 누르는 동안에는 슬롯이 준비되는 첫 틱부터 성공할 때까지 빠르게 재시도합니다.
+- 치명타 재시도 기본 기준을 45%로 바로잡고 새로운 저장 키를 사용합니다. 문자열과 숫자 해시 애니메이션을 모두 식별하며 F12 진단에 실제 분류와 차단 조건을 표시합니다.
+- 챔피언이 평타 사거리 안에 있으면 CC 상태여도 Combo, Harass, Auto, Killsteal에서 W를 사용하지 않습니다. 평타 사거리 안 W는 사용자가 Semi W 키를 누른 경우에만 허용됩니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### Core & Menu
+
+- Corrected Jhin's Curtain Call recast, critical retry, and W attack-range rules against live input state.
+
+#### Jhin
+
+- Fixed non-ready R2 requests delaying the next shot by up to roughly two seconds. The server-enforced official one-second minimum remains; Auto keeps its conservative interval, while a held Semi R or Combo input retries every tick from the first ready slot until the request succeeds.
+- Corrected the critical-retry default threshold to 45% with a fresh save key. Both string and numeric-hash animation events are recognized, and F12 diagnostics now show the classification and active gates.
+- W is never cast by Combo, Harass, Auto, or Killsteal against a champion inside attack range, even when the target is crowd controlled. Only a directly held Semi W may bypass this rule.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 核心与菜单
+
+- 根据实时输入状态修正了烬的大招再次施放、暴击重试以及 W 普攻距离规则。
+
+#### Jhin
+
+- 修复 R2 尚未就绪的请求导致下一发可能延迟到约两秒的问题。保留服务器强制的一秒官方最低间隔；自动模式维持保守间隔，按住 Semi R 或连招键时则从技能槽就绪的第一帧开始逐帧重试，直到请求成功。
+- 将暴击重试默认阈值修正为 45%，并使用新的保存键。现在可识别字符串与数字哈希动画事件，F12 调试会显示实际分类与拦截条件。
+- 当英雄位于普攻距离内时，即使目标处于控制状态，连招、消耗、自动逻辑和斩杀也不会使用 W；只有玩家直接按住 Semi W 时才允许例外。
+<!-- MESH-AIO:RELEASE:v1.1.3:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.2:START -->
 ## v1.1.2
 
