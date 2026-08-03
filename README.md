@@ -5,6 +5,79 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.0:START -->
+## v1.1.0
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 핵심 및 메뉴
+
+- mesh-aio에 다섯 번째 챔피언 Jhin을 추가하고, 실제 Q/W/E/R 아이콘이 표시되는 접이식 메뉴와 사용자 지정 단축키를 연결했습니다.
+- Riot 16.15.1/16.15 공식 데이터로 진의 피해량·사거리·시전 시간·투사체·함정·궁 탄환 계약을 고정하고 F12 진단을 추가했습니다.
+
+#### Jhin
+
+- Combo와 Harass에 Q/W/E 사용, 평타 사거리 안 비활성화, W 하드 CC 조건, 자동 처치·CC·정지 대상 반응을 각각 조절할 수 있게 했습니다.
+- `MMB` Farm 토글에 Q/W/E 라인·정글 옵션과 최소 적중 조건을 추가하고, Q 연쇄 대상과 W 관통 경로를 보수적으로 선택하도록 했습니다.
+- Semi W와 Semi R 키를 추가했습니다. R은 자동으로 시작하지 않으며, Semi R로 커튼 콜을 연 뒤 채널 중 실제 3500 사거리 탄환만 예측 조준합니다.
+- 일반 치명타 `Crit` 모션과 보장 4타 `Attack4`를 분리하는 실험적 치명타 재시도 옵션을 추가했습니다. 기본값은 꺼짐이며 활성 기준은 45~100%로 설정할 수 있고, 보장 4타와 이미 치명타인 공격은 취소하지 않습니다.
+- Q/W/E/R 실시간 범위, 패시브·치명타 상태, 콤보 피해 체력바, 처치 가능 표시와 세로형 핫키 상태줄을 추가했습니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### Core & Menu
+
+- Added Jhin as the fifth mesh-aio champion with collapsible menus, live Q/W/E/R icons, and rebindable hotkeys.
+- Locked Jhin's damage, range, cast-time, projectile, trap, and Curtain Call shot contracts to Riot 16.15.1/16.15 data and added F12 diagnostics.
+
+#### Jhin
+
+- Added separate Combo and Harass controls for Q/W/E, disable-inside-AA-range rules, hard-CC-only W behavior, killsteal, and automatic CC/immobile reactions.
+- Added Q/W/E lane and jungle controls under the `MMB` Farm toggle, including minimum-hit settings and conservative Q-bounce/W-line selection.
+- Added rebindable Semi W and Semi R. Curtain Call never starts automatically; Semi R opens it and only the active 3500-range shots are prediction-aimed during the channel.
+- Added an experimental critical retry option that distinguishes random `Crit` attacks from the guaranteed fourth-shot `Attack4`. It is off by default, supports a 45-100% activation threshold, and never cancels an already-critical or guaranteed fourth shot.
+- Added live Q/W/E/R ranges, passive and critical state text, combo-damage health bars, killable indicators, and the standard vertical hotkey status list.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 核心与菜单
+
+- mesh-aio 新增第五名英雄 Jhin，并加入可折叠菜单、实时 Q/W/E/R 图标与可重新绑定的快捷键。
+- 根据 Riot 16.15.1/16.15 官方数据固定烬的伤害、距离、施法时间、弹道、陷阱与大招子弹规则，并加入 F12 调试信息。
+
+#### Jhin
+
+- 为连招与消耗分别加入 Q/W/E 控制、普攻范围内禁用、W 仅对硬控目标、斩杀以及自动控制/静止目标反应选项。
+- 在 `MMB` 清线开关中加入 Q/W/E 对线与野怪选项、最低命中数，以及保守的 Q 弹跳和 W 穿透路径选择。
+- 新增可改键的半自动 W 与半自动 R。脚本不会自动开启谢幕；只有按下 Semi R 开启后，才会在引导期间预测瞄准实际 3500 距离的子弹。
+- 新增实验性暴击重试选项，区分随机 `Crit` 与必定暴击的第四发 `Attack4`。默认关闭，可设置 45-100% 的启用阈值，并且不会取消已经暴击或必定暴击的第四发。
+- 新增 Q/W/E/R 实时范围、被动与暴击状态、连招伤害生命条、可击杀提示以及标准纵向快捷键状态列表。
+<!-- MESH-AIO:RELEASE:v1.1.0:END -->
+
 <!-- MESH-AIO:RELEASE:v1.0.2:START -->
 ## v1.0.2
 
