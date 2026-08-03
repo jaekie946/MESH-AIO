@@ -5,6 +5,70 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.9:START -->
+## v1.1.9
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 핵심 및 메뉴
+
+- 진의 치명타 재시도 속도·고착 시간을 메뉴에서 직접 조절할 수 있게 하고 기본 속도를 5ms로 높였습니다.
+
+#### Jhin
+
+- 치명타 활성 기준을 최소·기본 60%로 변경했습니다. 기존 저장값과 충돌하지 않도록 새 설정 키를 사용합니다.
+- `Retry pulse` 슬라이더를 추가했습니다. 1~50ms 범위에서 실시간 조절할 수 있으며 기본값은 5ms입니다. 취소 확인 뒤 설정한 pulse가 만료되는 첫 pre-tick에 즉시 재공격합니다.
+- `Anti-stuck timeout` 슬라이더를 추가했습니다. 500~10000ms 범위, 기본 3000ms이며 고정 횟수 제한 없이 이 시간 안에서 성공할 때까지 반복합니다. Crit과 보장 4타는 계속 즉시 통과합니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### Core & Menu
+
+- Added user controls for Jhin's retry speed and anti-stuck duration, with a faster 5 ms default pulse.
+
+#### Jhin
+
+- Changed the critical activation threshold to a 60% minimum and default. A new setting key avoids conflicts with previously saved values.
+- Added a `Retry pulse` slider, adjustable live from 1 to 50 ms and defaulting to 5 ms. The reattack is issued on the first pre-tick after the configured pulse expires.
+- Added an `Anti-stuck timeout` slider from 500 to 10000 ms, defaulting to 3000 ms. With no fixed attempt cap, retries continue until success within this duration. Random crits and the guaranteed fourth shot still pass immediately.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 核心与菜单
+
+- 添加烬的重试速度与防卡死时间自定义设置，并将默认 pulse 提升为 5 毫秒。
+
+#### Jhin
+
+- 将暴击启用阈值的最低值和默认值改为 60%。使用新的设置键，避免与旧保存值冲突。
+- 新增 `Retry pulse` 滑块，可在 1~50 毫秒之间实时调整，默认 5 毫秒。配置的 pulse 到期后的第一个 pre-tick 会立即重新攻击。
+- 新增 `Anti-stuck timeout` 滑块，范围 500~10000 毫秒，默认 3000 毫秒。没有固定次数上限，会在该时间内持续重试直到成功。随机暴击和必定暴击第四发仍会立即放行。
+<!-- MESH-AIO:RELEASE:v1.1.9:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.8:START -->
 ## v1.1.8
 
