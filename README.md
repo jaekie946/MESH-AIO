@@ -5,6 +5,67 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v1.1.1:START -->
+## v1.1.1
+
+### 한국어
+
+#### 지원 챔피언
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 핵심 및 메뉴
+
+- 진의 직선 예측 입력을 공식 Hanbot 스키마로 교정하고 같은 필드 오류를 차단하는 회귀 계약을 추가했습니다.
+
+#### Jhin
+
+- W 또는 R 탄환 예측 시 `pred/collision` 내부에서 `vec2 nil` 치명 오류가 발생하던 문제를 수정했습니다.
+- W와 R의 실제 투사체 폭은 유지하면서 직선 충돌 판정이 요구하는 `width` 필드를 사용하도록 변경했습니다.
+
+### English
+
+#### Supported Champions
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### Core & Menu
+
+- Corrected Jhin's linear prediction inputs to the Hanbot schema and added regression contracts that reject the same field mismatch.
+
+#### Jhin
+
+- Fixed the fatal `vec2 nil` error inside `pred/collision` when predicting W or Curtain Call shots.
+- Preserved the official projectile widths while supplying the required `width` field for linear collision prediction.
+
+### 简体中文
+
+#### 支持英雄
+
+- Locke
+- Teemo
+- Malphite
+- Soraka
+- Jhin
+
+#### 核心与菜单
+
+- 将烬的直线预测输入修正为 Hanbot 所需格式，并新增回归契约以阻止相同字段错误再次出现。
+
+#### Jhin
+
+- 修复 W 或大招子弹预测进入 `pred/collision` 时触发的 `vec2 nil` 致命错误。
+- 保留官方弹道宽度数值，同时改用直线碰撞预测所要求的 `width` 字段。
+<!-- MESH-AIO:RELEASE:v1.1.1:END -->
+
 <!-- MESH-AIO:RELEASE:v1.1.0:START -->
 ## v1.1.0
 
