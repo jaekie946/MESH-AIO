@@ -5,6 +5,616 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v2.4.0:START -->
+## v2.4.0
+
+### 한국어
+
+#### 지원 챔피언
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### 핵심 및 메뉴
+
+- 버전: v2.4.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원을 유지합니다. 전용 모듈이 18개에서 19개로 늘었고(흐웨이 추가) 나머지 154챔피언은 공용 엔진을 사용합니다.
+- 일자·직선 스킬의 자동 시전에 실제 명중 판정을 추가한 공용 모듈을 도입했습니다. 대상이 도착 전에 판정을 벗어날 수 없거나, 멈춰 있거나, 경로가 확정될 때만 발사하며 세미키·도주는 우회합니다. 현재 오로라와 유나라에 적용됩니다.
+- 공식 수치 회귀 계약을 65개 추가해 총 431개가 되었습니다. 새 챔피언의 모든 스킬 수치가 공식 원본과 어긋나면 빌드 전에 검사에서 걸립니다.
+
+#### Hwei
+
+- 전용 모듈로 승격했습니다. 흐웨이는 주제(Q/W/E)를 먼저 누르고 다시 Q/W/E를 눌러 시전하는 구조라 실제 시전 가능한 스킬이 10개입니다. 각 스킬은 두 번째 키에 해당하는 물리 슬롯을 사용하므로, 예를 들어 Q-W는 Q로 주제를 연 뒤 W 슬롯을 시전합니다.
+- 주제 전환을 상태 기계로 처리합니다. 전환을 요청한 뒤 해당 물리 슬롯의 실제 스킬 이름이 원하는 스킬로 바뀐 것을 확인하고 나서야 실제 시전을 보냅니다. 확인되지 않으면 아무것도 시전하지 않고, 열린 주제는 최대 유지 시간이 지나면 자동으로 취소합니다.
+- 스킬 열 개에 각각 전용 설정 항목을 두었습니다. Q-Q 견제, Q-W는 시전 후 실제 도달까지 1.5초가 걸리는 만큼 대상이 속박·둔화 상태이거나 예측이 확정될 때만 사용하고 체력 비율 조건과 귀환 중인 적 조건을 제공합니다. Q-E는 거리·다중 적중 조건, E-Q는 콤보와 돌진 대응, E-W는 속박이라 채널 방해에도 사용하며, E-E는 다중 적중 우선과 자동 방해를 제공합니다.
+- W 계열은 아군 전용으로 처리합니다. W-Q 이동 속도 장판은 도주에만, W-W 보호막은 적의 강한 군중 제어나 돌진이 들어올 때와 아군 체력이 낮을 때만, W-E 강화는 지정한 체력·마나 조건에서 사용합니다. 적을 향해 시전하지 않습니다.
+- R는 자동 사용 기본 꺼짐입니다. 켜면 대상이 제어된 상태일 것, 다른 스킬로 처치 가능하면 아낄 것, 지정한 체력 비율 아래에서는 쓰지 않을 것, 다중 대상 조건을 확인합니다.
+- 팜은 Q-E와 W-E로 라인과 정글을 정리하며 각각 최소 마나와 최소 적중 수를 둡니다. 근처에 적 챔피언이 있으면 팜을 멈추는 옵션이 있습니다.
+- 공식 원본을 다시 확인해 두 가지를 바로잡았습니다. R의 지속 피해는 실제로 10/20/30이며, R의 실제 형태는 넓은 원이 아니라 폭 80의 직선으로 적 챔피언에게 처음 맞으면 터집니다. 그래서 팜에는 사용하지 않습니다.
+
+#### Aurora
+
+- 자동 Q1과 E가 이동하는 적에게 허공으로 나가던 문제를 고쳤습니다. 이전에는 예측 지점이 조준선 위에 있기만 하면 발사했는데, 이는 대상이 실제로 그 자리에 있을지와 무관했습니다. 이제 대상이 도착 전에 판정에서 벗어날 수 없거나, 멈춰 있거나, 예측 경로가 확정될 때만 자동으로 발사합니다. 세미키와 도주 사용은 그대로 즉시 발사합니다.
+
+#### Yunara
+
+- 자동 W도 같은 기준으로 고쳤습니다. 멈춰 있거나 직선으로 달려오는 적에게는 그대로 발사하고, 벗어날 수 있는 이동 대상에는 허비하지 않습니다. 도주 W는 예외로 즉시 발사합니다.
+
+### English
+
+#### Supported Champions
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### Core & Menu
+
+- Version: v2.4.0. 173-champion support stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data. Hand-tuned modules grew from 18 to 19 with Hwei; the remaining 154 champions use the shared engine.
+- Added a shared module that puts a real hit test in front of automatic linear casts: they fire only when the target cannot leave the shape before impact, is standing still, or its path is confirmed, while semi keys and flee bypass it. Applied to Aurora and Yunara for now.
+- Added 65 official-number regression contracts, bringing the total to 431, so any drift between the new champion's numbers and the official source fails the check before a build.
+
+#### Hwei
+
+- Promoted to a hand-tuned module. Hwei picks a subject with Q/W/E and then presses Q/W/E again, so he has ten castable spells. Each one uses the physical slot of its second key, so Q-W means opening the subject with Q and then casting the W slot.
+- Subject switching runs as a state machine. After requesting the switch the module waits until that physical slot's live spell name really is the wanted spell before sending the cast. If it cannot be confirmed nothing is cast, and an open subject is cancelled automatically once its maximum hold time passes.
+- All ten spells have their own settings. Q-Q pokes; Q-W takes about 1.5 seconds to land, so it fires only when the target is rooted or slowed or the prediction is confirmed, with health-percentage and recalling-enemy conditions. Q-E has distance and multi-hit conditions, E-Q covers combo and dash responses, E-W is the root and is therefore also used to interrupt channels, and E-E offers multi-target priority and automatic interrupting.
+- The W family is treated as ally-only. W-Q is used for fleeing, W-W shields against incoming heavy crowd control or dashes and for a low-health ally, and W-E is used under the configured health and mana conditions. None of them are aimed at enemies.
+- R ships with automatic use off. When enabled it requires the target to be impaired, holds R when other spells can already kill, skips targets below a configured health percentage, and checks the multi-target condition.
+- Farming clears lanes and camps with Q-E and W-E, each with its own minimum mana and minimum hits, plus an option to stop farming while an enemy champion is nearby.
+- Two corrections came out of re-deriving the official source: R's damage over time is 10/20/30, and R is not a wide circle but an 80-wide line that detonates on the first enemy champion it hits, so it is excluded from farming.
+
+#### Aurora
+
+- Fixed automatic Q1 and E firing into empty air at moving targets. Previously a predicted point merely sitting on the aim line was enough to fire, regardless of whether the target would actually be there. They now fire automatically only when the target cannot leave the hit shape before the shot arrives, is standing still, or the prediction path is confirmed. Semi keys and flee still fire immediately.
+
+#### Yunara
+
+- The automatic W got the same treatment: it still fires at a stationary or straight-line chaser but is no longer wasted on a moving target that can dodge it. Flee W is exempt and fires immediately.
+
+### 简体中文
+
+#### 支持英雄
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### 核心与菜单
+
+- 版本：v2.4.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄。专属模块从 18 个增加到 19 个（新增彗），其余 154 位英雄使用共用引擎。
+- 引入了共用模块，为直线技能的自动施放加入真正的命中判定：只有当目标在弹道到达前无法离开判定、处于静止、或路径已确认时才发射，半手动键与逃跑则绕过。目前应用于奥罗拉与尤娜拉。
+- 新增 65 条官方数值回归约定，总数达到 431 条；新英雄的任何技能数值与官方原始数据不一致，都会在构建前被检查拦下。
+
+#### Hwei
+
+- 升级为专属模块。彗需要先用 Q/W/E 选择主题，再按一次 Q/W/E 才能施放，因此他实际可施放的技能有十个。每个技能使用其第二个按键对应的物理槽位，例如 Q-W 是先用 Q 打开主题，再施放 W 槽位。
+- 主题切换以状态机处理：请求切换后，先确认该物理槽位的实际技能名称已变成目标技能，才发送真正的施法。无法确认时不施放任何技能；已打开的主题在超过最长保持时间后会自动取消。
+- 十个技能各有独立设置。Q-Q 用于消耗；Q-W 从施放到落地约 1.5 秒，因此只在目标被定身或减速、或预测已确认时使用，并提供生命百分比与回城中敌人的条件。Q-E 提供距离与多重命中条件，E-Q 用于连招与反突进，E-W 是定身因此也用于打断引导，E-E 提供多目标优先与自动打断。
+- W 系列按仅对友方处理。W-Q 用于逃跑，W-W 在敌方强控或突进来袭以及友方生命较低时提供护盾，W-E 在设定的生命与法力条件下使用，都不会朝敌人施放。
+- R 默认关闭自动使用。开启后要求目标处于受控状态、其他技能已能击杀时保留、低于设定生命百分比时不使用，并检查多目标条件。
+- 补刀与清野使用 Q-E 与 W-E，各自设有最低法力与最少命中数，并可在附近有敌方英雄时停止补刀。
+- 重新核对官方原始数据后修正了两处：R 的持续伤害实际为 10/20/30；R 并非宽阔的圆形，而是宽度 80 的直线，击中第一名敌方英雄即引爆，因此不用于补刀。
+
+#### Aurora
+
+- 修复了自动 Q1 与 E 对移动目标射向空处的问题。此前只要预测点落在瞄准线上就会发射，而不管目标是否真的会在那里。现在只有当目标在弹道到达前无法离开判定范围、处于静止、或预测路径已确认时才自动发射。半手动键与逃跑仍然立即发射。
+
+#### Yunara
+
+- 自动 W 采用同样的判定：对静止或直线追击的目标照常发射，但不再浪费在能够躲开的移动目标上。逃跑 W 为例外，立即发射。
+<!-- MESH-AIO:RELEASE:v2.4.0:END -->
+
 <!-- MESH-AIO:RELEASE:v2.3.0:START -->
 ## v2.3.0
 
