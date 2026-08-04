@@ -5,6 +5,616 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
+<!-- MESH-AIO:RELEASE:v2.3.0:START -->
+## v2.3.0
+
+### 한국어
+
+#### 지원 챔피언
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### 핵심 및 메뉴
+
+- 버전: v2.3.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원을 유지합니다. 전용 모듈이 16개에서 18개로 늘었고(가렌·오로라 추가) 나머지 155챔피언은 공용 엔진을 사용합니다.
+- 공식 원본의 서로 다른 필드가 같은 스킬의 크기를 다르게 적는 경우를 정리했습니다. 가렌 E는 원본 두 필드가 실제 회전 범위와 무관한 값이라 Data Dragon의 랭크별 사거리를 사용하고, 오로라 E는 실제 피해와 둔화가 적용되는 사각형 폭을 사용합니다. 두 수정 모두 근거를 코드 주석에 남겼습니다.
+- 새 전용 모듈의 공식 수치 회귀 계약을 38개 추가해 총 366개가 되었고, 평타 취소 계약 검사 대상은 9개 스킬로 늘었습니다.
+
+#### Garen
+
+- 전용 모듈로 승격했습니다. Q 결단력의 일격은 공식 평타 초기화 스킬이므로 평타 후딜에 시전하고, 성공한 뒤에만 오브워커 공격 타이머를 초기화합니다. 구조물을 때리는 중에는 초기화 경로를 사용하지 않습니다.
+- Q는 도망치는 대상을 따라잡을 때, 침묵으로 실제로 끊을 수 있는 채널을 방해할 때, 처치가 가능할 때 각각 별도 옵션으로 사용합니다. 침묵은 시전이 아니라 강화된 평타가 적중해야 걸리므로 대상이 평타 사거리 안에 있을 때만 판단합니다.
+- W 용기는 적의 강한 군중 제어나 돌진이 들어올 때, 그리고 지정한 체력 비율 아래에서만 사용합니다.
+- E 심판은 평타 초기화 스킬이 아니므로 자기 평타 시전 동작만 보호하고 공격 타이머는 건드리지 않습니다. 라인 정리에는 최소 적중 수 조건을 둡니다.
+- R 데마시아의 정의는 공식 기본 피해와 잃은 체력 비례 처형 피해를 함께 계산해 실제로 처치 가능할 때 사용합니다.
+- 참고 스크립트와 같이 포탑 아래에서 Q 사용을 허용하는 전용 키를 추가했습니다.
+
+#### Aurora
+
+- 전용 모듈로 승격했습니다. Q는 첫 시전과 재시전을 각각 켜고 끌 수 있고, 적에게 걸린 표식이 곧 사라질 때 재시전을 자동으로 사용하는 옵션과 남은 시간 기준을 제공합니다. 표식이 걸린 대상을 우선 노립니다.
+- W 이동기는 자동 사용이 기본 꺼짐입니다. 도주와 돌진 대응에 사용할 때도 착지 지점이 회피 안전 판정, 적 포탑 구역, 착지 주변 적 수 조건을 모두 통과해야 합니다. 은신 중 평타와 스킬 사용을 막는 옵션과 남은 은신 시간 기준도 제공합니다.
+- E는 사용 시 오로라 자신이 뒤로 밀려나므로 이동기와 같은 착지 안전 검사를 적용합니다. Q가 준비된 동안에는 사용하지 않는 옵션과 평타 사거리 밖에서는 사용하지 않는 옵션이 있습니다.
+- R은 자동 사용 기본 꺼짐이며, 켜면 지정한 최소 적중 인원 조건을 확인합니다.
+- 공식 원본을 다시 확인해 실제 값으로 맞췄습니다. R의 도약 거리는 250, W의 실제 이동 거리는 300이며, 선택 범위와 지대 크기를 이동 거리로 잘못 쓰지 않습니다.
+- 오로라에게는 침묵이나 강한 군중 제어가 없어 채널 방해 기능을 넣지 않았습니다. 끊을 수 없는 채널에 궁극기를 낭비하지 않기 위해서입니다.
+
+### English
+
+#### Supported Champions
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### Core & Menu
+
+- Version: v2.3.0. 173-champion support stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data. Hand-tuned modules grew from 16 to 18 with Garen and Aurora; the remaining 155 champions use the shared engine.
+- Resolved cases where different official fields describe the same spell's size differently. Garen E now uses the Data Dragon per-rank range because both raw fields describe something other than the spin, and Aurora E uses the rectangle width that actually applies its damage and slow. Both corrections carry their evidence in code comments.
+- Added 38 official-number regression contracts for the new modules, bringing the total to 366, and the attack-cancel contract check now covers nine spells.
+
+#### Garen
+
+- Promoted to a hand-tuned module. Decisive Strike is an official attack reset, so it is cast during basic-attack recovery and the orbwalker timer is reset only after a successful cast. The reset path is never used while attacking a structure.
+- Q has separate options for catching a fleeing target, interrupting a channel a silence can genuinely break, and finishing a kill. Because the silence comes from the empowered basic attack rather than the cast, those checks require the target to be inside attack range.
+- Courage is used when heavy enemy crowd control or a dash is incoming, and below a configurable health percentage.
+- Judgment is not an attack reset, so it only protects Garen's own attack windup and never touches the attack timer. Lane clear takes a minimum-minions-hit condition.
+- Demacian Justice combines the official base damage with the missing-health execute component and is used when it genuinely kills.
+- Added the reference script's dedicated key that permits Q use under an enemy turret.
+
+#### Aurora
+
+- Promoted to a hand-tuned module. Q's first cast and its recast have separate switches, plus an option to fire the recast automatically when the enemy's mark is about to expire, with a configurable remaining-time threshold. Marked targets are prioritised.
+- The W dash ships with automatic use off. Even for fleeing and anti-gapclose, the landing must pass the evade safety check, the enemy-turret area rule and the nearby-enemy limit. Options to block auto attacks and spells while stealthed, with a remaining-stealth threshold, are included.
+- E knocks Aurora backwards, so it uses the same landing safety checks as the dash. It also has options to hold it while Q is available and to skip it outside basic-attack range.
+- R ships with automatic use off; when enabled it requires the configured minimum number of enemies hit.
+- Re-checked against the official source and corrected to the real values: R's jump distance is 250 and W's actual travel is 300, so the selection range and the zone size are no longer mistaken for travel distance.
+- Aurora has no silence and no heavy crowd control, so no channel-interrupt feature was added. That avoids throwing an ultimate at channels it cannot break.
+
+### 简体中文
+
+#### 支持英雄
+
+- Annie
+- Olaf
+- Galio
+- TwistedFate
+- XinZhao
+- Urgot
+- Leblanc
+- Vladimir
+- Fiddlesticks
+- Kayle
+- MasterYi
+- Alistar
+- Ryze
+- Sion
+- Sivir
+- Soraka
+- Teemo
+- Tristana
+- Warwick
+- Nunu
+- MissFortune
+- Ashe
+- Tryndamere
+- Jax
+- Morgana
+- Zilean
+- Singed
+- Evelynn
+- Twitch
+- Karthus
+- Chogath
+- Amumu
+- Rammus
+- Anivia
+- Shaco
+- DrMundo
+- Sona
+- Kassadin
+- Irelia
+- Janna
+- Gangplank
+- Corki
+- Karma
+- Taric
+- Veigar
+- Trundle
+- Swain
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Katarina
+- Nocturne
+- Maokai
+- Renekton
+- JarvanIV
+- Elise
+- Orianna
+- MonkeyKing
+- Brand
+- LeeSin
+- Vayne
+- Rumble
+- Cassiopeia
+- Skarner
+- Heimerdinger
+- Nasus
+- Nidalee
+- Udyr
+- Poppy
+- Gragas
+- Pantheon
+- Ezreal
+- Mordekaiser
+- Yorick
+- Akali
+- Kennen
+- Garen
+- Leona
+- Malzahar
+- Talon
+- Riven
+- KogMaw
+- Shen
+- Lux
+- Xerath
+- Shyvana
+- Ahri
+- Graves
+- Fizz
+- Volibear
+- Rengar
+- Varus
+- Nautilus
+- Viktor
+- Sejuani
+- Fiora
+- Ziggs
+- Lulu
+- Draven
+- Hecarim
+- Khazix
+- Darius
+- Jayce
+- Lissandra
+- Diana
+- Quinn
+- Syndra
+- AurelionSol
+- Kayn
+- Zoe
+- Zyra
+- Kaisa
+- Seraphine
+- Gnar
+- Zac
+- Yasuo
+- Velkoz
+- Taliyah
+- Camille
+- Akshan
+- Belveth
+- Braum
+- Jhin
+- Kindred
+- Zeri
+- Jinx
+- TahmKench
+- Briar
+- Viego
+- Senna
+- Lucian
+- Zed
+- Kled
+- Ekko
+- Qiyana
+- Vi
+- Aatrox
+- Nami
+- Azir
+- Yuumi
+- Samira
+- Thresh
+- Illaoi
+- RekSai
+- Ivern
+- Kalista
+- Bard
+- Rakan
+- Xayah
+- Ornn
+- Sylas
+- Neeko
+- Aphelios
+- Rell
+- Pyke
+- Vex
+- Yone
+- Ambessa
+- Mel
+- Yunara
+- Locke
+- Sett
+- Lillia
+- Gwen
+- Renata
+- Aurora
+- Nilah
+- KSante
+- Smolder
+- Milio
+- Zaahen
+- Hwei
+- Naafiri
+
+#### 核心与菜单
+
+- 版本：v2.3.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄。专属模块从 16 个增加到 18 个（新增盖伦、奥罗拉），其余 155 位英雄使用共用引擎。
+- 整理了官方原始数据中不同字段对同一技能尺寸描述不一致的情况。盖伦 E 改用 Data Dragon 的分等级距离，因为两个原始字段描述的都不是旋转本身；奥罗拉 E 改用真正造成伤害与减速的矩形宽度。两处修正都在代码注释中保留了依据。
+- 为新模块增加了 38 条官方数值回归约定，总数达到 366 条；平A取消约定检查覆盖的技能增加到 9 个。
+
+#### Garen
+
+- 升级为专属模块。致命打击是官方普攻重置技能，因此在普攻后摇中施放，并且只有成功施放后才重置走砍计时器。攻击建筑时不会使用重置路径。
+- Q 分别提供追击逃跑目标、打断沉默确实能中断的引导、以及完成击杀这三个独立选项。由于沉默来自强化后的普攻而非施法本身，这些判断都要求目标处于普攻距离之内。
+- 勇气在敌方强控或突进来袭时使用，并可设定在生命百分比低于阈值时使用。
+- 审判不是普攻重置技能，因此只保护盖伦自己的普攻前摇，绝不改动攻击计时器。清线设有最少命中小兵数条件。
+- 德玛西亚正义结合官方基础伤害与按已损失生命计算的处决部分，只在确实能击杀时使用。
+- 新增参考脚本中允许在敌方防御塔下使用 Q 的专用按键。
+
+#### Aurora
+
+- 升级为专属模块。Q 的首次施放与再次施放各自独立开关，并提供在敌人身上的标记即将消失时自动再次施放的选项与剩余时间阈值。会优先选择带有标记的目标。
+- W 位移默认关闭自动使用。即使用于逃跑与反突进，落点也必须通过闪避安全判定、敌方防御塔区域规则与周围敌人数量限制。同时提供隐身期间封锁普攻与技能的选项及剩余隐身时间阈值。
+- E 会把奥罗拉向后击退，因此采用与位移相同的落点安全检查。另有在 Q 可用时暂不使用、以及在普攻距离之外不使用的选项。
+- R 默认关闭自动使用；开启后会检查设定的最少命中人数条件。
+- 重新核对官方原始数据并修正为真实数值：R 的跳跃距离为 250，W 的实际位移为 300，不再把选择范围与区域大小误当作位移距离。
+- 奥罗拉没有沉默也没有强控，因此没有加入引导打断功能，以免把大招浪费在无法打断的引导上。
+<!-- MESH-AIO:RELEASE:v2.3.0:END -->
+
 <!-- MESH-AIO:RELEASE:v2.2.0:START -->
 ## v2.2.0
 
