@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.19.0:START -->
-## v2.19.0
+<!-- MESH-AIO:RELEASE:v2.20.0:START -->
+## v2.20.0
 
 ### 한국어
 
@@ -49,21 +49,25 @@
 
 #### 핵심 및 메뉴
 
-- 버전: v2.19.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원을 유지하며, 전용 모듈이 27개(공용 146)로 늘었습니다.
-- Jinx가 27번째 전용 모듈로 승격되었습니다. 공식 16.15 원본 수치 21개 항목이 자동 회귀 검사에 고정되었습니다.
-- 릴리즈 노트의 지원 챔피언 목록이 직접 제작한 전용 모듈만 나열하도록 바뀌었습니다(어떤 챔피언이 수제작인지 한눈에 보이도록). 나머지 챔피언의 공용 엔진 지원은 그대로입니다.
+- 버전: v2.20.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원과 전용 27/공용 146 구조를 유지합니다.
+- 이번 릴리즈는 실전 로그로 확인된 전용 모듈 3종(칼리스타·아리·제라스)의 사용자 동작 수정과 표시 기능 추가가 중심입니다.
+- 스킬-플래시 연계(로크 Q플 계열)의 콜백 순서 표준이 확정되었습니다: 플래시 예약을 시전 이전에 등록해야 동기 콜백에서도 연계가 발동합니다. 아리·제라스가 이 표준으로 정렬되었습니다.
 
-#### Jinx
+#### Kalista
 
-- 신규 전용 모듈: **거리 기반 Q 폼 전환이 핵심**입니다. 미니건이 닿는 대상은 미니건(최대 DPS·공속 스택), 미니건 밖·로켓 사거리(기본 525+랭크별 100~200) 안 대상은 로켓으로 자동 전환합니다. 전환은 0.4초 스로틀과 평타 윈드업 보호를 지킵니다.
-- 팜 폼 관리: 웨이브가 미니건 안이면 미니건 유지, 로켓으로만 닿는 막타/스플래시(250, 최소 명중 슬라이더) 상황에서만 마나 게이트 하에 로켓. 전투 대상이 없으면 미니건 복귀(패시브 절약).
-- W(1450, 첫 유닛 정지)는 평타가 닿는 대상에게 쓰지 않는 옵션(기본 켜짐)과 함께 콤보/견제/킬스틸/스테이시스 저격을 담당합니다. 수동 W는 T.
-- E 와작와작 덫은 반응 전용입니다: 나에게 착지하는 돌진 길목, 하드 CC 대상, 채널링 인터럽트, Flee 추격 저지. 수동 E는 G.
-- R는 글로벌 처형입니다: 사거리 슬라이더(기본 2300) 안에서 거리 램프(바닥→최대)+잃은 체력 비례를 정직하게 계산해 처치 확정일 때만 발사합니다. 수동 R는 Space.
+- Q 벽넘기 키가 X에서 프로젝트 표준 월점프 키 X1MB로 이동했습니다(콤보 계열 키와의 충돌 제거).
+- Flee(Z) 도주 중 도주 경로에 넘을 수 있는 벽이 있으면 자동으로 Q 홉으로 넘어갑니다. 벽 착지점 표시는 벽넘기 키뿐 아니라 Flee 중에도 그려집니다.
+- E(파열) 예상 피해를 대상 위에 퍼센트로 표시하는 옵션이 추가되었습니다(Drawings > Rend damage percent, 기본 켜짐). 챔피언은 실드 포함 체력 대비, 정글 몬스터도 전부 표시하며 처치 가능(100% 이상)이면 빨간색으로 바뀝니다. 처치 가능 원 표시도 정글 몬스터(바론/드래곤 E 스틸 판단)까지 확장되었습니다.
 
-#### Soraka
+#### Ahri
 
-- 칼바람 실전 피드백: 자동 R가 체력 조건만으로 나가지 않도록, R를 받을 아군이 **전투 중일 때만**(최근 2.5초 내 피해를 입었거나 주변 900 안에 적 챔피언) 발동하는 게이트를 추가했습니다(기본 켜짐, 끌 수 있음).
+- E-플래시(A)가 원거리 대상에게 E만 발사하고 플래시가 따라붙지 않던 문제를 수정했습니다. 플래시 예약이 시전 이후에 등록되어 동기 콜백이 빈손으로 돌던 순서 버그로, 이제 E 윈드업 중 플래시가 정상 연계됩니다.
+- R 진입(콤보 옵션)이 켜져 있어도 발동하지 않던 문제를 수정했습니다. 충전 수 판독이 실패하면 "마지막 대시 보존" 기본 옵션이 모든 진입을 차단했는데, 공식 15초 3회 재시전 창을 자체 추적해 첫 R가 준비된 상태를 3충전으로 올바르게 인식합니다.
+- 도주 W(Use in Flee)가 적 근접(900) 조건 없이, 옵션이 켜져 있고 Z를 누르면 준비 즉시 시전됩니다(감쇠 이속을 도주 시작부터 활용).
+
+#### Xerath
+
+- E-플래시(G)에 아리와 동일한 콜백 순서 버그가 잠복해 있어 같은 방식으로 수정했습니다. 윈드업 중 플래시 연계가 코드 경로상 복구되었습니다.
 
 ### English
 
@@ -101,21 +105,25 @@ All 173 champions are supported on the official 16.15 data. The list below is th
 
 #### Core & Menu
 
-- Version: v2.19.0. 173-champion support stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data; hand-tuned modules grow to 27 (shared-engine 146).
-- Jinx is promoted to the 27th dedicated module. 21 official 16.15 raw values are pinned into the automated regression checks.
-- The Supported-Champions list in these notes now names only the hand-tuned dedicated modules, so it is obvious which champions are hand-made; shared-engine coverage for everyone else is unchanged.
+- Version: v2.20.0. 173-champion support stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data, with the 27 dedicated / 146 shared-engine split unchanged.
+- This release focuses on user-visible behavior fixes and new displays for three dedicated modules (Kalista, Ahri, Xerath), all confirmed from live game logs.
+- The spell-into-Flash callback ordering standard (the Locke Q-Flash family) is now settled: the Flash reservation must be registered BEFORE the cast so a synchronous callback still fires the link. Ahri and Xerath are aligned to it.
 
-#### Jinx
+#### Kalista
 
-- New dedicated module where the **distance-based Q form switch is the core**: minigun on anything the minigun reaches (max DPS, attack-speed stacks), rockets only for targets between minigun reach and the rocket range (base 525 + rank 100..200), throttled and windup-protected.
-- Farm form management: stay on the minigun while the wave is in minigun reach; rockets only for last hits or splash clears (official 250, minimum-hits slider) beyond it, behind a mana gate; return to minigun when idle.
-- W (1450, stops on the first unit) covers combo/harass/killsteal/stasis snipes with an option (default on) to never W a target the basic attack reaches. Manual W on T.
-- The E chompers are reactive only: the landing of a dash onto Jinx, hard-CCed targets, channel interrupts, and Flee peel. Manual E on G.
-- R is the global execute: inside the range slider (2300 default) it computes the distance ramp (floor to max) plus the missing-health payout honestly and fires only on a confirmed kill. Manual R on Space.
+- The Q wall-hop key moved from X to the project-standard wall-jump key X1MB (removes the collision with combo-family keys).
+- While fleeing (Z), a hoppable wall on the escape path now triggers the Q hop automatically; the wall landing marker draws during Flee as well as on the wall key.
+- New display: Rend (E) damage as a percent over each target (Drawings > Rend damage percent, default on). Champions are measured against health plus shields, jungle monsters are all covered, and the text turns red once lethal (100%+). The killable circle also extends to jungle monsters (Baron/Dragon E steals at a glance).
 
-#### Soraka
+#### Ahri
 
-- ARAM field feedback: automatic R no longer fires on the HP condition alone - the ally receiving it must be IN COMBAT (damaged within the last 2.5 s or an enemy champion within 900), default on and toggleable.
+- Fixed E-Flash (A) firing only the E at faraway targets with no Flash following: the Flash reservation was registered after the cast, so a synchronous callback found nothing pending. The Flash now links during the E wind-up.
+- Fixed R engage never firing with the combo option on: when the charge count could not be read, the default "never spend the final dash" option blocked every engage. The official 15-second three-recast window is now self-tracked, so a fresh R correctly reads as three charges.
+- Flee W (Use in Flee) now casts the moment W is ready while Z is held with the option on - the enemy-within-900 gate is gone, so the decaying haste starts with the escape.
+
+#### Xerath
+
+- E-Flash (G) carried the same latent callback-ordering bug as Ahri and received the same fix; the Flash link during the E wind-up is restored on the code path.
 
 ### 简体中文
 
@@ -153,27 +161,32 @@ All 173 champions are supported on the official 16.15 data. The list below is th
 
 #### 核心与菜单
 
-- 版本：v2.19.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄；专属模块增至 27 个（共用引擎 146 个）。
-- 金克丝晋升为第 27 个专属模块，21 项官方 16.15 原始数值已固定进自动回归检查。
-- 更新说明中的支持英雄列表现在只列出手工制作的专属模块，一眼可见哪些英雄是手工打造；其余英雄的共用引擎支持不变。
+- 版本：v2.20.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄，专属 27 / 共用引擎 146 的结构不变。
+- 本次更新聚焦三个专属模块（复仇之矛、九尾妖狐、远古巫灵）经实战日志确认的用户可见行为修复与新显示功能。
+- 技能接闪现（洛克 Q 闪系列）的回调顺序标准已确定：闪现预约必须在施放之前登记，同步回调才能触发衔接。九尾妖狐与远古巫灵已按此标准对齐。
 
-#### Jinx
+#### Kalista
 
-- 新专属模块，**按距离切换 Q 形态是核心**：机枪够得着的目标用机枪（最大 DPS、攻速叠层），仅在机枪射程外、火箭射程（基础 525 + 每级 100~200）内的目标切换火箭；切换有 0.4 秒节流并保护普攻前摇。
-- 清线形态管理：兵线在机枪范围内保持机枪；只有火箭才够得着的补刀/溅射清线（官方 250，最少命中滑条）才在蓝量门槛下切火箭；空闲时切回机枪。
-- W（1450，命中第一个单位即停）负责连招/骚扰/抢头/凝滞狙击，并有默认开启的"普攻可及目标不放 W"选项。手动 W 为 T。
-- E 火焰咀嚼者仅作反应使用：扑向金克丝的突进落点、硬控目标、打断引导、Flee 反追。手动 E 为 G。
-- R 是全图处决：在射程滑条（默认 2300）内诚实计算距离斜坡（下限到上限）加已损生命加成，仅在确定击杀时发射。手动 R 为空格。
+- Q 翻墙键从 X 移至项目标准跳墙键 X1MB（消除与连招系键位的冲突）。
+- Flee（Z）逃跑时，逃跑路径上有可翻越的墙会自动用 Q 跳跃翻越；墙体落点标记在 Flee 期间与翻墙键期间都会绘制。
+- 新增显示：在目标上方以百分比显示 E（撕裂）预计伤害（Drawings > Rend damage percent，默认开启）。英雄按含护盾生命计算，野怪全部覆盖，可击杀（100% 以上）时文字变红；可击杀圆圈也扩展到野怪（男爵/巨龙 E 抢夺一目了然）。
 
-#### Soraka
+#### Ahri
 
-- 大乱斗实战反馈：自动 R 不再仅凭血量条件释放——接受 R 的队友必须**处于战斗中**（最近 2.5 秒内受到伤害，或 900 范围内有敌方英雄），默认开启且可关闭。
-<!-- MESH-AIO:RELEASE:v2.19.0:END -->
+- 修复 E 闪（A）对远处目标只发 E、闪现不跟随的问题：闪现预约登记在施放之后，同步回调扑空。现在 E 前摇期间闪现正常衔接。
+- 修复开启连招选项后 R 仍不进场的问题：充能数读取失败时，默认的"保留最后一段位移"选项会拦截所有进场。现改为自行跟踪官方 15 秒三段重施窗口，新 R 就绪时正确识别为三充能。
+- 逃跑 W（Use in Flee）不再要求 900 范围内有敌人——选项开启且按住 Z 时，W 就绪即刻施放（衰减加速从逃跑开始就生效）。
+
+#### Xerath
+
+- E 闪（G）潜伏着与九尾妖狐相同的回调顺序问题，已用同样方式修复；E 前摇期间的闪现衔接在代码路径上恢复。
+<!-- MESH-AIO:RELEASE:v2.20.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.19.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.19.0)
 - [v2.18.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.18.0)
 - [v2.17.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.17.1)
 - [v2.17.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.17.0)
