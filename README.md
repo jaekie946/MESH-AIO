@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.21.2:START -->
-## v2.21.2
+<!-- MESH-AIO:RELEASE:v2.21.3:START -->
+## v2.21.3
 
 ### 한국어
 
@@ -50,12 +50,17 @@
 
 #### 핵심 및 메뉴
 
-- 버전: v2.21.2. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준 173챔피언 지원에서 전용 모듈이 28개(공용 145)로 늘었습니다.
-- 이번 패치는 베인 Q(구르기) 방향 계약 수정입니다: 벽 방향 구르기는 이미 벽에 붙어 이동이 없는 평타-리셋 롤일 때만 허용하고, 실제 이동이 있는 벽행 롤은 전부 금지합니다.
+- 버전: v2.21.3. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준 173챔피언 지원에서 전용 모듈이 28개(공용 145)로 늘었습니다.
+- 전용 모듈 전수 점검 패치입니다: 신규 트리스타나 모듈의 API 사용을 프로젝트 표준에 맞추고, 갱플랭크 연쇄 큐의 교착 한 건을 제거했습니다.
 
-#### Vayne
+#### Tristana
 
-- Q 구르기가 자꾸 벽 방향으로 나가던 문제를 수정했습니다: 요청 종점이 지형 안이면서 실제 이동이 남는 롤은 전부 기각합니다. 벽에 완전히 붙어 이동 0으로 끝나는 평타-리셋 롤만 벽 방향 시전이 허용되며, 그 외에는 부채꼴 후보에서 열린 방향을 선택합니다.
+- R 안티-갭클로즈가 돌진 착지점을 프로젝트 표준(`path.endPos` + z/y 폴백)으로 읽도록 수정했습니다. 기존 `path.point2D` 인덱싱은 미검증 필드라 착지 판정이 무력화될 수 있었습니다.
+- E 부착 폭탄 추적을 객체 동일성 비교에서 networkID 비교(프로젝트 표준)로 바꿨습니다. 스택 카운트가 대상 오브젝트 재생성에도 안전해집니다.
+
+#### Gangplank
+
+- E-Q-E 후속 통 큐가 충전 0 상태를 만나면 즉시 해제되도록 수정했습니다. 기존에는 6초 타임아웃까지 매 틱 다른 모든 행동(W 정화/힐 포함)을 막았습니다.
 
 ### English
 
@@ -94,12 +99,17 @@ All 173 champions are supported on the official 16.15 data. The list below is th
 
 #### Core & Menu
 
-- Version: v2.21.2. On Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data, the dedicated modules grow to 28 (shared-engine 145) out of the 173 supported champions.
-- This patch fixes the Vayne Q (Tumble) direction contract: rolling at a wall is allowed only as the zero-travel attack-reset roll while already flush against it; every wall-bound roll with real displacement is rejected.
+- Version: v2.21.3. On Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data, the dedicated modules grow to 28 (shared-engine 145) out of the 173 supported champions.
+- A full dedicated-module audit patch: the new Tristana module is aligned to the project-standard API usage, and one deadlock in the Gangplank chain queue is removed.
 
-#### Vayne
+#### Tristana
 
-- Fixed Q constantly rolling toward walls: any roll whose requested endpoint sits inside terrain while still displacing her is rejected. Aiming at a wall is only allowed as the zero-travel attack-reset roll while already flush against it; otherwise the candidate fan picks an open direction.
+- R anti-gapclose now reads the dash landing with the project-standard `path.endPos` (z/y fallback). The previous `path.point2D` indexing is an unverified field and could nullify the landing check.
+- E attached-bomb tracking switched from object identity to networkID comparison (project standard), making the stack count safe across target object recreation.
+
+#### Gangplank
+
+- The E-Q-E follow-up keg queue now releases immediately when charges hit zero. Previously it held every other action (including W cleanse/heal) each tick until the 6 s timeout.
 
 ### 简体中文
 
@@ -138,18 +148,24 @@ All 173 champions are supported on the official 16.15 data. The list below is th
 
 #### 核心与菜单
 
-- 版本：v2.21.2。基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄，专属模块增至 28 个（共用引擎 145 个）。
-- 本补丁修正暗夜猎手 Q（翻滚）方向契约：只有已经贴墙、零位移的普攻重置翻滚才允许朝墙释放；任何有实际位移的朝墙翻滚一律拒绝。
+- 版本：v2.21.3。基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄，专属模块增至 28 个（共用引擎 145 个）。
+- 本补丁为专属模块全面审查：新麦林炮手模块的 API 用法对齐项目标准，并移除火药桶连锁队列中的一处死锁。
 
-#### Vayne
+#### Tristana
 
-- 修复 Q 总是朝墙翻滚的问题：请求终点位于地形内且仍有位移的翻滚一律拒绝。只有已经贴墙、零位移的普攻重置翻滚才允许朝墙释放，否则从扇形候选中选择开阔方向。
-<!-- MESH-AIO:RELEASE:v2.21.2:END -->
+- R 反突进改用项目标准的 `path.endPos`（z/y 回退）读取冲刺落点。旧的 `path.point2D` 索引是未验证字段，可能使落点判定失效。
+- E 附着炸弹跟踪从对象同一性比较改为 networkID 比较（项目标准），层数统计对目标对象重建保持安全。
+
+#### Gangplank
+
+- E-Q-E 后续桶队列在充能为 0 时立即解除。旧逻辑会在 6 秒超时前每帧阻塞其他所有动作（包括 W 净化/回血）。
+<!-- MESH-AIO:RELEASE:v2.21.3:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.21.2](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.21.2)
 - [v2.21.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.21.1)
 - [v2.20.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.20.0)
 - [v2.19.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.19.0)
