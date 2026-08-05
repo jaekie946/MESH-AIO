@@ -4,6 +4,11 @@
 
 # MESH-AIO Update History
 
+## 다운로드 / Download / 下载
+
+- **[mesh.shard 최신 버전 바로 받기 / Direct download / 直接下载](https://github.com/jaekie946/MESH-AIO/releases/latest/download/mesh.shard)**
+- [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
+
 <!-- MESH-AIO:UPDATES:START -->
 <!-- MESH-AIO:RELEASE:v2.15.0:START -->
 ## v2.15.0
