@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.17.0:START -->
-## v2.17.0
+<!-- MESH-AIO:RELEASE:v2.17.1:START -->
+## v2.17.1
 
 ### 한국어
 
@@ -199,9 +199,10 @@
 
 #### 핵심 및 메뉴
 
-- 버전: v2.17.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언(전용 25, 공용 148) 지원을 유지합니다.
+- 버전: v2.17.1. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언(전용 25, 공용 148) 지원을 유지합니다.
 - **모드 밸런스 보정이 전 전용 챔피언 실시간 피해 계산에 들어갔습니다.** 칼바람 나락의 챔피언별 가하는/받는 피해 보정(130챔피언 분)을 새 공용 모듈 `modebalance`가 게임 모드를 감지해 모든 전용 모듈(25개)의 킬스틸·처치 확정·막타·처치 가능 표시 계산에 자동 반영합니다. 예: 칼바람 Kalista는 가하는 피해 +10%/받는 피해 -10%로 계산됩니다.
-- 협곡(클래식)은 보정 없음(×1.0)이며, 모드 판정이 불확실하면 항상 클래식으로 안전하게 처리합니다. 아레나/URF의 전역 보정은 구조화된 데이터가 확보되는 대로 이어집니다.
+- **아레나 시스템 보정 추가**: 인게임 "아레나 능력치 조정" 규칙에 따라 아레나에서 원거리 챔피언을 때리는 피해는 ×0.85(피해량 감소 15%)로 계산합니다. 체력/방어력/마저 보너스는 라이브 스탯으로 자동 반영됩니다.
+- 협곡(클래식)은 보정 없음(×1.0)이며, 모드 판정이 불확실하면 항상 클래식으로 안전하게 처리합니다. 아레나 챔피언별 개별 보정과 URF 전역 보정은 구조화된 데이터가 확보되는 대로 이어집니다.
 
 #### Kalista
 
@@ -392,9 +393,10 @@
 
 #### Core & Menu
 
-- Version: v2.17.0. 173-champion support (25 hand-tuned, 148 shared-engine) stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data.
+- Version: v2.17.1. 173-champion support (25 hand-tuned, 148 shared-engine) stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data.
 - **Mode-balance corrections now live inside every real-time damage calculation.** The new shared `modebalance` module detects the game mode and folds the ARAM per-champion damage-dealt/damage-taken tuning (130 champions) into every dedicated module's killsteal, execute, last-hit, and killable-indicator math automatically. Example: ARAM Kalista computes with +10% damage dealt / -10% damage taken.
-- Summoner's Rift (classic) stays uncorrected (x1.0), and an uncertain mode reading always resolves safely to classic. Arena/URF global tuning follows once structured data is available.
+- **Arena systemic correction added**: per the in-game "Arena stat adjustment" rules, damage onto RANGED champions in Arena now computes at x0.85 (their 15% damage reduction). The HP/armor/MR bonuses need no correction - they are read from live stats.
+- Summoner's Rift (classic) stays uncorrected (x1.0), and an uncertain mode reading always resolves safely to classic. Arena per-champion tuning and URF global tuning follow once structured data is available.
 
 #### Kalista
 
@@ -585,19 +587,21 @@
 
 #### 核心与菜单
 
-- 版本：v2.17.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄（专属 25、共用引擎 148）。
+- 版本：v2.17.1。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄（专属 25、共用引擎 148）。
 - **模式平衡修正已进入所有实时伤害计算。** 新共用模块 `modebalance` 检测当前游戏模式，把极地大乱斗的英雄造成/承受伤害修正（130 位英雄）自动纳入全部 25 个专属模块的抢头、处决、补刀与可击杀指示计算。例如：大乱斗中的卡莉丝塔按造成伤害 +10%/承受伤害 -10% 计算。
-- 召唤师峡谷（经典）不做修正（×1.0），模式判定不确定时始终安全地按经典处理。竞技场/无限火力的全局修正将在获得结构化数据后跟进。
+- **新增竞技场系统修正**：依据游戏内"竞技场属性调整"规则，竞技场中打向远程英雄的伤害按 ×0.85 计算（其 15% 减伤）。生命/护甲/魔抗加成从实时属性读取，无需额外修正。
+- 召唤师峡谷（经典）不做修正（×1.0），模式判定不确定时始终安全地按经典处理。竞技场英雄个体修正与无限火力全局修正将在获得结构化数据后跟进。
 
 #### Kalista
 
 - 新标准的代表案例：她在大乱斗中的 E 处决与 Q 补刀计算现在包含 +10% 造成伤害修正。
-<!-- MESH-AIO:RELEASE:v2.17.0:END -->
+<!-- MESH-AIO:RELEASE:v2.17.1:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.17.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.17.0)
 - [v2.16.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.16.0)
 - [v2.15.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.15.0)
 - [v2.14.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.14.0)
