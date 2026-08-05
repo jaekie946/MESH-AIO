@@ -5,8 +5,8 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.10.6:START -->
-## v2.10.6
+<!-- MESH-AIO:RELEASE:v2.11.0:START -->
+## v2.11.0
 
 ### 한국어
 
@@ -194,8 +194,12 @@
 
 #### 핵심 및 메뉴
 
-- 버전: v2.10.6. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언(전용 22, 공용 151) 지원을 그대로 유지합니다.
+- 버전: v2.11.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언(전용 22, 공용 151) 지원을 그대로 유지합니다.
 - 갱플랭크 첫 인게임 실측(F12) 피드백을 반영한 수정 릴리즈입니다.
+
+#### Orianna
+
+- 프레임 드랍을 개선했습니다: 상태줄 문자열과 글자 폭을 매 프레임 새로 만들던 것을 값이 바뀔 때만 갱신하도록 캐시하고, 처치 가능 판정을 초당 5회로 제한했으며, 공 주변 W/R 원과 사거리 원의 그리기 세그먼트를 줄였습니다. 표시 내용은 동일합니다.
 
 #### Gangplank
 
@@ -211,7 +215,11 @@
 - 세미 통(X1MB)이 이제 안정적으로 격발합니다: 수동 키는 명시적 의도이므로 준비된 통이면 주변 적 여부와 무관하게 즉시 터뜨립니다.
 - E-Q-E(G)의 간헐 동작 두 가지를 고쳤습니다: Q가 쿨다운이어도 첫 통을 미리 깔고(대기 중 Q가 돌아옴), Q 격발과 같은 틱에 나가는 두 번째 통이 내부 틱 가드에 먹혀 무작위로 빠지던 문제를 직접 시전으로 해결했습니다.
 - E-Q-E(G)는 거리 적응형이 되었습니다: 대상이 E-Q-E 사거리면 두 통으로, 그보다 멀고 충전이 3개 있으면 자동으로 E-Q-E-E 세 통 체인으로 실행합니다. 첫 통은 항상 연결 거리의 정수 배만큼 대상 뒤에 깔려 마지막 통이 대상 정중앙에 떨어지고, 세 번째 통은 공식 0.5초 설치 간격에 맞춰 키를 떼도 자동으로 이어집니다.
+- 전 챔피언 스탯 판독을 감사해 표준화했습니다: 총 AD·AP·보너스 AD를 문서화된 필드에서 우선 읽습니다. 수동 합성으로 아이템 스탯이 빠지던 모듈(아칼리·키아나·렝가·탈론·티모·갱플랭크)을 모두 수정해 피해 과소평가로 인한 막타·킬 판정 누락을 없앴고, 새 챔피언 제작 가이드에 표준으로 등재했습니다.
+- 전 챔피언 드로우 성능 표준을 도입했습니다: 공용 캐시 모듈이 상태줄 문자열·글자 폭을 메모화하고, 원 그리기 세그먼트에 상한을 두었으며, 22개 전용 모듈과 공용 엔진(151챔피언) 전체에 일괄 적용했습니다. 매 프레임 문자열 생성이 유발하던 주기적 프레임 드랍이 사라집니다.
 - 배포 페이지를 정리했습니다: 릴리즈 본문과 업데이트 히스토리의 지원 챔피언 173명 목록이 접힌 상태로 표시되고, 공개 README 첫 페이지는 최신 버전 전문만 보여주며 이전 버전들은 각 Release 링크 목록으로 압축됩니다.
+- Q 피해 계산을 바로잡았습니다: 총 공격력을 표준 필드로 읽어 아이템 공격력이 빠지던 과소평가를 없앴고, 치명타 확률이 사실상 확정(87.5% 초과)일 때는 치명타 배수까지 반영합니다. 이제 Q가 충분히 처치 가능한 미니언·몬스터 막타를 놓치지 않습니다.
+- 원거리 오프너 통은 사슬을 완성할 충전이 실제로 있을 때만 깝니다: 충전 1개로 먼 곳에 깔린 통이 영영 연계되지 못하던 낭비를 막았습니다(E-Q-E는 2개, E-Q-E-E는 3개 필요).
 - 사슬 연계가 한 번 어긋난 뒤 조용히 영영 멈추던 문제를 고쳤습니다: 내부 연계 상태가 키를 떼거나 콜백이 누락되면 지워지지 않아 이후 모든 변환을 차단했습니다. 이제 6초 강제 만료와, 격발 후 0.15초 안에 콜백이 없으면 후속 통을 직접 이어가는 폴백이 있습니다.
 - 격발 방식을 예측 리드에서 관측 기반으로 바꿨습니다(정확함 우선): Q는 통 체력이 실제로 1로 관측된 뒤에만 나가며, 슬라이더는 그 위에 추가 지연을 얹습니다. 미리 쏘다 통만 깎던 실수가 사라집니다.
 - E-Q-E(G)가 기존 화약통을 활용합니다: Q 격발 사거리 안의 통이 대상까지의 연결 창에 맞으면 새 통을 깔지 않고 그 통을 앵커로 채택해 바로 격발 대기에 들어갑니다(세미 통 키와 동일한 원칙). 이미 대상을 덮는 통이면 격발만 하고 후속 통도 아낍니다.
@@ -411,8 +419,12 @@
 
 #### Core & Menu
 
-- Version: v2.10.6. 173-champion support (22 hand-tuned, 151 shared-engine) stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data.
+- Version: v2.11.0. 173-champion support (22 hand-tuned, 151 shared-engine) stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data.
 - A fix release from Gangplank's first in-game F12 feedback.
+
+#### Orianna
+
+- Improved frame drops: status-line strings and text widths are now cached and rebuilt only when a value changes, the killable check runs five times per second instead of every frame, and the W/R circles around the ball plus the range circles use fewer draw segments. What is shown is unchanged.
 
 #### Gangplank
 
@@ -428,7 +440,11 @@
 - The semi barrel (X1MB) now detonates reliably: a held manual key is explicit intent, so any ready keg is blown regardless of nearby enemies.
 - Two intermittent E-Q-E (G) issues are fixed: the first keg now drops even while Q is cooling (Q returns during the decay wait), and the second keg no longer randomly disappears when it left on the same tick as the Q - it is cast directly past the per-tick guard.
 - E-Q-E (G) is now distance-adaptive: inside E-Q-E reach it plays two kegs, and beyond that - with three charges banked - it automatically runs the three-keg E-Q-E-E chain. The first keg always sits a whole number of links short of the target so the LAST keg lands exactly on them, and the third keg follows on the official 0.5-second between-barrels clock even if the key is released.
+- Audited and standardized stat reads across every champion: total AD, AP, and bonus AD now read the documented fields first. Modules whose hand-composed math dropped item stats (Akali, Qiyana, Rengar, Talon, Teemo, Gangplank) are all fixed, removing missed last hits and kill checks from under-estimated damage, and the rule is recorded in the champion-building guide.
+- Introduced a draw-performance standard for every champion: a shared cache module memoizes status-line strings and text widths, circle segment counts are capped, and the change is applied across all 22 dedicated modules and the shared engine covering the other 151 champions. The periodic frame drops caused by per-frame string building are gone.
 - Cleaned up the distribution pages: the 173-champion support list is now collapsed in release notes and the update history, and the public README front page shows only the latest version in full with older versions compacted to a list of release links.
+- Fixed the Q damage calculation: total attack damage now reads the standard field (item AD was being dropped), and a practically guaranteed crit (above 87.5%) applies the crit multiplier. Q no longer skips minions and monsters it can clearly execute.
+- A far opener keg is only placed when the charges to finish the chain are actually banked: one banked charge used to strand a far keg that could never connect (E-Q-E needs two, E-Q-E-E needs three).
 - Fixed chain plays silently stopping forever after one miss: the internal play state was never cleared when the key was released or a callback went missing, vetoing every later conversion. It now hard-expires after 6 seconds, and a 0.15-second fired-timeout places the follow-up keg directly when the callback never arrives.
 - Detonation switched from predictive lead to observation (accuracy first): the Q only goes after the keg's health is actually SEEN at 1, with the slider adding delay on top. The early shots that merely shaved kegs are gone.
 - E-Q-E (G) now uses existing kegs: a live keg inside Q-trigger reach whose distance to the target fits a links window is adopted as the anchor with no new placement at all (the same principle as the semi barrel key), and a keg already covering the target just detonates without spending follow-ups.
@@ -628,8 +644,12 @@
 
 #### 核心与菜单
 
-- 版本：v2.10.6。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄（22 个专属、151 个共用引擎）。
+- 版本：v2.11.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄（22 个专属、151 个共用引擎）。
 - 这是根据普朗克首次游戏内 F12 实测反馈的修复版本。
+
+#### Orianna
+
+- 改善了掉帧：状态栏字符串与文字宽度改为仅在数值变化时重建，可击杀判定改为每秒 5 次而非每帧，围绕球的 W/R 圆圈与射程圈使用更少的绘制段数。显示内容不变。
 
 #### Gangplank
 
@@ -645,7 +665,11 @@
 - 半自动放桶（X1MB）现在稳定引爆：按住手动键即明确意图，只要有就绪的桶就立刻引爆，无论附近有无敌人。
 - 修复了 E-Q-E（G）的两个间歇性问题：Q 冷却中也会先放第一个桶（等待期间 Q 会转好）；与 Q 同一帧发出的第二个桶不再被内部帧保护随机吞掉，改为直接施放。
 - E-Q-E（G）现在按距离自适应：目标在 E-Q-E 射程内时使用两个桶；更远且备有三层充能时，自动执行三桶的 E-Q-E-E 连锁。第一个桶始终放在距目标整数个连接距离之后，使最后一个桶正好落在目标身上；第三个桶按官方 0.5 秒放桶间隔自动接上，即使松开按键也会完成。
+- 审计并标准化了所有英雄的属性读取：总攻击力、法强与额外攻击力现在优先读取文档化字段。手动合成漏算装备属性的模块（阿卡丽、奇亚娜、雷恩加尔、塔隆、提莫、普朗克）已全部修正，消除了因伤害低估导致的尾刀与击杀判定遗漏，并将该规则写入英雄制作指南。
+- 为所有英雄引入绘制性能标准：共用缓存模块记忆化状态栏字符串与文字宽度，限制圆圈绘制段数，并统一应用于全部 22 个专属模块与覆盖其余 151 位英雄的共用引擎。由逐帧字符串构建引起的周期性掉帧不复存在。
 - 清理了发布页面：支持英雄 173 人列表在发布说明与更新历史中默认折叠；公开 README 首页只完整展示最新版本，旧版本压缩为各 Release 链接列表。
+- 修正了 Q 伤害计算：总攻击力改读标准字段（此前漏算装备攻击力），且暴击率接近必定（高于 87.5%）时计入暴击倍率。Q 不再错过明明能击杀的小兵与野怪。
+- 只有当完成桶链所需的充能确实备好时才会放远距离起手桶：此前仅剩 1 层充能时放出的远桶永远无法连接（E-Q-E 需 2 层，E-Q-E-E 需 3 层）。
 - 修复了桶链在一次失误后永久静默停摆的问题：内部连招状态在松开按键或回调丢失时不会清除，从而否决之后的所有转换。现在有 6 秒强制过期，且引爆后 0.15 秒内无回调时直接补放后续桶。
 - 引爆方式从预测提前改为基于观测（准确优先）：Q 只在实际观测到桶血量为 1 之后才发出，滑条在此之上追加延迟。提前射击只削桶的失误不再发生。
 - E-Q-E（G）现在会利用已有的火药桶：Q 触发距离内、且到目标距离符合连接窗口的桶会被直接采纳为锚点而不再新放桶（与半自动放桶键相同原则）；已覆盖目标的桶则直接引爆，不再消耗后续桶。
@@ -658,12 +682,13 @@
 - 修复了 Q 提前引爆过早的问题：此前瞄准衰减刻度边界的精确时刻，导致弹丸比真实刻度早几十毫秒到达，只把桶削到 1 而没有引爆。现在到达时刻会滞后刻度一个内置 150 毫秒安全余量（加滑条附加值），普攻引爆只在观测血量已为 1 时进行。
 - 新增自动团战 R（默认开启）：大招为全图施放，因此以每个敌人为候选中心，在可靠容纳设定人数（默认 3 人，可调）的最佳位置自动施放。开启命中可靠性选项时，只统计在 0.5 秒施法期间走不出范围的敌人。
 - 半自动放桶（X1MB）改为朝鼠标方向的最大距离放置而非鼠标位置：已有桶时从离鼠标最近的桶延伸一个完整连接距离，否则放在 Q 能直接触发的最远处（修复近距离浪费）。
-<!-- MESH-AIO:RELEASE:v2.10.6:END -->
+<!-- MESH-AIO:RELEASE:v2.11.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.10.6](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.10.6)
 - [v2.10.5](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.10.5)
 - [v2.10.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.10.3)
 - [v2.10.2](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.10.2)
