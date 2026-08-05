@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.16.0:START -->
-## v2.16.0
+<!-- MESH-AIO:RELEASE:v2.17.0:START -->
+## v2.17.0
 
 ### 한국어
 
@@ -199,18 +199,13 @@
 
 #### 핵심 및 메뉴
 
-- 버전: v2.16.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원을 유지하며, 전용 모듈이 25개(공용 148)로 늘었습니다.
-- Kalista가 25번째 전용 모듈로 승격되었습니다. 공식 16.15 원본 수치 15개 항목이 자동 회귀 검사에 고정되었습니다.
+- 버전: v2.17.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언(전용 25, 공용 148) 지원을 유지합니다.
+- **모드 밸런스 보정이 전 전용 챔피언 실시간 피해 계산에 들어갔습니다.** 칼바람 나락의 챔피언별 가하는/받는 피해 보정(130챔피언 분)을 새 공용 모듈 `modebalance`가 게임 모드를 감지해 모든 전용 모듈(25개)의 킬스틸·처치 확정·막타·처치 가능 표시 계산에 자동 반영합니다. 예: 칼바람 Kalista는 가하는 피해 +10%/받는 피해 -10%로 계산됩니다.
+- 협곡(클래식)은 보정 없음(×1.0)이며, 모드 판정이 불확실하면 항상 클래식으로 안전하게 처리합니다. 아레나/URF의 전역 보정은 구조화된 데이터가 확보되는 대로 이어집니다.
 
 #### Kalista
 
-- 신규 전용 모듈: 평-Q-평 위빙으로 파열의 창을 쌓고, **E는 처치 확정일 때** 나갑니다. 창 스택은 적 버프 스캔 우선에 자체 4초 평타 추적 폴백입니다.
-- E 경로: 챔피언 처치(항상), 표식 미니언을 E로 죽여 쿨 초기화하면서 표식 챔피언에게 피해+슬로우를 함께 넣는 루난 추격 콤보(콤보 중 자동), E 사거리(1000)를 벗어나려는 표식 챔피언 대상 창 개수 기반 덤프, 견제 덤프(옵션), 그리고 최소 처치 수 기반 팜 E(정글 포함, 에픽 몬스터 공식 50% 반영)입니다.
-- Q는 첫 유닛에 막히지만 처치 시 창이 관통·전이되므로, 경로의 미니언이 **전부 Q에 죽으면** 자동 Q를 통과시키는 관통 게이트가 있습니다(스택 전이 콤보).
-- 추격(Pursuit): 콤보 대상이 평타 사거리 밖이면 주변 미니언/정글/식물(타워는 옵션, 기본 꺼짐)을 공격해 패시브 도약으로 계속 따라갑니다.
-- 벽넘기 키(X): 커서 방향으로 이동하며 도약 거리(330) 안에 벽과 반대편 착지점이 있으면 Q를 시전해 패시브 도약으로 벽을 넘습니다(착지 미리보기 드로우 포함).
-- W는 5000 사거리 시야 파수꾼입니다: Semi W(G)는 바론/드래곤 둥지 중 가까운 곳으로 발사하고, 자동 모드(기본 꺼짐)는 주변 적 없음 확인+둥지 거리 슬라이더+둥지별 60초 스로틀을 지킵니다.
-- R는 결속(서약) 아군 소환입니다: 결속 아군이 1000 사거리 안에서 체력 슬라이더 이하 + 주변 적 수 조건일 때 자동 구출하고, Semi R(Space)도 제공합니다.
+- 위 모드 밸런스 표준의 대표 사례로, 칼바람에서 E 처치 확정·Q 막타 계산이 +10% 가하는 피해 보정을 포함해 정확해졌습니다.
 ### English
 
 #### Supported Champions
@@ -397,18 +392,13 @@
 
 #### Core & Menu
 
-- Version: v2.16.0. 173-champion support stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data; hand-tuned modules grow to 25 (shared-engine 148).
-- Kalista is promoted to the 25th dedicated module. 15 official 16.15 raw values are pinned into the automated regression checks.
+- Version: v2.17.0. 173-champion support (25 hand-tuned, 148 shared-engine) stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data.
+- **Mode-balance corrections now live inside every real-time damage calculation.** The new shared `modebalance` module detects the game mode and folds the ARAM per-champion damage-dealt/damage-taken tuning (130 champions) into every dedicated module's killsteal, execute, last-hit, and killable-indicator math automatically. Example: ARAM Kalista computes with +10% damage dealt / -10% damage taken.
+- Summoner's Rift (classic) stays uncorrected (x1.0), and an uncertain mode reading always resolves safely to classic. Arena/URF global tuning follows once structured data is available.
 
 #### Kalista
 
-- New dedicated module: AA-Q-AA weaving stacks Rend spears, and **E fires when the payout kills**. Spear counts read the enemy buff first with an own-attack 4-second tracker as fallback.
-- E paths: champion kill (always), the Runaan chase combo - killing a marked minion with E resets the cooldown while the marked champion eats the damage and slow (automatic inside Combo) - a spear-count dump on a marked champion escaping the 1000 tether, an optional harass dump, and farm E at the minimum-kills slider (jungle included, epic monsters at the official 50%).
-- Q stops on the first unit, but a kill passes the spear on - so the pierce gate lets automatic Q through blocking minions when they ALL die to it (the stack-transfer combo).
-- Pursuit: when the Combo champion is out of attack reach, nearby minions/jungle/plants (turrets optional, off by default) are attacked so the Martial Poise hop keeps chasing.
-- Wall key (X): walks toward the cursor and casts Q when a wall with a passable landing sits inside the 330 hop, jumping thin walls on the passive hop (with a landing preview drawing).
-- W is the 5000-range vision sentinel: Semi W (G) fires at the nearest Baron/Dragon pit, and the default-off auto mode adds a no-enemy guard, a pit-distance slider, and a per-pit 60-second throttle.
-- R recalls the Oath-sworn ally: auto rescue when the bound ally inside the 1000 range drops under the HP slider with enough enemies around, plus Semi R (Space).
+- The flagship case for the new standard: her ARAM E-execute and Q last-hit math now include the +10% damage-dealt correction.
 ### 简体中文
 
 #### 支持英雄
@@ -595,24 +585,20 @@
 
 #### 核心与菜单
 
-- 版本：v2.16.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄；专属模块增至 25 个（共用引擎 148 个）。
-- 卡莉丝塔晋升为第 25 个专属模块，15 项官方 16.15 原始数值已固定进自动回归检查。
+- 版本：v2.17.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄（专属 25、共用引擎 148）。
+- **模式平衡修正已进入所有实时伤害计算。** 新共用模块 `modebalance` 检测当前游戏模式，把极地大乱斗的英雄造成/承受伤害修正（130 位英雄）自动纳入全部 25 个专属模块的抢头、处决、补刀与可击杀指示计算。例如：大乱斗中的卡莉丝塔按造成伤害 +10%/承受伤害 -10% 计算。
+- 召唤师峡谷（经典）不做修正（×1.0），模式判定不确定时始终安全地按经典处理。竞技场/无限火力的全局修正将在获得结构化数据后跟进。
 
 #### Kalista
 
-- 新专属模块：普攻-Q-普攻编织叠加撕裂之矛，**E 在确定击杀时释放**。矛层数优先读取敌方 Buff，并以自身 4 秒普攻跟踪作为兜底。
-- E 的路径：击杀英雄（始终）、卢安追击连招——用 E 杀死带矛小兵刷新冷却，同时带矛英雄吃到伤害和减速（连招中自动）——对将要脱离 1000 范围的带矛英雄按矛数滑条倾泻、可选的骚扰倾泻，以及按最少击杀数的清线 E（含野怪，史诗野怪按官方 50% 计算）。
-- Q 会被第一个单位挡住，但击杀后长矛会穿透传递——因此当路径上的小兵**全部会被 Q 击杀**时，穿透门允许自动 Q 通过（层数传递连招）。
-- 追击（Pursuit）：连招目标超出普攻距离时，攻击附近的小兵/野怪/植物（防御塔为选项，默认关闭），借助战争律动的跳跃持续追击。
-- 翻墙键（X）：朝光标移动，当 330 跳跃距离内存在墙体且对面有可落地点时施放 Q，借被动跳跃翻越薄墙（附落点预览绘制）。
-- W 是 5000 射程的视野哨兵：Semi W（G）射向最近的男爵/巨龙巢穴；自动模式（默认关闭）附带无敌人确认、巢穴距离滑条和每巢穴 60 秒节流。
-- R 召回誓约绑定的队友：绑定队友在 1000 范围内、血量低于滑条且周围敌人数达标时自动救援，另有 Semi R（空格）。
-<!-- MESH-AIO:RELEASE:v2.16.0:END -->
+- 新标准的代表案例：她在大乱斗中的 E 处决与 Q 补刀计算现在包含 +10% 造成伤害修正。
+<!-- MESH-AIO:RELEASE:v2.17.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.16.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.16.0)
 - [v2.15.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.15.0)
 - [v2.14.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.14.0)
 - [v2.13.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.13.0)
