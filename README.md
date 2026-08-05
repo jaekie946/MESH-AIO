@@ -5,8 +5,8 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.12.0:START -->
-## v2.12.0
+<!-- MESH-AIO:RELEASE:v2.13.0:START -->
+## v2.13.0
 
 ### 한국어
 
@@ -194,12 +194,12 @@
 
 #### 핵심 및 메뉴
 
-- 버전: v2.12.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언(전용 22, 공용 151) 지원을 그대로 유지합니다.
+- 버전: v2.13.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언(전용 22, 공용 151) 지원을 그대로 유지합니다.
 - 갱플랭크 첫 인게임 실측(F12) 피드백을 반영한 수정 릴리즈입니다.
 
-#### Orianna
+#### Syndra
 
-- E-R 아군 연계를 추가했습니다(기본 켜짐): 적진으로 돌진 중인 아군 챔피언을 감지해 착지점에 설정 인원(기본 2명) 이상이 있으면 E로 공을 태워 보내고, 공이 도착해 충격파가 확실히 그 인원을 덮는 순간 R가 자동으로 이어집니다. 연계는 E 시전 후 3초까지 키 없이 완결됩니다.
+- Q-R-E 콤보를 추가했습니다(기본 켜짐): 자동 처치 R가 나가기 직전에 대상 위에 Q를 먼저 깔고, 새 구체가 확인되는 즉시 R를 이어서 폭딜을 극대화합니다. 바닥에 남은 구체는 기존 밀어내기 로직이 그대로 이어받아 E 광역 스턴으로 마무리합니다. 구체 확인은 0.9초 창 안에서만 기다리며, 창을 넘기면 상태가 즉시 정리됩니다.
 ### English
 
 #### Supported Champions
@@ -386,12 +386,12 @@
 
 #### Core & Menu
 
-- Version: v2.12.0. 173-champion support (22 hand-tuned, 151 shared-engine) stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data.
+- Version: v2.13.0. 173-champion support (22 hand-tuned, 151 shared-engine) stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data.
 - A fix release from Gangplank's first in-game F12 feedback.
 
-#### Orianna
+#### Syndra
 
-- Added the E-R ally engage (default on): an allied champion already dashing into the enemy is detected, and when the configured head-count (default 2) stands at the dash landing the ball rides in on E - the shockwave then follows on its own the moment the ball reliably covers them. The play completes keylessly for up to 3 seconds after the E.
+- Added the Q-R-E combo (default on): right before an automatic lethal R, a Q lands on the target first and the R follows the moment the fresh sphere is confirmed, maximizing the burst. The grounded sphere is then picked up by the existing push logic for the wide E stun finish. The sphere wait lives inside a 0.9-second window and the state clears immediately past it.
 ### 简体中文
 
 #### 支持英雄
@@ -578,18 +578,19 @@
 
 #### 核心与菜单
 
-- 版本：v2.12.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄（22 个专属、151 个共用引擎）。
+- 版本：v2.13.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄（22 个专属、151 个共用引擎）。
 - 这是根据普朗克首次游戏内 F12 实测反馈的修复版本。
 
-#### Orianna
+#### Syndra
 
-- 新增 E-R 友军连锁（默认开启）：检测正在突进敌阵的友方英雄，当突进落点有设定人数（默认 2 人）时用 E 把球送上去；球到位并可靠覆盖目标的瞬间自动接 R。该连招在 E 施放后 3 秒内无需按键自动完成。
-<!-- MESH-AIO:RELEASE:v2.12.0:END -->
+- 新增 Q-R-E 连招（默认开启）：在自动致命 R 出手之前先在目标身上放 Q，新球体确认的瞬间接 R 以最大化爆发；落地的球体随后由既有的推球逻辑接手，以 E 的大范围眩晕收尾。等待球体确认限定在 0.9 秒窗口内，超时立即清理状态。
+<!-- MESH-AIO:RELEASE:v2.13.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.12.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.12.0)
 - [v2.11.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.11.0)
 - [v2.10.6](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.10.6)
 - [v2.10.5](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.10.5)
