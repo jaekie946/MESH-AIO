@@ -10,605 +10,171 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.18.0:START -->
-## v2.18.0
+<!-- MESH-AIO:RELEASE:v2.19.0:START -->
+## v2.19.0
 
 ### 한국어
 
 #### 지원 챔피언
 
+공식 16.15 데이터 기준 173챔피언 전체를 지원합니다. 아래는 세부 로직을 직접 제작한 전용 모듈 27개이며, 나머지 챔피언은 공용 엔진 베이스라인으로 동작합니다.
 
-<details>
-<summary>지원 챔피언 173명 펼치기</summary>
-
-- Annie
-- Olaf
-- Galio
-- TwistedFate
-- XinZhao
-- Urgot
-- Leblanc
-- Vladimir
-- Fiddlesticks
-- Kayle
-- MasterYi
-- Alistar
-- Ryze
-- Sion
-- Sivir
-- Soraka
-- Teemo
-- Tristana
-- Warwick
-- Nunu
-- MissFortune
-- Ashe
-- Tryndamere
-- Jax
-- Morgana
-- Zilean
-- Singed
-- Evelynn
-- Twitch
-- Karthus
-- Chogath
-- Amumu
-- Rammus
-- Anivia
-- Shaco
-- DrMundo
-- Sona
-- Kassadin
-- Irelia
-- Janna
-- Gangplank
-- Corki
-- Karma
-- Taric
-- Veigar
-- Trundle
-- Swain
-- Caitlyn
-- Blitzcrank
-- Malphite
-- Katarina
-- Nocturne
-- Maokai
-- Renekton
-- JarvanIV
-- Elise
-- Orianna
-- MonkeyKing
-- Brand
-- LeeSin
-- Vayne
-- Rumble
-- Cassiopeia
-- Skarner
-- Heimerdinger
-- Nasus
-- Nidalee
-- Udyr
-- Poppy
-- Gragas
-- Pantheon
-- Ezreal
-- Mordekaiser
-- Yorick
-- Akali
-- Kennen
-- Garen
-- Leona
-- Malzahar
-- Talon
-- Riven
-- KogMaw
-- Shen
-- Lux
-- Xerath
-- Shyvana
 - Ahri
-- Graves
-- Fizz
-- Volibear
-- Rengar
-- Varus
-- Nautilus
-- Viktor
-- Sejuani
-- Fiora
-- Ziggs
-- Lulu
-- Draven
-- Hecarim
-- Khazix
-- Darius
-- Jayce
-- Lissandra
-- Diana
-- Quinn
-- Syndra
-- AurelionSol
-- Kayn
-- Zoe
-- Zyra
-- Kaisa
-- Seraphine
-- Gnar
-- Zac
-- Yasuo
-- Velkoz
-- Taliyah
-- Camille
-- Akshan
-- Belveth
-- Braum
-- Jhin
-- Kindred
-- Zeri
-- Jinx
-- TahmKench
-- Briar
-- Viego
-- Senna
-- Lucian
-- Zed
-- Kled
-- Ekko
-- Qiyana
-- Vi
-- Aatrox
-- Nami
-- Azir
-- Yuumi
-- Samira
-- Thresh
-- Illaoi
-- RekSai
-- Ivern
-- Kalista
-- Bard
-- Rakan
-- Xayah
-- Ornn
-- Sylas
-- Neeko
-- Aphelios
-- Rell
-- Pyke
-- Vex
-- Yone
-- Ambessa
-- Mel
-- Yunara
-- Locke
-- Sett
-- Lillia
-- Gwen
-- Renata
+- Akali
 - Aurora
-- Nilah
-- KSante
-- Smolder
-- Milio
-- Zaahen
+- Ezreal
+- Gangplank
+- Garen
 - Hwei
-- Naafiri
-
-</details>
+- Jhin
+- Jinx
+- Kalista
+- KogMaw
+- Leblanc
+- Locke
+- Malphite
+- Malzahar
+- Orianna
+- Pyke
+- Qiyana
+- Rengar
+- Riven
+- Soraka
+- Syndra
+- Talon
+- Teemo
+- Vayne
+- Xerath
+- Yunara
 
 #### 핵심 및 메뉴
 
-- 버전: v2.18.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원을 유지하며, 전용 모듈이 26개(공용 147)로 늘었습니다.
-- Ahri가 26번째 전용 모듈로 승격되었습니다. 공식 16.15 원본 수치 22개 항목이 자동 회귀 검사에 고정되었습니다.
+- 버전: v2.19.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원을 유지하며, 전용 모듈이 27개(공용 146)로 늘었습니다.
+- Jinx가 27번째 전용 모듈로 승격되었습니다. 공식 16.15 원본 수치 21개 항목이 자동 회귀 검사에 고정되었습니다.
+- 릴리즈 노트의 지원 챔피언 목록이 직접 제작한 전용 모듈만 나열하도록 바뀌었습니다(어떤 챔피언이 수제작인지 한눈에 보이도록). 나머지 챔피언의 공용 엔진 지원은 그대로입니다.
 
-#### Ahri
+#### Jinx
 
-- 신규 전용 모듈: 핵심 딜교환 E-Q-W를 그대로 구현했습니다. 매혹(E)을 신뢰도 게이트로 먼저 맞추고, E 투사체가 나는 동안 Q/W를 잠시 보류해 매혹된 대상에게 전부 꽂습니다. 이미 매혹된 적이 있으면 그 적의 현재 위치로 Q를 즉시 발사합니다.
-- Q는 왕복 스킬로 계산합니다: 나가는 타는 마법, 돌아오는 타는 고정 피해. 자석(Magnetism, L 토글)은 구슬 복귀 창에서 대상 쪽으로 짧게 걸어 복귀 타를 강제로 통과시키며, 타워/다수 적 가드가 있습니다.
-- E는 매혹 외에도 하드 CC 대상 자동 매혹, 채널링 인터럽트, 돌진 반응, 킬스틸, 스테이시스 저격을 담당합니다. E-점멸(A 키)은 사거리 밖 대상에게 E 시전 중 점멸로 기습합니다.
-- R 진입(R-E-Q-W)은 기본 꺼짐입니다: 켜면 대상 체력 45% 이하 + 착지점 주변 적 수 확인 + 타워 밖(H 토글로 허용) + 마지막 대시 보존 조건에서만 500 대시로 진입합니다.
-- W는 공식 550 획득 사거리 안에서만 사용하고, Flee에서 40% 감쇠 이속으로도 씁니다. 팜은 Q 라인 클리어(최소 명중 수)입니다.
+- 신규 전용 모듈: **거리 기반 Q 폼 전환이 핵심**입니다. 미니건이 닿는 대상은 미니건(최대 DPS·공속 스택), 미니건 밖·로켓 사거리(기본 525+랭크별 100~200) 안 대상은 로켓으로 자동 전환합니다. 전환은 0.4초 스로틀과 평타 윈드업 보호를 지킵니다.
+- 팜 폼 관리: 웨이브가 미니건 안이면 미니건 유지, 로켓으로만 닿는 막타/스플래시(250, 최소 명중 슬라이더) 상황에서만 마나 게이트 하에 로켓. 전투 대상이 없으면 미니건 복귀(패시브 절약).
+- W(1450, 첫 유닛 정지)는 평타가 닿는 대상에게 쓰지 않는 옵션(기본 켜짐)과 함께 콤보/견제/킬스틸/스테이시스 저격을 담당합니다. 수동 W는 T.
+- E 와작와작 덫은 반응 전용입니다: 나에게 착지하는 돌진 길목, 하드 CC 대상, 채널링 인터럽트, Flee 추격 저지. 수동 E는 G.
+- R는 글로벌 처형입니다: 사거리 슬라이더(기본 2300) 안에서 거리 램프(바닥→최대)+잃은 체력 비례를 정직하게 계산해 처치 확정일 때만 발사합니다. 수동 R는 Space.
+
+#### Soraka
+
+- 칼바람 실전 피드백: 자동 R가 체력 조건만으로 나가지 않도록, R를 받을 아군이 **전투 중일 때만**(최근 2.5초 내 피해를 입었거나 주변 900 안에 적 챔피언) 발동하는 게이트를 추가했습니다(기본 켜짐, 끌 수 있음).
 
 ### English
 
 #### Supported Champions
 
+All 173 champions are supported on the official 16.15 data. The list below is the 27 hand-tuned dedicated modules; every other champion runs on the shared-engine baseline.
 
-<details>
-<summary>Expand the 173 supported champions</summary>
-
-- Annie
-- Olaf
-- Galio
-- TwistedFate
-- XinZhao
-- Urgot
-- Leblanc
-- Vladimir
-- Fiddlesticks
-- Kayle
-- MasterYi
-- Alistar
-- Ryze
-- Sion
-- Sivir
-- Soraka
-- Teemo
-- Tristana
-- Warwick
-- Nunu
-- MissFortune
-- Ashe
-- Tryndamere
-- Jax
-- Morgana
-- Zilean
-- Singed
-- Evelynn
-- Twitch
-- Karthus
-- Chogath
-- Amumu
-- Rammus
-- Anivia
-- Shaco
-- DrMundo
-- Sona
-- Kassadin
-- Irelia
-- Janna
-- Gangplank
-- Corki
-- Karma
-- Taric
-- Veigar
-- Trundle
-- Swain
-- Caitlyn
-- Blitzcrank
-- Malphite
-- Katarina
-- Nocturne
-- Maokai
-- Renekton
-- JarvanIV
-- Elise
-- Orianna
-- MonkeyKing
-- Brand
-- LeeSin
-- Vayne
-- Rumble
-- Cassiopeia
-- Skarner
-- Heimerdinger
-- Nasus
-- Nidalee
-- Udyr
-- Poppy
-- Gragas
-- Pantheon
-- Ezreal
-- Mordekaiser
-- Yorick
-- Akali
-- Kennen
-- Garen
-- Leona
-- Malzahar
-- Talon
-- Riven
-- KogMaw
-- Shen
-- Lux
-- Xerath
-- Shyvana
 - Ahri
-- Graves
-- Fizz
-- Volibear
-- Rengar
-- Varus
-- Nautilus
-- Viktor
-- Sejuani
-- Fiora
-- Ziggs
-- Lulu
-- Draven
-- Hecarim
-- Khazix
-- Darius
-- Jayce
-- Lissandra
-- Diana
-- Quinn
-- Syndra
-- AurelionSol
-- Kayn
-- Zoe
-- Zyra
-- Kaisa
-- Seraphine
-- Gnar
-- Zac
-- Yasuo
-- Velkoz
-- Taliyah
-- Camille
-- Akshan
-- Belveth
-- Braum
-- Jhin
-- Kindred
-- Zeri
-- Jinx
-- TahmKench
-- Briar
-- Viego
-- Senna
-- Lucian
-- Zed
-- Kled
-- Ekko
-- Qiyana
-- Vi
-- Aatrox
-- Nami
-- Azir
-- Yuumi
-- Samira
-- Thresh
-- Illaoi
-- RekSai
-- Ivern
-- Kalista
-- Bard
-- Rakan
-- Xayah
-- Ornn
-- Sylas
-- Neeko
-- Aphelios
-- Rell
-- Pyke
-- Vex
-- Yone
-- Ambessa
-- Mel
-- Yunara
-- Locke
-- Sett
-- Lillia
-- Gwen
-- Renata
+- Akali
 - Aurora
-- Nilah
-- KSante
-- Smolder
-- Milio
-- Zaahen
+- Ezreal
+- Gangplank
+- Garen
 - Hwei
-- Naafiri
-
-</details>
+- Jhin
+- Jinx
+- Kalista
+- KogMaw
+- Leblanc
+- Locke
+- Malphite
+- Malzahar
+- Orianna
+- Pyke
+- Qiyana
+- Rengar
+- Riven
+- Soraka
+- Syndra
+- Talon
+- Teemo
+- Vayne
+- Xerath
+- Yunara
 
 #### Core & Menu
 
-- Version: v2.18.0. 173-champion support stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data; hand-tuned modules grow to 26 (shared-engine 147).
-- Ahri is promoted to the 26th dedicated module. 22 official 16.15 raw values are pinned into the automated regression checks.
+- Version: v2.19.0. 173-champion support stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data; hand-tuned modules grow to 27 (shared-engine 146).
+- Jinx is promoted to the 27th dedicated module. 21 official 16.15 raw values are pinned into the automated regression checks.
+- The Supported-Champions list in these notes now names only the hand-tuned dedicated modules, so it is obvious which champions are hand-made; shared-engine coverage for everyone else is unchanged.
 
-#### Ahri
+#### Jinx
 
-- New dedicated module implementing the core E-Q-W trade: the charm lands first through the reliability gate, Q/W are held while the E missile flies so the full load hits a charmed target, and any already-charmed enemy eats Q at their exact position immediately.
-- Q is computed as the round trip it is: magic on the way out, TRUE damage on the return. Magnetism (L toggle) walks toward the target during the return window so the orb drags through them, with turret and crowd guards.
-- E also covers auto-charm on hard CC, channel interrupts, anti-gapclose, killsteal, and stasis snipes. E-Flash (A) casts E beyond range and Flashes mid-windup.
-- The R engage (R-E-Q-W) is default OFF: enabled, it dashes the official 500 only at targets under the HP slider (45), never onto a crowded landing, never under an enemy turret without the H toggle, and never spends the last dash.
-- W fires only inside the official 550 acquisition and doubles as the Flee haste; farm is the Q line clear at the minimum-hits slider.
+- New dedicated module where the **distance-based Q form switch is the core**: minigun on anything the minigun reaches (max DPS, attack-speed stacks), rockets only for targets between minigun reach and the rocket range (base 525 + rank 100..200), throttled and windup-protected.
+- Farm form management: stay on the minigun while the wave is in minigun reach; rockets only for last hits or splash clears (official 250, minimum-hits slider) beyond it, behind a mana gate; return to minigun when idle.
+- W (1450, stops on the first unit) covers combo/harass/killsteal/stasis snipes with an option (default on) to never W a target the basic attack reaches. Manual W on T.
+- The E chompers are reactive only: the landing of a dash onto Jinx, hard-CCed targets, channel interrupts, and Flee peel. Manual E on G.
+- R is the global execute: inside the range slider (2300 default) it computes the distance ramp (floor to max) plus the missing-health payout honestly and fires only on a confirmed kill. Manual R on Space.
+
+#### Soraka
+
+- ARAM field feedback: automatic R no longer fires on the HP condition alone - the ally receiving it must be IN COMBAT (damaged within the last 2.5 s or an enemy champion within 900), default on and toggleable.
 
 ### 简体中文
 
 #### 支持英雄
 
+基于官方 16.15 数据支持全部 173 位英雄。下方为 27 个手工制作的专属模块；其余英雄由共用引擎基线驱动。
 
-<details>
-<summary>展开 173 位支持英雄</summary>
-
-- Annie
-- Olaf
-- Galio
-- TwistedFate
-- XinZhao
-- Urgot
-- Leblanc
-- Vladimir
-- Fiddlesticks
-- Kayle
-- MasterYi
-- Alistar
-- Ryze
-- Sion
-- Sivir
-- Soraka
-- Teemo
-- Tristana
-- Warwick
-- Nunu
-- MissFortune
-- Ashe
-- Tryndamere
-- Jax
-- Morgana
-- Zilean
-- Singed
-- Evelynn
-- Twitch
-- Karthus
-- Chogath
-- Amumu
-- Rammus
-- Anivia
-- Shaco
-- DrMundo
-- Sona
-- Kassadin
-- Irelia
-- Janna
-- Gangplank
-- Corki
-- Karma
-- Taric
-- Veigar
-- Trundle
-- Swain
-- Caitlyn
-- Blitzcrank
-- Malphite
-- Katarina
-- Nocturne
-- Maokai
-- Renekton
-- JarvanIV
-- Elise
-- Orianna
-- MonkeyKing
-- Brand
-- LeeSin
-- Vayne
-- Rumble
-- Cassiopeia
-- Skarner
-- Heimerdinger
-- Nasus
-- Nidalee
-- Udyr
-- Poppy
-- Gragas
-- Pantheon
-- Ezreal
-- Mordekaiser
-- Yorick
-- Akali
-- Kennen
-- Garen
-- Leona
-- Malzahar
-- Talon
-- Riven
-- KogMaw
-- Shen
-- Lux
-- Xerath
-- Shyvana
 - Ahri
-- Graves
-- Fizz
-- Volibear
-- Rengar
-- Varus
-- Nautilus
-- Viktor
-- Sejuani
-- Fiora
-- Ziggs
-- Lulu
-- Draven
-- Hecarim
-- Khazix
-- Darius
-- Jayce
-- Lissandra
-- Diana
-- Quinn
-- Syndra
-- AurelionSol
-- Kayn
-- Zoe
-- Zyra
-- Kaisa
-- Seraphine
-- Gnar
-- Zac
-- Yasuo
-- Velkoz
-- Taliyah
-- Camille
-- Akshan
-- Belveth
-- Braum
-- Jhin
-- Kindred
-- Zeri
-- Jinx
-- TahmKench
-- Briar
-- Viego
-- Senna
-- Lucian
-- Zed
-- Kled
-- Ekko
-- Qiyana
-- Vi
-- Aatrox
-- Nami
-- Azir
-- Yuumi
-- Samira
-- Thresh
-- Illaoi
-- RekSai
-- Ivern
-- Kalista
-- Bard
-- Rakan
-- Xayah
-- Ornn
-- Sylas
-- Neeko
-- Aphelios
-- Rell
-- Pyke
-- Vex
-- Yone
-- Ambessa
-- Mel
-- Yunara
-- Locke
-- Sett
-- Lillia
-- Gwen
-- Renata
+- Akali
 - Aurora
-- Nilah
-- KSante
-- Smolder
-- Milio
-- Zaahen
+- Ezreal
+- Gangplank
+- Garen
 - Hwei
-- Naafiri
-
-</details>
+- Jhin
+- Jinx
+- Kalista
+- KogMaw
+- Leblanc
+- Locke
+- Malphite
+- Malzahar
+- Orianna
+- Pyke
+- Qiyana
+- Rengar
+- Riven
+- Soraka
+- Syndra
+- Talon
+- Teemo
+- Vayne
+- Xerath
+- Yunara
 
 #### 核心与菜单
 
-- 版本：v2.18.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄；专属模块增至 26 个（共用引擎 147 个）。
-- 阿狸晋升为第 26 个专属模块，22 项官方 16.15 原始数值已固定进自动回归检查。
+- 版本：v2.19.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄；专属模块增至 27 个（共用引擎 146 个）。
+- 金克丝晋升为第 27 个专属模块，21 项官方 16.15 原始数值已固定进自动回归检查。
+- 更新说明中的支持英雄列表现在只列出手工制作的专属模块，一眼可见哪些英雄是手工打造；其余英雄的共用引擎支持不变。
 
-#### Ahri
+#### Jinx
 
-- 新专属模块，实现核心 E-Q-W 交易：先以可靠度门槛命中魅惑（E），E 飞行期间暂缓 Q/W，确保全部命中被魅惑的目标；若已有敌人被魅惑，则立即朝其当前位置发射 Q。
-- Q 按往返计算：去程魔法伤害，回程真实伤害。磁力（L 开关）在宝珠回程窗口朝目标短暂走位，让回程强制穿过目标，附带防御塔与人数保护。
-- E 还负责硬控目标自动魅惑、打断引导、反突进、抢头与凝滞狙击。E 闪（A 键）对射程外目标在 E 前摇中闪现突袭。
-- R 进场（R-E-Q-W）默认关闭：开启后仅在目标血量 ≤45%、落点周围敌人数合规、不在敌方塔下（H 开关可允许）且保留最后一段位移时，以官方 500 距离突进。
-- W 仅在官方 550 获取范围内使用，Flee 中也用于 40% 衰减加速；清线为按最少命中数的 Q 直线清线。
-<!-- MESH-AIO:RELEASE:v2.18.0:END -->
+- 新专属模块，**按距离切换 Q 形态是核心**：机枪够得着的目标用机枪（最大 DPS、攻速叠层），仅在机枪射程外、火箭射程（基础 525 + 每级 100~200）内的目标切换火箭；切换有 0.4 秒节流并保护普攻前摇。
+- 清线形态管理：兵线在机枪范围内保持机枪；只有火箭才够得着的补刀/溅射清线（官方 250，最少命中滑条）才在蓝量门槛下切火箭；空闲时切回机枪。
+- W（1450，命中第一个单位即停）负责连招/骚扰/抢头/凝滞狙击，并有默认开启的"普攻可及目标不放 W"选项。手动 W 为 T。
+- E 火焰咀嚼者仅作反应使用：扑向金克丝的突进落点、硬控目标、打断引导、Flee 反追。手动 E 为 G。
+- R 是全图处决：在射程滑条（默认 2300）内诚实计算距离斜坡（下限到上限）加已损生命加成，仅在确定击杀时发射。手动 R 为空格。
+
+#### Soraka
+
+- 大乱斗实战反馈：自动 R 不再仅凭血量条件释放——接受 R 的队友必须**处于战斗中**（最近 2.5 秒内受到伤害，或 900 范围内有敌方英雄），默认开启且可关闭。
+<!-- MESH-AIO:RELEASE:v2.19.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.18.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.18.0)
 - [v2.17.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.17.1)
 - [v2.17.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.17.0)
 - [v2.16.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.16.0)
