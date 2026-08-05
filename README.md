@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.17.1:START -->
-## v2.17.1
+<!-- MESH-AIO:RELEASE:v2.18.0:START -->
+## v2.18.0
 
 ### 한국어
 
@@ -199,14 +199,17 @@
 
 #### 핵심 및 메뉴
 
-- 버전: v2.17.1. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언(전용 25, 공용 148) 지원을 유지합니다.
-- **모드 밸런스 보정이 전 전용 챔피언 실시간 피해 계산에 들어갔습니다.** 칼바람 나락의 챔피언별 가하는/받는 피해 보정(130챔피언 분)을 새 공용 모듈 `modebalance`가 게임 모드를 감지해 모든 전용 모듈(25개)의 킬스틸·처치 확정·막타·처치 가능 표시 계산에 자동 반영합니다. 예: 칼바람 Kalista는 가하는 피해 +10%/받는 피해 -10%로 계산됩니다.
-- **아레나 시스템 보정 추가**: 인게임 "아레나 능력치 조정" 규칙에 따라 아레나에서 원거리 챔피언을 때리는 피해는 ×0.85(피해량 감소 15%)로 계산합니다. 체력/방어력/마저 보너스는 라이브 스탯으로 자동 반영됩니다.
-- 협곡(클래식)은 보정 없음(×1.0)이며, 모드 판정이 불확실하면 항상 클래식으로 안전하게 처리합니다. 아레나 챔피언별 개별 보정과 URF 전역 보정은 구조화된 데이터가 확보되는 대로 이어집니다.
+- 버전: v2.18.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원을 유지하며, 전용 모듈이 26개(공용 147)로 늘었습니다.
+- Ahri가 26번째 전용 모듈로 승격되었습니다. 공식 16.15 원본 수치 22개 항목이 자동 회귀 검사에 고정되었습니다.
 
-#### Kalista
+#### Ahri
 
-- 위 모드 밸런스 표준의 대표 사례로, 칼바람에서 E 처치 확정·Q 막타 계산이 +10% 가하는 피해 보정을 포함해 정확해졌습니다.
+- 신규 전용 모듈: 핵심 딜교환 E-Q-W를 그대로 구현했습니다. 매혹(E)을 신뢰도 게이트로 먼저 맞추고, E 투사체가 나는 동안 Q/W를 잠시 보류해 매혹된 대상에게 전부 꽂습니다. 이미 매혹된 적이 있으면 그 적의 현재 위치로 Q를 즉시 발사합니다.
+- Q는 왕복 스킬로 계산합니다: 나가는 타는 마법, 돌아오는 타는 고정 피해. 자석(Magnetism, L 토글)은 구슬 복귀 창에서 대상 쪽으로 짧게 걸어 복귀 타를 강제로 통과시키며, 타워/다수 적 가드가 있습니다.
+- E는 매혹 외에도 하드 CC 대상 자동 매혹, 채널링 인터럽트, 돌진 반응, 킬스틸, 스테이시스 저격을 담당합니다. E-점멸(A 키)은 사거리 밖 대상에게 E 시전 중 점멸로 기습합니다.
+- R 진입(R-E-Q-W)은 기본 꺼짐입니다: 켜면 대상 체력 45% 이하 + 착지점 주변 적 수 확인 + 타워 밖(H 토글로 허용) + 마지막 대시 보존 조건에서만 500 대시로 진입합니다.
+- W는 공식 550 획득 사거리 안에서만 사용하고, Flee에서 40% 감쇠 이속으로도 씁니다. 팜은 Q 라인 클리어(최소 명중 수)입니다.
+
 ### English
 
 #### Supported Champions
@@ -393,14 +396,17 @@
 
 #### Core & Menu
 
-- Version: v2.17.1. 173-champion support (25 hand-tuned, 148 shared-engine) stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data.
-- **Mode-balance corrections now live inside every real-time damage calculation.** The new shared `modebalance` module detects the game mode and folds the ARAM per-champion damage-dealt/damage-taken tuning (130 champions) into every dedicated module's killsteal, execute, last-hit, and killable-indicator math automatically. Example: ARAM Kalista computes with +10% damage dealt / -10% damage taken.
-- **Arena systemic correction added**: per the in-game "Arena stat adjustment" rules, damage onto RANGED champions in Arena now computes at x0.85 (their 15% damage reduction). The HP/armor/MR bonuses need no correction - they are read from live stats.
-- Summoner's Rift (classic) stays uncorrected (x1.0), and an uncertain mode reading always resolves safely to classic. Arena per-champion tuning and URF global tuning follow once structured data is available.
+- Version: v2.18.0. 173-champion support stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data; hand-tuned modules grow to 26 (shared-engine 147).
+- Ahri is promoted to the 26th dedicated module. 22 official 16.15 raw values are pinned into the automated regression checks.
 
-#### Kalista
+#### Ahri
 
-- The flagship case for the new standard: her ARAM E-execute and Q last-hit math now include the +10% damage-dealt correction.
+- New dedicated module implementing the core E-Q-W trade: the charm lands first through the reliability gate, Q/W are held while the E missile flies so the full load hits a charmed target, and any already-charmed enemy eats Q at their exact position immediately.
+- Q is computed as the round trip it is: magic on the way out, TRUE damage on the return. Magnetism (L toggle) walks toward the target during the return window so the orb drags through them, with turret and crowd guards.
+- E also covers auto-charm on hard CC, channel interrupts, anti-gapclose, killsteal, and stasis snipes. E-Flash (A) casts E beyond range and Flashes mid-windup.
+- The R engage (R-E-Q-W) is default OFF: enabled, it dashes the official 500 only at targets under the HP slider (45), never onto a crowded landing, never under an enemy turret without the H toggle, and never spends the last dash.
+- W fires only inside the official 550 acquisition and doubles as the Flee haste; farm is the Q line clear at the minimum-hits slider.
+
 ### 简体中文
 
 #### 支持英雄
@@ -587,20 +593,23 @@
 
 #### 核心与菜单
 
-- 版本：v2.17.1。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄（专属 25、共用引擎 148）。
-- **模式平衡修正已进入所有实时伤害计算。** 新共用模块 `modebalance` 检测当前游戏模式，把极地大乱斗的英雄造成/承受伤害修正（130 位英雄）自动纳入全部 25 个专属模块的抢头、处决、补刀与可击杀指示计算。例如：大乱斗中的卡莉丝塔按造成伤害 +10%/承受伤害 -10% 计算。
-- **新增竞技场系统修正**：依据游戏内"竞技场属性调整"规则，竞技场中打向远程英雄的伤害按 ×0.85 计算（其 15% 减伤）。生命/护甲/魔抗加成从实时属性读取，无需额外修正。
-- 召唤师峡谷（经典）不做修正（×1.0），模式判定不确定时始终安全地按经典处理。竞技场英雄个体修正与无限火力全局修正将在获得结构化数据后跟进。
+- 版本：v2.18.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄；专属模块增至 26 个（共用引擎 147 个）。
+- 阿狸晋升为第 26 个专属模块，22 项官方 16.15 原始数值已固定进自动回归检查。
 
-#### Kalista
+#### Ahri
 
-- 新标准的代表案例：她在大乱斗中的 E 处决与 Q 补刀计算现在包含 +10% 造成伤害修正。
-<!-- MESH-AIO:RELEASE:v2.17.1:END -->
+- 新专属模块，实现核心 E-Q-W 交易：先以可靠度门槛命中魅惑（E），E 飞行期间暂缓 Q/W，确保全部命中被魅惑的目标；若已有敌人被魅惑，则立即朝其当前位置发射 Q。
+- Q 按往返计算：去程魔法伤害，回程真实伤害。磁力（L 开关）在宝珠回程窗口朝目标短暂走位，让回程强制穿过目标，附带防御塔与人数保护。
+- E 还负责硬控目标自动魅惑、打断引导、反突进、抢头与凝滞狙击。E 闪（A 键）对射程外目标在 E 前摇中闪现突袭。
+- R 进场（R-E-Q-W）默认关闭：开启后仅在目标血量 ≤45%、落点周围敌人数合规、不在敌方塔下（H 开关可允许）且保留最后一段位移时，以官方 500 距离突进。
+- W 仅在官方 550 获取范围内使用，Flee 中也用于 40% 衰减加速；清线为按最少命中数的 Q 直线清线。
+<!-- MESH-AIO:RELEASE:v2.18.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.17.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.17.1)
 - [v2.17.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.17.0)
 - [v2.16.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.16.0)
 - [v2.15.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.15.0)
