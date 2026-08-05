@@ -19,33 +19,33 @@
 
 공식 16.15 데이터 기준 173챔피언 전체를 지원합니다. 아래는 세부 로직을 직접 제작한 전용 모듈 27개이며, 나머지 챔피언은 공용 엔진 베이스라인으로 동작합니다.
 
-- Ahri
-- Akali
-- Aurora
-- Ezreal
-- Gangplank
-- Garen
-- Hwei
-- Jhin
-- Jinx
-- Kalista
-- KogMaw
-- Leblanc
-- Locke
-- Malphite
-- Malzahar
-- Orianna
-- Pyke
-- Qiyana
-- Rengar
-- Riven
-- Soraka
-- Syndra
-- Talon
-- Teemo
-- Vayne
-- Xerath
-- Yunara
+- 아리
+- 아칼리
+- 오로라
+- 이즈리얼
+- 갱플랭크
+- 가렌
+- 흐웨이
+- 진
+- 징크스
+- 칼리스타
+- 코그모
+- 르블랑
+- 로크
+- 말파이트
+- 말자하
+- 오리아나
+- 파이크
+- 키아나
+- 렝가
+- 리븐
+- 소라카
+- 신드라
+- 탈론
+- 티모
+- 베인
+- 제라스
+- 유나라
 
 #### 핵심 및 메뉴
 
@@ -81,8 +81,8 @@ All 173 champions are supported on the official 16.15 data. The list below is th
 - Jhin
 - Jinx
 - Kalista
-- KogMaw
-- Leblanc
+- Kog'Maw
+- LeBlanc
 - Locke
 - Malphite
 - Malzahar
@@ -123,33 +123,33 @@ All 173 champions are supported on the official 16.15 data. The list below is th
 
 基于官方 16.15 数据支持全部 173 位英雄。下方为 27 个手工制作的专属模块；其余英雄由共用引擎基线驱动。
 
-- Ahri
-- Akali
-- Aurora
-- Ezreal
-- Gangplank
-- Garen
-- Hwei
-- Jhin
-- Jinx
-- Kalista
-- KogMaw
-- Leblanc
-- Locke
-- Malphite
-- Malzahar
-- Orianna
-- Pyke
-- Qiyana
-- Rengar
-- Riven
-- Soraka
-- Syndra
-- Talon
-- Teemo
-- Vayne
-- Xerath
-- Yunara
+- 九尾妖狐
+- 离群之刺
+- 双界灵兔
+- 探险家
+- 海洋之灾
+- 德玛西亚之力
+- 异画师
+- 戏命师
+- 暴走萝莉
+- 复仇之矛
+- 深渊巨口
+- 诡术妖姬
+- 灰烬驱魔人
+- 熔岩巨兽
+- 虚空先知
+- 发条魔灵
+- 血港鬼影
+- 元素女皇
+- 傲之追猎者
+- 放逐之刃
+- 众星之子
+- 暗黑元首
+- 刀锋之影
+- 迅捷斥候
+- 暗夜猎手
+- 远古巫灵
+- 不破之誓
 
 #### 核心与菜单
 
