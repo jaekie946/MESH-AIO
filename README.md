@@ -5,8 +5,8 @@
 # MESH-AIO Update History
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.14.0:START -->
-## v2.14.0
+<!-- MESH-AIO:RELEASE:v2.15.0:START -->
+## v2.15.0
 
 ### 한국어
 
@@ -194,16 +194,16 @@
 
 #### 핵심 및 메뉴
 
-- 버전: v2.14.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원을 유지하며, 전용 모듈이 23개(공용 150)로 늘었습니다.
-- Ezreal이 23번째 전용 모듈로 승격되었습니다. 공식 16.15 원본 수치 24개 항목이 자동 회귀 검사에 고정되었습니다.
+- 버전: v2.15.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준의 173챔피언 지원을 유지하며, 전용 모듈이 24개(공용 149)로 늘었습니다.
+- KogMaw가 24번째 전용 모듈로 승격되었습니다. 공식 16.15 원본 수치 26개 항목이 자동 회귀 검사에 고정되었습니다.
 
-#### Ezreal
+#### KogMaw
 
-- 신규 전용 모듈: W 표식 중심 교리로 동작합니다. 콤보에서 W(1150 사거리, 미니언 관통 예측)를 먼저 맞히고, 다음 자동 Q는 오브워커 대상보다 W 표식이 붙은 적을 우선해 격발이 낭비되지 않게 합니다. 표식 인식은 버프 스캔 우선, 자체 비행시간+공식 4초 추적기 폴백입니다.
-- W는 공격 중인 타워/억제기에도 자동으로 사용합니다(옵션+마나 게이트). 다음 평타가 표식을 격발해 추가 피해를 얻습니다.
-- E는 공격 스킬이 아니라 도주기입니다: Flee(Z) 커서 방향 블링크와, 적 돌진 착지 반응 회피에서만 사용하며 콤보/견제/킬스틸에는 절대 넣지 않습니다.
-- R는 글로벌 스킬로 취급합니다: Semi R(Space)는 슬라이더 사거리(기본 6000) 안에서 마우스에 가장 가까운 적을 조준하고, 자동 처치 R는 최소/최대 사거리(기본 1200~3000) 안에서 관통 감쇠(유닛당 -10%, 최저 30%)를 반영한 피해가 처치 확정일 때만 발사합니다. 1초 채널 동안 오브워커를 잠그고, 근접 적이 있으면 자동 R를 보류하는 옵션이 있습니다.
-- 스테이시스 저격(Q/W/처치 확정 R), 표식 격발 포함 Q 킬스틸, 처치 확정 Q 막타 팜(대포/슈퍼 우선, 그다음 최저 체력, 평타 도달 미니언 건너뛰기 옵션, 정글 포함), Auto Q 토글(J), 표식/사거리/처치 가능 드로우를 제공합니다.
+- 신규 전용 모듈: W(사거리 +130~210, 8초, %최대체력 온힛 강화 자기 버프)가 핵심 교리입니다. 콤보에서 대상이 W 확장 사거리 안에 들어오는 순간 W를 켜고, W가 도는 동안 실공속이 임계값(기본 3.0, 슬라이더) 이상이면 자동 Q/E/R 시전을 스킬별 토글로 억제해 기관총 평타를 스킬이 끊지 않게 합니다. 킬스틸·세미 키·스테이시스 저격은 억제에서 제외됩니다.
+- Q(1175 사거리, 방어력/마저 감쇄)는 콤보 선두로 나가고, E(1200 사거리, 관통 슬로우)는 콤보 슬로우·돌진 착지 반응 피격 저지·Flee(Z)를 담당합니다.
+- R는 랭크별 1300/1550/1800 포격입니다: 콤보 R는 대상 체력 %(기본 65) 이하 + 코스트 스택 상한(기본 2) + 평타 도달 대상 제외 옵션을 모두 지켜야 나가고, Auto R 토글(U)은 자체 스택 상한(기본 3)에 공격 가능한 적이 하나라도 있으면 쏘지 않습니다. 코스트 스택은 공식 8초 창에서 자기 시전을 추적해 스택당 +40, 상한 400 마나를 항상 확인합니다.
+- 처형 수학 내장: 잃은 체력 1%당 +0.833%(최대 ×1.5), 체력 40% 미만은 공식 ×2를 그대로 반영해 킬스틸 R가 정확히 계산합니다. W 온힛(%최대체력, 몬스터 상한 100)도 처치 가능 표시에 포함됩니다.
+- 처치 확정 Q 막타 팜(대포/슈퍼 우선, 평타 도달 스킵 옵션, 정글 포함)과 최소 명중 수 기반 E 라인 클리어, Semi R(Space)/Semi E(G), W 가동 중 확장 사거리 원 드로우를 제공합니다.
 ### English
 
 #### Supported Champions
@@ -390,16 +390,16 @@
 
 #### Core & Menu
 
-- Version: v2.14.0. 173-champion support stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data; hand-tuned modules grow to 23 (shared-engine 150).
-- Ezreal is promoted to the 23rd dedicated module. 24 official 16.15 raw values are pinned into the automated regression checks.
+- Version: v2.15.0. 173-champion support stays on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data; hand-tuned modules grow to 24 (shared-engine 149).
+- KogMaw is promoted to the 24th dedicated module. 26 official 16.15 raw values are pinned into the automated regression checks.
 
-#### Ezreal
+#### KogMaw
 
-- New dedicated module built around the W-mark doctrine. Combo lands W first (1150 range, minion-piercing prediction), and the next automatic Q prioritizes the W-marked enemy over the orbwalker target so the detonation is never wasted. Mark reading is buff-scan first with an internal travel-time + official 4-second tracker as fallback.
-- W is also cast automatically on the turret/inhibitor being attacked (option + mana gate); the following basic attack detonates the mark for extra damage.
-- E is an escape, never an attack: it fires only in Flee (Z, blink toward the cursor) and as an anti-gapclose blink away from a dash landing - never in combo, harass, or killsteal.
-- R is treated as the global it is: Semi R (Space) aims the nearest-mouse enemy inside the range slider (6000 default), and the automatic R execute fires only between the min/max range sliders (1200-3000 default) when the pierce-falloff damage (-10% per unit, 30% floor) still kills. The orbwalker is held through the 1-second channel, and an option holds automatic R while an enemy is nearby.
-- Ships stasis snipes (Q/W/lethal-only R), Q killsteal counting the mark detonation, kill-secured Q last hits (cannon/super first, then lowest health, with an option to skip minions the basic attack reaches, jungle included), the Auto Q toggle (J), and mark/range/killable drawings.
+- New dedicated module built around W - the self-buff that adds 130..210 attack range for 8 seconds plus the %-max-health on-hit. Combo turns W on the moment the target enters the extended reach, and while W runs with the live attack speed above the threshold slider (3.0 default), automatic Q/E/R casts are suppressed per spell so nothing interrupts the machine-gun window. Killsteal, semi keys, and stasis snipes stay exempt.
+- Q (1175 range, armor/MR shred) opens the combo; E (1200 range, piercing slow) covers the combo slow, peeling a dash that lands on Kog'Maw, and Flee (Z).
+- R is the rank-ranged 1300/1550/1800 artillery: combo R requires the target-HP slider (65 default), the cost-stack cap (2 default), and the option that skips targets the basic attack already reaches; the Auto R toggle (U) has its own stack cap (3 default) and never fires while any attackable enemy exists. Cost stacks are tracked from own casts over the official 8-second window (+40 per stack, 400 cap) and every automatic R checks affordability.
+- The execute math is built in: +0.833% per 1% missing health up to x1.5, and the official x2 below 40% health, so the R killsteal computes exactly. The W on-hit (%-max-health, 100 monster cap) is part of the killable indicator.
+- Ships kill-secured Q last hits (cannon/super first, AA-reach skip option, jungle included), an E lane clear at the minimum-hits slider, Semi R (Space) / Semi E (G), and the extended-attack-range circle drawn while W runs.
 ### 简体中文
 
 #### 支持英雄
@@ -586,22 +586,23 @@
 
 #### 核心与菜单
 
-- 版本：v2.14.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄；专属模块增至 23 个（共用引擎 150 个）。
-- 伊泽瑞尔晋升为第 23 个专属模块，24 项官方 16.15 原始数值已固定进自动回归检查。
+- 版本：v2.15.0。继续基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄；专属模块增至 24 个（共用引擎 149 个）。
+- 克格莫晋升为第 24 个专属模块，26 项官方 16.15 原始数值已固定进自动回归检查。
 
-#### Ezreal
+#### KogMaw
 
-- 新专属模块，以 W 印记为核心：连招先命中 W（1150 射程、穿越小兵的预测），随后的自动 Q 优先攻击带 W 印记的敌人而不是走砍目标，确保引爆不被浪费。印记识别以 Buff 扫描为先，内部飞行时间加官方 4 秒计时器作为兜底。
-- W 也会自动施放在正在攻击的防御塔/水晶上（选项+蓝量门槛），下一次普攻引爆印记获得额外伤害。
-- E 是位移逃生技能而非攻击技能：仅在 Flee（Z，向光标方向闪现）和敌方突进落点反应规避中使用，绝不进入连招/骚扰/抢头。
-- R 按全图技能处理：Semi R（空格）在滑条射程（默认 6000）内瞄准离鼠标最近的敌人；自动处决 R 仅在最小/最大射程（默认 1200~3000）之间、且计入穿透衰减（每单位 -10%，下限 30%）后的伤害仍然致命时发射。1 秒引导期间锁定走砍，并有敌人近身时暂缓自动 R 的选项。
-- 附带凝滞狙击（Q/W/仅致命 R）、计入印记引爆的 Q 抢头、确定击杀的 Q 补刀（炮车/超级兵优先，其次最低血量，可跳过普攻可及的小兵，含野怪）、Auto Q 开关（J）以及印记/射程/可击杀绘制。
-<!-- MESH-AIO:RELEASE:v2.14.0:END -->
+- 新专属模块，以 W 为核心——这个自身增益提供 130~210 攻击距离加成（8 秒）和 %最大生命值的攻击特效。连招在目标进入扩展射程的瞬间开 W；W 期间若实时攻速超过阈值滑条（默认 3.0），自动 Q/E/R 将按技能开关被抑制，确保没有技能打断机枪普攻窗口。抢头、手动键与凝滞狙击不受抑制。
+- Q（1175 射程，护甲/魔抗削减）作为连招起手；E（1200 射程，穿透减速）负责连招减速、敌方突进落点的反打减速以及 Flee（Z）。
+- R 是按等级 1300/1550/1800 射程的炮击：连招 R 需同时满足目标血量 %（默认 65）、耗蓝层数上限（默认 2）以及跳过普攻可及目标的选项；Auto R 开关（U）有独立层数上限（默认 3），且只要存在任何可普攻的敌人就不会发射。耗蓝层数通过官方 8 秒窗口跟踪自身施放（每层 +40，上限 400），每次自动 R 都检查蓝量是否足够。
+- 处决数学内置：每 1% 已损失生命值 +0.833%（最高 ×1.5），40% 生命值以下按官方 ×2 计算，R 抢头因此精确。W 攻击特效（%最大生命值，野怪上限 100）也计入可击杀指示。
+- 附带确定击杀的 Q 补刀（炮车/超级兵优先，可跳过普攻可及小兵，含野怪）、按最少命中数的 E 清线、Semi R（空格）/Semi E（G），以及 W 期间的扩展攻击距离圆圈绘制。
+<!-- MESH-AIO:RELEASE:v2.15.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.14.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.14.0)
 - [v2.13.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.13.0)
 - [v2.12.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.12.0)
 - [v2.11.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.11.0)
