@@ -10,271 +10,657 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.23.0:START -->
-## v2.23.0
+<!-- MESH-AIO:RELEASE:v2.24.0:START -->
+## v2.24.0
 
 ### 한국어
 
 #### 지원 챔피언
 
-공식 16.15 데이터 기준 173챔피언 전체를 지원합니다. 아래는 세부 상태 머신을
-직접 제작한 전용 모듈 28개이며, 나머지 145챔피언은 각자의 행동 계약을 공용
-엔진에서 실행합니다.
-
-- 아리
-- 아칼리
-- 오로라
-- 이즈리얼
-- 갱플랭크
-- 가렌
-- 흐웨이
-- 진
-- 징크스
-- 칼리스타
-- 코그모
+- 올라프
 - 르블랑
-- 로크
-- 말파이트
-- 말자하
-- 오리아나
-- 파이크
-- 키아나
-- 렝가
-- 리븐
+- 블라디미르
+- 시비르
 - 소라카
-- 신드라
-- 탈론
 - 티모
 - 트리스타나
+- 미스 포츈
+- 애쉬
+- 트위치
+- 카서스
+- 이렐리아
+- 갱플랭크
+- 코르키
+- 케이틀린
+- 블리츠크랭크
+- 말파이트
+- 엘리스
+- 오리아나
 - 베인
+- 카시오페아
+- 이즈리얼
+- 모데카이저
+- 아칼리
+- 가렌
+- 말자하
+- 탈론
+- 리븐
+- 코그모
 - 제라스
+- 아리
+- 렝가
+- 바루스
+- 빅토르
+- 드레이븐
+- 카직스
+- 신드라
+- 카이사
+- 야스오
+- 탈리야
+- 진
+- 제리
+- 징크스
+- 루시안
+- 제드
+- 키아나
+- 사미라
+- 쓰레쉬
+- 일라오이
+- 칼리스타
+- 자야
+- 아펠리오스
+- 파이크
+- 요네
+- 멜
 - 유나라
+- 로크
+- 오로라
+- 밀리오
+- 자헨
+- 흐웨이
 
 #### 핵심 및 메뉴
 
-- 버전 v2.23.0에서 173개 `profile.lua` 전부에 Combo/Harass/Farm/Flee/Reactive/Weave 순서, 실행 동작, 상태·자원 특성 계약을 추가했습니다. 공식 목록과 173/173 일치하지 않으면 빌드가 실패합니다.
-- 현재 계약은 실행 동작 440개와 상태·정책 특성 275개입니다. 공용 145챔피언은 하나의 전역 Q/W/E/R 순서 대신 자기 계약을 실제로 읽고, 전용 28챔피언은 기존 실측 상태 머신을 유지합니다.
-- 각 공용 챔피언은 필요한 수동·강제·커서·아군·처형·자동·일시정지·스킬→점멸·점멸→스킬·벽 동작만 `Champion Actions`에 표시합니다. 새 키는 기본 미지정이며 dropdown + `Set LMB`로 배정합니다.
-- 공식 `mClientData.mTargeterDefinitions`의 Line/Cone/Aoe/Range 사거리·반경·폭을 일반식으로 읽어 누락되거나 잘못 생성되던 판정을 복구했습니다. 글로벌 R과 이동속도 기반 동적 사거리도 공식 계약으로 고정했습니다.
-- FXT 173파일은 라이선스 미확인 읽기 전용 행동 자료로만 감사했습니다. 파일·함수·상수·수치·구형 API는 복사하지 않았고 Riot 고정 데이터와 현재 Hanbot API로 독립 구현했습니다.
-- 새 다단계·점멸 동작은 정적 검사와 Lua 5.1 검사를 통과했지만 라이브 서버 타이밍은 F12 확인 대상입니다. 버프·스택·무기·소환물처럼 live 상태가 필요한 기능은 추측 시전하지 않고 안전하게 닫힙니다.
+- v2.24.0은 Riot 16.15.1/클라이언트 16.15 기준 173챔피언을 수작업 전용 28개, 생성 전용 33개, 공용 112개로 실행합니다.
+- NG-AIO 10개는 모두 전용입니다. 기존 이즈리얼·칼리스타·로크 상태 머신은 보존하고, 일라오이·이렐리아·카서스·멜·블라디미르·야스오·제드는 현재 Hanbot API와 공식 데이터로 상태 로직을 이식했습니다.
+- HGVip/CXJ/Q-Aio는 라이선스가 확인되지 않아 코드를 복사하지 않았습니다. 둘 이상 자료에서 독립적으로 확인된 26개 챔피언만 생성 전용으로 승격하고, 위험한 재시전·방어기·궁극기는 상태를 확인할 수 없으면 자동 시전을 거부합니다.
+- 생성 전용 메뉴는 감사 출처와 기능 계약, 챔피언별 실동작 옵션을 표시하며 기존 Semi Q/W/E/R, Champion Actions, LMB 키 지정 기능을 그대로 사용합니다.
+- 현재 스킬 슬롯 이름을 공식 raw 형태 1,004개(재시전 269·변신/강화 23·충전 23·평타 리셋 75)와 매 틱 대조하고, 동일 alias는 정확한 mScriptName을 우선해 각 시전 방식으로 분기합니다.
+- Elise·Jayce·Nidalee 양방향 변신, Rek'Sai 잠복, Aphelios 무기 전환, Hwei 팔레트뿐 아니라 Sylas의 훔친 궁과 Viego 빙의 슬롯도 공식 전체 카탈로그에서 현재 이름으로 찾습니다.
+- 공식 타게팅 계약이 불명확한 형태는 자동 시전을 막고 세미키만 허용하며, 궁극기와 변신 자동 사용은 기본 OFF로 두었습니다.
+- 공식 평타 리셋 태그가 있는 형태는 평타 선딜을 보존한 뒤 첫 유효 백스윙에서 요청하고, 거부된 유효 요청만 1ms 스크립트 하한으로 재시도합니다.
+- OP.GG 16.15 공개 페이지의 173챔피언 스킬 우선순위와 사용자 팁을 robots.txt 허용 확인 후 별도 보조 캐시에 저장했으며, 수치와 시전 형태는 Riot 원본만 기준으로 사용합니다.
 
-#### Aatrox
+#### Olaf
 
-- Q의 공식 850/400 판정과 E 300/50 판정을 nested targeter에서 복구하고, 수동 W·Q→점멸·Q 단계 상태 계약을 프로필에 추가했습니다.
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 axe_pickup·q_magnet·low_hp_w 계약을 연결했습니다. 공식 형태 5개와 전투 Q→E→W→R 순서를 유지합니다.
 
-#### Aphelios
+#### Vladimir
 
-- 무기 상태 특성을 보존하면서 수동 Q/R, 강제 R, 자동 W 일시정지 동작을 독립 키로 노출했습니다.
+- NG-AIO+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 empowered_q·e_charge·e_release·pool_block·multi_r 계약을 연결했습니다. 공식 형태 4개와 전투 Q→E→R→W 순서를 유지합니다.
 
-#### Jayce
+#### Sivir
 
-- 자세 상태와 정확한 live form을 기준으로 수동 Q/EQ, 커서 EQ, E→점멸, 강제 E, 자동 R 일시정지 계약을 추가했습니다.
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 q_return·w_reset·spellshield 계약을 연결했습니다. 공식 형태 4개와 전투 Q→W→E→R 순서를 유지합니다.
 
-#### Seraphine
+#### MissFortune
 
-- R의 공식 1300/160 판정을 복구하고 수동 E/R, E·R→점멸, 패시브 일시정지, 이중 시전·에코 상태를 기록했습니다.
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 passive_swap·q_bounce·channel_r 계약을 연결했습니다. 공식 형태 5개와 전투 Q→W→E→R 순서를 유지합니다.
 
-#### Sett
+#### Ashe
 
-- W 공식 805/210 판정을 복구하고 수동 W/E/EW/R, W→점멸, 점멸→E/R, 강제 R과 W 조준 보정 계약을 추가했습니다.
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 q_weave·cone_w·global_r 계약을 연결했습니다. 공식 형태 6개와 전투 W→Q→E→R 순서를 유지합니다.
 
-#### Sion
+#### Twitch
 
-- Q의 공식 750/180 판정을 복구하고 W·E→점멸, Q 충전, R 조향 상태를 공용 계약에 반영했습니다.
+- HGVip+CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 poison·stealth_return·e_execute·r_line 계약을 연결했습니다. 공식 형태 4개와 전투 E→Q→W→R 순서를 유지합니다.
 
-#### TwistedFate
+#### Karthus
 
-- Q의 공식 1400/40 판정을 복구하고 수동 Q/W, 카드 색 선택, 카드 평타 위빙·공격 일시정지 상태를 분리했습니다.
+- NG-AIO+CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 isolated_q·aura_hysteresis·mana_reserve·passive_r·global_r 계약을 연결했습니다. 공식 형태 15개와 전투 E→Q→W→R 순서를 유지합니다.
 
-#### Warwick
+#### Irelia
 
-- R 사거리를 이동속도 x2.5, 최대 2500으로 계산하고 수동 R, Q→점멸, 점멸→E, 강제 Q와 Q 홀드 상태를 추가했습니다.
+- NG-AIO+CXJ 교차 감사로 생성 전용 진입점에 승격하고 q_reset·marked_q·minion_gapclose·e_two_stage·w_block·multi_r 계약을 연결했습니다. 공식 형태 8개와 전투 E→R→Q→W 순서를 유지합니다.
+
+#### Corki
+
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 missile_ammo·big_one·package_state 계약을 연결했습니다. 공식 형태 4개와 전투 Q→E→W→R 순서를 유지합니다.
+
+#### Caitlyn
+
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 headshot·trap_cc·net_recoil·global_execute 계약을 연결했습니다. 공식 형태 5개와 전투 Q→W→E→R 순서를 유지합니다.
+
+#### Blitzcrank
+
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 hook_collision·e_reset·interrupt_r 계약을 연결했습니다. 공식 형태 4개와 전투 Q→E→W→R 순서를 유지합니다.
+
+#### Elise
+
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 stance·spiderlings·rappel_state 계약을 연결했습니다. 공식 형태 11개와 전투 Q→W→E→R 순서를 유지합니다.
+
+#### Cassiopeia
+
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 poison_e·miasma_dash·facing_r 계약을 연결했습니다. 공식 형태 4개와 전투 E→Q→W→R 순서를 유지합니다.
+
+#### Ezreal
+
+- NG-AIO의 초반 패시브 유지 결정을 현재 API로 옮겨, 실시간 `ezrealpassivestacks` 종료와 Q 비행시간이 만나는 66ms 구간에만 미니언 Q를 사용하도록 추가했습니다. 옵션은 기본 OFF입니다.
+
+#### Mordekaiser
+
+- HGVip+CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 passive_ring·isolated_q·realm_r 계약을 연결했습니다. 공식 형태 4개와 전투 Q→E→W→R 순서를 유지합니다.
+
+#### Varus
+
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 q_charge·blight·w_execute·chain_r 계약을 연결했습니다. 공식 형태 4개와 전투 Q→W→E→R 순서를 유지합니다.
+
+#### Viktor
+
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 e_vector·w_cc·r_follow·hex_fragments 계약을 연결했습니다. 공식 형태 5개와 전투 E→Q→W→R 순서를 유지합니다.
+
+#### Draven
+
+- HGVip+CXJ 교차 감사로 생성 전용 진입점에 승격하고 axe_catch·axe_renewal·global_r 계약을 연결했습니다. 공식 형태 7개와 전투 Q→W→E→R 순서를 유지합니다.
+
+#### Khazix
+
+- HGVip+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 evolution·isolation·safe_e 계약을 연결했습니다. 공식 형태 10개와 전투 Q→W→E→R 순서를 유지합니다.
+
+#### Kaisa
+
+- HGVip+CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 evolution·plasma·isolated_q·safe_r 계약을 연결했습니다. 공식 형태 7개와 전투 Q→E→W→R 순서를 유지합니다.
 
 #### Yasuo
 
-- 커서 E, 자동 R, Q→점멸, EQ→점멸, E 모드, Q 스택과 대상별 돌진 표식 계약을 추가했습니다.
+- NG-AIO+HGVip+CXJ 교차 감사로 생성 전용 진입점에 승격하고 q_stack·dash_marks·minion_dash·eq·eq_flash·windwall·knockup_r 계약을 연결했습니다. 공식 형태 13개와 전투 Q→E→W→R 순서를 유지합니다.
+
+#### Taliyah
+
+- HGVip+CXJ 교차 감사로 생성 전용 진입점에 승격하고 worked_ground·w_vector·e_dash·channel_r 계약을 연결했습니다. 공식 형태 9개와 전투 Q→E→W→R 순서를 유지합니다.
 
 #### Zeri
 
-- Q 평타 상태를 보존하면서 수동 W, 자동 Q, 강제 Q→Q, 커서 방향 벽 E를 추가했습니다. 지형 확인이 필요한 W/E는 자동 조준으로 추측하지 않습니다.
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 q_attack·charged_passive·wall_w·wall_e·r_effectiveness 계약을 연결했습니다. 공식 형태 4개와 전투 Q→E→W→R 순서를 유지합니다.
+
+#### Lucian
+
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 passive_weave·extended_q·r_magnet 계약을 연결했습니다. 공식 형태 4개와 전투 Q→E→W→R 순서를 유지합니다.
+
+#### Zed
+
+- NG-AIO+CXJ 교차 감사로 생성 전용 진입점에 승격하고 shadow_tracking·multi_origin_q·shadow_e·weq·death_mark·safe_swap 계약을 연결했습니다. 공식 형태 8개와 전투 R→W→E→Q 순서를 유지합니다.
+
+#### Samira
+
+- HGVip+CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 style·melee_q·projectile_w·dash_reset·r_gate 계약을 연결했습니다. 공식 형태 7개와 전투 Q→E→W→R 순서를 유지합니다.
+
+#### Thresh
+
+- HGVip+CXJ 교차 감사로 생성 전용 진입점에 승격하고 q_recast·lantern_ally·e_direction 계약을 연결했습니다. 공식 형태 8개와 전투 Q→E→W→R 순서를 유지합니다.
+
+#### Illaoi
+
+- NG-AIO 교차 감사로 생성 전용 진입점에 승격하고 spirit_priority·w_attack_reset·heartsteel_wait·multi_r 계약을 연결했습니다. 공식 형태 4개와 전투 E→Q→W→R 순서를 유지합니다.
+
+#### Xayah
+
+- HGVip+CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 feathers·e_root·r_reposition 계약을 연결했습니다. 공식 형태 4개와 전투 E→W→Q→R 순서를 유지합니다.
+
+#### Aphelios
+
+- HGVip+CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 weapon_state·mark_range·weapon_swap 계약을 연결했습니다. 공식 형태 11개와 전투 Q→E→W→R 순서를 유지합니다.
+
+#### Yone
+
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 q_stack·spirit_return·safe_r 계약을 연결했습니다. 공식 형태 6개와 전투 Q→E→W→R 순서를 유지합니다.
+
+#### Mel
+
+- NG-AIO+CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 multi_q·reserve_w·reflect_lethal·e_setup·r_reserve 계약을 연결했습니다. 공식 형태 4개와 전투 E→Q→R→W 순서를 유지합니다.
+
+#### Milio
+
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 ally_shield·interrupt_q·cleanse_r 계약을 연결했습니다. 공식 형태 5개와 전투 E→W→Q→R 순서를 유지합니다.
+
+#### Zaahen
+
+- CXJ+Q-Aio 교차 감사로 생성 전용 진입점에 승격하고 recast_state·resource·execute 계약을 연결했습니다. 공식 형태 6개와 전투 Q→E→W→R 순서를 유지합니다.
 
 ### English
 
 #### Supported Champions
 
-All 173 champions are supported on the official 16.15 data. The following 28
-use hand-tuned state machines; the other 145 execute their own behaviour
-contracts through the shared engine.
-
-- Ahri
-- Akali
-- Aurora
-- Ezreal
-- Gangplank
-- Garen
-- Hwei
-- Jhin
-- Jinx
-- Kalista
-- Kog'Maw
+- Olaf
 - LeBlanc
-- Locke
-- Malphite
-- Malzahar
-- Orianna
-- Pyke
-- Qiyana
-- Rengar
-- Riven
+- Vladimir
+- Sivir
 - Soraka
-- Syndra
-- Talon
 - Teemo
 - Tristana
+- Miss Fortune
+- Ashe
+- Twitch
+- Karthus
+- Irelia
+- Gangplank
+- Corki
+- Caitlyn
+- Blitzcrank
+- Malphite
+- Elise
+- Orianna
 - Vayne
+- Cassiopeia
+- Ezreal
+- Mordekaiser
+- Akali
+- Garen
+- Malzahar
+- Talon
+- Riven
+- Kog'Maw
 - Xerath
+- Ahri
+- Rengar
+- Varus
+- Viktor
+- Draven
+- Kha'Zix
+- Syndra
+- Kai'Sa
+- Yasuo
+- Taliyah
+- Jhin
+- Zeri
+- Jinx
+- Lucian
+- Zed
+- Qiyana
+- Samira
+- Thresh
+- Illaoi
+- Kalista
+- Xayah
+- Aphelios
+- Pyke
+- Yone
+- Mel
 - Yunara
+- Locke
+- Aurora
+- Milio
+- Zaahen
+- Hwei
 
 #### Core & Menu
 
-- Version v2.23.0 gives all 173 `profile.lua` files independent Combo, Harass, Farm, Flee, Reactive, and Weave orders plus executable actions and state/resource traits. Generation fails unless the catalog matches the official roster 173/173.
-- The catalog contains 440 executable actions and 275 state/policy traits. The 145 shared champions consume their own contracts instead of one global Q/W/E/R order, while the 28 dedicated champions retain their measured state machines.
-- Each shared champion exposes only its relevant manual, force, cursor, ally, execute, auto, pause, spell-to-Flash, Flash-to-spell, and wall actions under `Champion Actions`. New bindings default to unassigned and support dropdown + `Set LMB` mapping.
-- General extraction of official Line/Cone/Aoe/Range geometry from `mClientData.mTargeterDefinitions` restores missing or incorrect targeting. Global ultimates and movement-speed-scaled ranges are also pinned as official contracts.
-- The 173 FXT files were used only as unlicensed, read-only behavioural references. No file, function, constant, numeric value, or legacy API was copied; Riot-pinned data and the current Hanbot API drive the independent implementation.
-- New multi-step and Flash actions pass static and Lua 5.1 validation, but their live server timing remains an F12 test item. Buff-, stack-, weapon-, and summon-dependent logic fails closed instead of guessing live state.
+- v2.24.0 runs all 173 champions from Riot 16.15.1/client 16.15 as 28 hand-tuned, 33 generated-specialist, and 112 shared entries.
+- All ten NG-AIO champions are dedicated. Existing Ezreal, Kalista, and Locke state machines remain intact; Illaoi, Irelia, Karthus, Mel, Vladimir, Yasuo, and Zed now use current-API specialist state logic.
+- HGVip/CXJ/Q-Aio had no supplied reuse license, so no code was copied. Only 26 champions independently corroborated by at least two archives were promoted, with unsafe recasts, defensive spells, and ultimates failing closed when state is unknown.
+- Specialist menus expose audit sources, feature contracts, and connected champion options while retaining Semi Q/W/E/R, Champion Actions, and LMB key assignment.
+- Matches each live slot name against 1,004 official raw forms (recast 269, transform/upgrade 23, charge 23, attack reset 75) every tick, preferring an exact mScriptName when aliases overlap.
+- Covers both directions of Elise, Jayce, and Nidalee transformations, Rek'Sai burrow, Aphelios weapon swaps, Hwei palettes, Sylas stolen ultimates, and Viego possession slots through the full official catalog.
+- Forms with an ambiguous official targeting contract stay semi-manual only, while automatic ultimates and transformations remain disabled by default.
+- Official attack-reset forms preserve the auto-attack windup, cast on the first valid backswing callback, and retry only valid rejected requests with a 1 ms script-local floor.
+- Archived skill priorities and user-tip summaries for all 173 champions from OP.GG 16.15 after verifying robots.txt permission; Riot data remains the sole authority for numbers and cast forms.
 
-#### Aatrox
+#### Olaf
 
-- Restored official 850/400 Q and 300/50 E geometry from nested targeters, then added Manual W, Q-to-Flash, and Q-stage contracts.
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with axe_pickup, q_magnet, low_hp_w; it retains 5 official forms and the Q→E→W→R combat order.
 
-#### Aphelios
+#### Vladimir
 
-- Preserved weapon-state traits while exposing Manual Q/R, Force R, and Pause Automatic W as independent actions.
+- Promoted to a dedicated specialist entry after NG-AIO+Q-Aio review, with empowered_q, e_charge, e_release, pool_block, multi_r; it retains 4 official forms and the Q→E→R→W combat order.
 
-#### Jayce
+#### Sivir
 
-- Added stance-aware Manual Q/EQ, Cursor EQ, E-to-Flash, Force E, and Pause Automatic R contracts against exact live forms.
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with q_return, w_reset, spellshield; it retains 4 official forms and the Q→W→E→R combat order.
 
-#### Seraphine
+#### MissFortune
 
-- Restored official 1300/160 R geometry and recorded Manual E/R, E/R-to-Flash, passive pause, double-cast, and Echo behaviour.
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with passive_swap, q_bounce, channel_r; it retains 5 official forms and the Q→W→E→R combat order.
 
-#### Sett
+#### Ashe
 
-- Restored official 805/210 W geometry and added Manual W/E/EW/R, W-to-Flash, Flash-to-E/R, Force R, and W-adjustment contracts.
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with q_weave, cone_w, global_r; it retains 6 official forms and the W→Q→E→R combat order.
 
-#### Sion
+#### Twitch
 
-- Restored official 750/180 Q geometry and added W/E-to-Flash, Q-charge, and R-steering contracts.
+- Promoted to a dedicated specialist entry after HGVip+CXJ+Q-Aio review, with poison, stealth_return, e_execute, r_line; it retains 4 official forms and the E→Q→W→R combat order.
 
-#### TwistedFate
+#### Karthus
 
-- Restored official 1400/40 Q geometry and separated Manual Q/W, card selection, card-attack weaving, and attack-pause state.
+- Promoted to a dedicated specialist entry after NG-AIO+CXJ+Q-Aio review, with isolated_q, aura_hysteresis, mana_reserve, passive_r, global_r; it retains 15 official forms and the E→Q→W→R combat order.
 
-#### Warwick
+#### Irelia
 
-- R now uses movement speed x2.5 up to 2500, with Manual R, Q-to-Flash, Flash-to-E, Force Q, and Q-hold contracts.
+- Promoted to a dedicated specialist entry after NG-AIO+CXJ review, with q_reset, marked_q, minion_gapclose, e_two_stage, w_block, multi_r; it retains 8 official forms and the E→R→Q→W combat order.
+
+#### Corki
+
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with missile_ammo, big_one, package_state; it retains 4 official forms and the Q→E→W→R combat order.
+
+#### Caitlyn
+
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with headshot, trap_cc, net_recoil, global_execute; it retains 5 official forms and the Q→W→E→R combat order.
+
+#### Blitzcrank
+
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with hook_collision, e_reset, interrupt_r; it retains 4 official forms and the Q→E→W→R combat order.
+
+#### Elise
+
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with stance, spiderlings, rappel_state; it retains 11 official forms and the Q→W→E→R combat order.
+
+#### Cassiopeia
+
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with poison_e, miasma_dash, facing_r; it retains 4 official forms and the E→Q→W→R combat order.
+
+#### Ezreal
+
+- Ported NG-AIO's early passive refresh decision to the current API: minion Q is requested only in the 66 ms window where travel time lands before `ezrealpassivestacks` expires. The option defaults off.
+
+#### Mordekaiser
+
+- Promoted to a dedicated specialist entry after HGVip+CXJ+Q-Aio review, with passive_ring, isolated_q, realm_r; it retains 4 official forms and the Q→E→W→R combat order.
+
+#### Varus
+
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with q_charge, blight, w_execute, chain_r; it retains 4 official forms and the Q→W→E→R combat order.
+
+#### Viktor
+
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with e_vector, w_cc, r_follow, hex_fragments; it retains 5 official forms and the E→Q→W→R combat order.
+
+#### Draven
+
+- Promoted to a dedicated specialist entry after HGVip+CXJ review, with axe_catch, axe_renewal, global_r; it retains 7 official forms and the Q→W→E→R combat order.
+
+#### Khazix
+
+- Promoted to a dedicated specialist entry after HGVip+Q-Aio review, with evolution, isolation, safe_e; it retains 10 official forms and the Q→W→E→R combat order.
+
+#### Kaisa
+
+- Promoted to a dedicated specialist entry after HGVip+CXJ+Q-Aio review, with evolution, plasma, isolated_q, safe_r; it retains 7 official forms and the Q→E→W→R combat order.
 
 #### Yasuo
 
-- Added Cursor E, Auto R, Q-to-Flash, EQ-to-Flash, E mode, Q stacks, and per-target dash-mark contracts.
+- Promoted to a dedicated specialist entry after NG-AIO+HGVip+CXJ review, with q_stack, dash_marks, minion_dash, eq, eq_flash, windwall, knockup_r; it retains 13 official forms and the Q→E→W→R combat order.
+
+#### Taliyah
+
+- Promoted to a dedicated specialist entry after HGVip+CXJ review, with worked_ground, w_vector, e_dash, channel_r; it retains 9 official forms and the Q→E→W→R combat order.
 
 #### Zeri
 
-- Preserved Q-as-attack state while adding Manual W, Auto Q, Force Q-to-Q, and cursor-directed wall E. Terrain-dependent W/E stays fail-closed for automatic aim.
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with q_attack, charged_passive, wall_w, wall_e, r_effectiveness; it retains 4 official forms and the Q→E→W→R combat order.
+
+#### Lucian
+
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with passive_weave, extended_q, r_magnet; it retains 4 official forms and the Q→E→W→R combat order.
+
+#### Zed
+
+- Promoted to a dedicated specialist entry after NG-AIO+CXJ review, with shadow_tracking, multi_origin_q, shadow_e, weq, death_mark, safe_swap; it retains 8 official forms and the R→W→E→Q combat order.
+
+#### Samira
+
+- Promoted to a dedicated specialist entry after HGVip+CXJ+Q-Aio review, with style, melee_q, projectile_w, dash_reset, r_gate; it retains 7 official forms and the Q→E→W→R combat order.
+
+#### Thresh
+
+- Promoted to a dedicated specialist entry after HGVip+CXJ review, with q_recast, lantern_ally, e_direction; it retains 8 official forms and the Q→E→W→R combat order.
+
+#### Illaoi
+
+- Promoted to a dedicated specialist entry after NG-AIO review, with spirit_priority, w_attack_reset, heartsteel_wait, multi_r; it retains 4 official forms and the E→Q→W→R combat order.
+
+#### Xayah
+
+- Promoted to a dedicated specialist entry after HGVip+CXJ+Q-Aio review, with feathers, e_root, r_reposition; it retains 4 official forms and the E→W→Q→R combat order.
+
+#### Aphelios
+
+- Promoted to a dedicated specialist entry after HGVip+CXJ+Q-Aio review, with weapon_state, mark_range, weapon_swap; it retains 11 official forms and the Q→E→W→R combat order.
+
+#### Yone
+
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with q_stack, spirit_return, safe_r; it retains 6 official forms and the Q→E→W→R combat order.
+
+#### Mel
+
+- Promoted to a dedicated specialist entry after NG-AIO+CXJ+Q-Aio review, with multi_q, reserve_w, reflect_lethal, e_setup, r_reserve; it retains 4 official forms and the E→Q→R→W combat order.
+
+#### Milio
+
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with ally_shield, interrupt_q, cleanse_r; it retains 5 official forms and the E→W→Q→R combat order.
+
+#### Zaahen
+
+- Promoted to a dedicated specialist entry after CXJ+Q-Aio review, with recast_state, resource, execute; it retains 6 official forms and the Q→E→W→R combat order.
 
 ### 简体中文
 
 #### 支持英雄
 
-基于官方 16.15 数据支持全部 173 位英雄。以下 28 位使用手工状态机；其余 145 位
-通过共用引擎执行各自的行为契约。
-
-- 九尾妖狐
-- 离群之刺
-- 双界灵兔
-- 探险家
-- 海洋之灾
-- 德玛西亚之力
-- 异画师
-- 戏命师
-- 暴走萝莉
-- 复仇之矛
-- 深渊巨口
+- 狂战士
 - 诡术妖姬
-- 灰烬驱魔人
-- 熔岩巨兽
-- 虚空先知
-- 发条魔灵
-- 血港鬼影
-- 元素女皇
-- 傲之追猎者
-- 放逐之刃
+- 猩红收割者
+- 战争女神
 - 众星之子
-- 暗黑元首
-- 刀锋之影
 - 迅捷斥候
 - 麦林炮手
+- 赏金猎人
+- 寒冰射手
+- 瘟疫之源
+- 死亡颂唱者
+- 刀锋舞者
+- 海洋之灾
+- 英勇投弹手
+- 皮城女警
+- 蒸汽机器人
+- 熔岩巨兽
+- 蜘蛛女皇
+- 发条魔灵
 - 暗夜猎手
+- 魔蛇之拥
+- 探险家
+- 铁铠冥魂
+- 离群之刺
+- 德玛西亚之力
+- 虚空先知
+- 刀锋之影
+- 放逐之刃
+- 深渊巨口
 - 远古巫灵
+- 九尾妖狐
+- 傲之追猎者
+- 惩戒之箭
+- 奥术先驱
+- 荣耀行刑官
+- 虚空掠夺者
+- 暗黑元首
+- 虚空之女
+- 疾风剑豪
+- 岩雀
+- 戏命师
+- 祖安花火
+- 暴走萝莉
+- 圣枪游侠
+- 影流之主
+- 元素女皇
+- 沙漠玫瑰
+- 魂锁典狱长
+- 海兽祭司
+- 复仇之矛
+- 逆羽
+- 残月之肃
+- 血港鬼影
+- 封魔剑魂
+- 流光镜影
 - 不破之誓
+- 灰烬驱魔人
+- 双界灵兔
+- 明烛
+- 不落魔锋
+- 异画师
 
 #### 核心与菜单
 
-- v2.23.0 为全部 173 个 `profile.lua` 加入独立的 Combo、Harass、Farm、Flee、Reactive、Weave 顺序，以及执行动作和状态/资源特性；契约目录若未与官方名单 173/173 完全一致，生成会失败。
-- 当前目录包含 440 个可执行动作和 275 个状态/策略特性。145 个共用英雄读取自己的契约，不再使用单一全局 Q/W/E/R 顺序；28 个专属英雄保留实测状态机。
-- 每位共用英雄只在 `Champion Actions` 中显示自己需要的手动、强制、鼠标方向、队友、斩杀、自动、暂停、技能→闪现、闪现→技能和翻墙动作。新按键默认未绑定，可通过下拉框与 `Set LMB` 分配。
-- 现在会从官方 `mClientData.mTargeterDefinitions` 统一提取 Line/Cone/Aoe/Range 的距离、半径和宽度，修复缺失或错误的目标几何；全图大招和移速动态距离也固定为官方契约。
-- FXT 的 173 个文件仅作为无许可证的只读行为参考。没有复制文件、函数、常量、数值或旧 API；独立实现只使用锁定的 Riot 数据和当前 Hanbot API。
-- 新增多段与闪现动作已通过静态及 Lua 5.1 检查，但实时服务器时序仍需 F12 验证。依赖增益、层数、武器和召唤物的逻辑在状态不明时会安全拒绝。
+- v2.24.0 依据 Riot 16.15.1/客户端 16.15 支持全部 173 位英雄：28 个手工专属、33 个生成专属、112 个共用入口。
+- NG-AIO 的 10 位英雄全部使用专属入口；保留伊泽瑞尔、卡莉丝塔、洛克的现有状态机，并为俄洛伊、艾瑞莉娅、卡尔萨斯、梅尔、弗拉基米尔、亚索、劫加入当前 API 状态逻辑。
+- HGVip/CXJ/Q-Aio 未附带可复用许可证，因此没有复制代码；仅将至少两个资料独立确认的 26 位英雄升级为生成专属，未知状态下会拒绝危险的再施法、防御技能与终极技能。
+- 专属菜单显示审计来源、功能契约和已连接的英雄选项，同时保留 Semi Q/W/E/R、Champion Actions 与 LMB 按键分配。
+- 每个 tick 将当前技能槽名称与 1,004 个官方 raw 形态（再施法 269、变身/强化 23、蓄力 23、普攻重置 75）匹配；别名重叠时优先精确 mScriptName。
+- 通过完整官方目录覆盖伊莉丝、杰斯、奈德丽双向变身、雷克塞遁地、厄斐琉斯换枪、慧的画板、塞拉斯偷取终极技能和佛耶戈附身后的技能槽。
+- 官方目标类型不明确的形态只允许半自动按键，自动使用终极技能和自动变身默认关闭。
+- 带官方普攻重置标签的形态会保留普攻前摇，在第一个有效后摇回调施法，并仅对有效但被拒绝的请求按 1 毫秒脚本下限重试。
+- 在确认 robots.txt 允许后，离线保存 OP.GG 16.15 的 173 位英雄技能优先级和用户技巧摘要；技能数值与施法形态仍只以 Riot 原始数据为准。
 
-#### Aatrox
+#### Olaf
 
-- 从嵌套目标数据恢复 Q 的官方 850/400 与 E 的 300/50 几何，并加入手动 W、Q→闪现和 Q 阶段契约。
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 axe_pickup、q_magnet、low_hp_w，并保留 5 个官方形态与 Q→E→W→R 战斗顺序。
 
-#### Aphelios
+#### Vladimir
 
-- 保留武器状态特性，同时把手动 Q/R、强制 R、暂停自动 W 作为独立动作开放。
+- 经 NG-AIO+Q-Aio 交叉审计后升级为专属入口，加入 empowered_q、e_charge、e_release、pool_block、multi_r，并保留 4 个官方形态与 Q→E→R→W 战斗顺序。
 
-#### Jayce
+#### Sivir
 
-- 按精确实时形态加入姿态相关的手动 Q/EQ、鼠标 EQ、E→闪现、强制 E 和暂停自动 R 契约。
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 q_return、w_reset、spellshield，并保留 4 个官方形态与 Q→W→E→R 战斗顺序。
 
-#### Seraphine
+#### MissFortune
 
-- 恢复 R 的官方 1300/160 几何，并记录手动 E/R、E/R→闪现、被动暂停、双重施法与回响行为。
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 passive_swap、q_bounce、channel_r，并保留 5 个官方形态与 Q→W→E→R 战斗顺序。
 
-#### Sett
+#### Ashe
 
-- 恢复 W 的官方 805/210 几何，并加入手动 W/E/EW/R、W→闪现、闪现→E/R、强制 R 和 W 调整契约。
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 q_weave、cone_w、global_r，并保留 6 个官方形态与 W→Q→E→R 战斗顺序。
 
-#### Sion
+#### Twitch
 
-- 恢复 Q 的官方 750/180 几何，并加入 W/E→闪现、Q 蓄力与 R 转向契约。
+- 经 HGVip+CXJ+Q-Aio 交叉审计后升级为专属入口，加入 poison、stealth_return、e_execute、r_line，并保留 4 个官方形态与 E→Q→W→R 战斗顺序。
 
-#### TwistedFate
+#### Karthus
 
-- 恢复 Q 的官方 1400/40 几何，并拆分手动 Q/W、选牌、卡牌普攻穿插与攻击暂停状态。
+- 经 NG-AIO+CXJ+Q-Aio 交叉审计后升级为专属入口，加入 isolated_q、aura_hysteresis、mana_reserve、passive_r、global_r，并保留 15 个官方形态与 E→Q→W→R 战斗顺序。
 
-#### Warwick
+#### Irelia
 
-- R 现在按移速 x2.5 计算且最高 2500，并加入手动 R、Q→闪现、闪现→E、强制 Q 与 Q 长按契约。
+- 经 NG-AIO+CXJ 交叉审计后升级为专属入口，加入 q_reset、marked_q、minion_gapclose、e_two_stage、w_block、multi_r，并保留 8 个官方形态与 E→R→Q→W 战斗顺序。
+
+#### Corki
+
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 missile_ammo、big_one、package_state，并保留 4 个官方形态与 Q→E→W→R 战斗顺序。
+
+#### Caitlyn
+
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 headshot、trap_cc、net_recoil、global_execute，并保留 5 个官方形态与 Q→W→E→R 战斗顺序。
+
+#### Blitzcrank
+
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 hook_collision、e_reset、interrupt_r，并保留 4 个官方形态与 Q→E→W→R 战斗顺序。
+
+#### Elise
+
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 stance、spiderlings、rappel_state，并保留 11 个官方形态与 Q→W→E→R 战斗顺序。
+
+#### Cassiopeia
+
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 poison_e、miasma_dash、facing_r，并保留 4 个官方形态与 E→Q→W→R 战斗顺序。
+
+#### Ezreal
+
+- 将 NG-AIO 的前期被动续层判断迁移到当前 API：只有当 Q 飞行时间能在 `ezrealpassivestacks` 结束前命中的 66 毫秒窗口内，才会对小兵施放 Q；该选项默认关闭。
+
+#### Mordekaiser
+
+- 经 HGVip+CXJ+Q-Aio 交叉审计后升级为专属入口，加入 passive_ring、isolated_q、realm_r，并保留 4 个官方形态与 Q→E→W→R 战斗顺序。
+
+#### Varus
+
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 q_charge、blight、w_execute、chain_r，并保留 4 个官方形态与 Q→W→E→R 战斗顺序。
+
+#### Viktor
+
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 e_vector、w_cc、r_follow、hex_fragments，并保留 5 个官方形态与 E→Q→W→R 战斗顺序。
+
+#### Draven
+
+- 经 HGVip+CXJ 交叉审计后升级为专属入口，加入 axe_catch、axe_renewal、global_r，并保留 7 个官方形态与 Q→W→E→R 战斗顺序。
+
+#### Khazix
+
+- 经 HGVip+Q-Aio 交叉审计后升级为专属入口，加入 evolution、isolation、safe_e，并保留 10 个官方形态与 Q→W→E→R 战斗顺序。
+
+#### Kaisa
+
+- 经 HGVip+CXJ+Q-Aio 交叉审计后升级为专属入口，加入 evolution、plasma、isolated_q、safe_r，并保留 7 个官方形态与 Q→E→W→R 战斗顺序。
 
 #### Yasuo
 
-- 加入鼠标 E、自动 R、Q→闪现、EQ→闪现、E 模式、Q 层数和目标冲刺标记契约。
+- 经 NG-AIO+HGVip+CXJ 交叉审计后升级为专属入口，加入 q_stack、dash_marks、minion_dash、eq、eq_flash、windwall、knockup_r，并保留 13 个官方形态与 Q→E→W→R 战斗顺序。
+
+#### Taliyah
+
+- 经 HGVip+CXJ 交叉审计后升级为专属入口，加入 worked_ground、w_vector、e_dash、channel_r，并保留 9 个官方形态与 Q→E→W→R 战斗顺序。
 
 #### Zeri
 
-- 保留 Q 作为攻击的状态，同时加入手动 W、自动 Q、强制 Q→Q 与鼠标方向墙体 E；依赖地形的 W/E 不会自动猜测瞄准。
-<!-- MESH-AIO:RELEASE:v2.23.0:END -->
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 q_attack、charged_passive、wall_w、wall_e、r_effectiveness，并保留 4 个官方形态与 Q→E→W→R 战斗顺序。
+
+#### Lucian
+
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 passive_weave、extended_q、r_magnet，并保留 4 个官方形态与 Q→E→W→R 战斗顺序。
+
+#### Zed
+
+- 经 NG-AIO+CXJ 交叉审计后升级为专属入口，加入 shadow_tracking、multi_origin_q、shadow_e、weq、death_mark、safe_swap，并保留 8 个官方形态与 R→W→E→Q 战斗顺序。
+
+#### Samira
+
+- 经 HGVip+CXJ+Q-Aio 交叉审计后升级为专属入口，加入 style、melee_q、projectile_w、dash_reset、r_gate，并保留 7 个官方形态与 Q→E→W→R 战斗顺序。
+
+#### Thresh
+
+- 经 HGVip+CXJ 交叉审计后升级为专属入口，加入 q_recast、lantern_ally、e_direction，并保留 8 个官方形态与 Q→E→W→R 战斗顺序。
+
+#### Illaoi
+
+- 经 NG-AIO 交叉审计后升级为专属入口，加入 spirit_priority、w_attack_reset、heartsteel_wait、multi_r，并保留 4 个官方形态与 E→Q→W→R 战斗顺序。
+
+#### Xayah
+
+- 经 HGVip+CXJ+Q-Aio 交叉审计后升级为专属入口，加入 feathers、e_root、r_reposition，并保留 4 个官方形态与 E→W→Q→R 战斗顺序。
+
+#### Aphelios
+
+- 经 HGVip+CXJ+Q-Aio 交叉审计后升级为专属入口，加入 weapon_state、mark_range、weapon_swap，并保留 11 个官方形态与 Q→E→W→R 战斗顺序。
+
+#### Yone
+
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 q_stack、spirit_return、safe_r，并保留 6 个官方形态与 Q→E→W→R 战斗顺序。
+
+#### Mel
+
+- 经 NG-AIO+CXJ+Q-Aio 交叉审计后升级为专属入口，加入 multi_q、reserve_w、reflect_lethal、e_setup、r_reserve，并保留 4 个官方形态与 E→Q→R→W 战斗顺序。
+
+#### Milio
+
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 ally_shield、interrupt_q、cleanse_r，并保留 5 个官方形态与 E→W→Q→R 战斗顺序。
+
+#### Zaahen
+
+- 经 CXJ+Q-Aio 交叉审计后升级为专属入口，加入 recast_state、resource、execute，并保留 6 个官方形态与 Q→E→W→R 战斗顺序。
+<!-- MESH-AIO:RELEASE:v2.24.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.23.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.23.0)
 - [v2.22.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.22.0)
 - [v2.21.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.21.3)
 - [v2.21.2](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.21.2)
