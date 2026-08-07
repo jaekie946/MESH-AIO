@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.21.3:START -->
-## v2.21.3
+<!-- MESH-AIO:RELEASE:v2.22.0:START -->
+## v2.22.0
 
 ### 한국어
 
@@ -50,17 +50,39 @@
 
 #### 핵심 및 메뉴
 
-- 버전: v2.21.3. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준 173챔피언 지원에서 전용 모듈이 28개(공용 145)로 늘었습니다.
-- 전용 모듈 전수 점검 패치입니다: 신규 트리스타나 모듈의 API 사용을 프로젝트 표준에 맞추고, 갱플랭크 연쇄 큐의 교착 한 건을 제거했습니다.
+- 버전: v2.22.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준 173챔피언 지원(전용 28, 공용 145)을 유지합니다.
+- 공용 엔진에 Evade 우선권, 실제 live spell 피해 기반 처치 확정, 돌진 도착시간 안티갭, 주 대상을 보존하는 다중 적중 조준, 이동기 착지 검증과 아군 체력 임계값을 추가했습니다.
+- 공용 Hotkeys에 Semi Q/W/E/R, `J` Auto Q, `X1MB` 수동 이동기/벽넘기, 자동 시전 일시정지를 정리했습니다. Last Hit 중에는 Auto Q가 작동하지 않고, 일시정지는 자동 주문만 막아 기본 오브워커 이동과 공격은 유지합니다.
+- 공용 메뉴와 전용 28개 메뉴에 dropdown + `Set LMB` 버튼을 추가했습니다. 이미 구현된 수동 동작을 골라 왼쪽 마우스에 배정하며, 존재하지 않는 keybind를 선택지에 넣으면 정적 검사가 실패합니다.
+- FXT 173개 챔피언 파일은 라이선스 미확인 읽기 전용 행동 자료로만 전수 감사했습니다. 파일·함수·상수·구형 API는 배포물에 복사하지 않았습니다.
 
-#### Tristana
+#### Annie
 
-- R 안티-갭클로즈가 돌진 착지점을 프로젝트 표준(`path.endPos` + z/y 폴백)으로 읽도록 수정했습니다. 기존 `path.point2D` 인덱싱은 미검증 필드라 착지 판정이 무력화될 수 있었습니다.
-- E 부착 폭탄 추적을 객체 동일성 비교에서 networkID 비교(프로젝트 표준)로 바꿨습니다. 스택 카운트가 대상 오브젝트 재생성에도 안전해집니다.
+- E를 적 대상 주문으로 오분류하던 생성 프로필을 아군/자기 보호 주문으로 바로잡아 공용 콤보가 적에게 시전하려는 경로를 차단했습니다.
 
-#### Gangplank
+#### Jayce
 
-- E-Q-E 후속 통 큐가 충전 0 상태를 만나면 즉시 해제되도록 수정했습니다. 기존에는 6초 타임아웃까지 매 틱 다른 모든 행동(W 정화/힐 포함)을 막았습니다.
+- 완전한 Q→E 상태 연계 없이 Acceleration Gate만 자동 시전하지 않도록 fail-closed 처리했습니다. 수동 Semi E는 그대로 사용할 수 있습니다.
+
+#### Jhin
+
+- Evade가 활성인 틱에는 치명타 재시도와 Semi/채널 로직보다 먼저 반환하도록 전용 pre-tick 안전 순서를 보강했고, 기존 수동 키를 LMB로 배정할 수 있게 했습니다.
+
+#### Malphite
+
+- Evade 활성 중에는 Flee·Semi·자동 시전이 주문을 내지 않도록 전용 모듈을 공용 틱 소유권 표준에 맞추고, Semi 키 LMB 배정 버튼을 추가했습니다.
+
+#### Pyke
+
+- Evade가 Q 차징·E 이동·점멸 연계보다 먼저 틱을 소유하도록 보강했으며, Semi Q/R과 Delivery/E-Flash 키를 메뉴에서 LMB로 재지정할 수 있습니다.
+
+#### Soraka
+
+- Evade가 활성인 동안 Force E, Flee, 자동 치유·반응 주문이 실행되지 않도록 했고, Force E와 Flee 키를 LMB 선택기에 연결했습니다.
+
+#### Teemo
+
+- Evade 중 Semi/Flee/함정 로직이 이동·시전 주문을 내지 않도록 안전 게이트를 앞당기고, Semi Q/R·일시정지·Flee 키의 LMB 배정을 지원합니다.
 
 ### English
 
@@ -99,17 +121,39 @@ All 173 champions are supported on the official 16.15 data. The list below is th
 
 #### Core & Menu
 
-- Version: v2.21.3. On Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data, the dedicated modules grow to 28 (shared-engine 145) out of the 173 supported champions.
-- A full dedicated-module audit patch: the new Tristana module is aligned to the project-standard API usage, and one deadlock in the Gangplank chain queue is removed.
+- Version: v2.22.0. Support remains at 173 champions (28 dedicated and 145 shared) on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data.
+- The shared engine gains Evade ownership, exact live-spell damage kill confirmation, arrival-timed anti-gapclose, primary-preserving multi-hit aim, mobility landing validation, and ally-health thresholds.
+- Shared Hotkeys now organize Semi Q/W/E/R, `J` Auto Q, `X1MB` manual mobility/wall hop, and a pause-automatic-casts action. Auto Q stays out of Last Hit, while pause suppresses script automation without stopping native orbwalker movement or attacks.
+- The shared menu and all 28 dedicated menus gain a dropdown plus `Set LMB` button. It binds the left mouse button to an existing manual action, and static validation rejects any selector entry without a declared keybind.
+- All 173 FXT champion files were audited only as unlicensed, read-only behavioural references. No file, function, constant, or legacy API was copied into the package.
 
-#### Tristana
+#### Annie
 
-- R anti-gapclose now reads the dash landing with the project-standard `path.endPos` (z/y fallback). The previous `path.point2D` indexing is an unverified field and could nullify the landing check.
-- E attached-bomb tracking switched from object identity to networkID comparison (project standard), making the stack count safe across target object recreation.
+- The generated profile now classifies E as an ally/self protection spell instead of an enemy spell, preventing the shared combo engine from trying to cast it on opponents.
 
-#### Gangplank
+#### Jayce
 
-- The E-Q-E follow-up keg queue now releases immediately when charges hit zero. Previously it held every other action (including W cleanse/heal) each tick until the 6 s timeout.
+- Acceleration Gate now fails closed for automation until a complete Q-to-E state sequence exists. Manual Semi E remains available.
+
+#### Jhin
+
+- The dedicated pre-tick now yields to active Evade before critical-retry, Semi, or channel logic, and its existing manual actions can be assigned to LMB.
+
+#### Malphite
+
+- The dedicated module now emits no Flee, Semi, or automatic spell orders while Evade is active, and its Semi actions are available in the LMB selector.
+
+#### Pyke
+
+- Evade now owns the tick before Q charging, E movement, or Flash sequences; Semi Q/R and Delivery/E-Flash actions can be rebound to LMB from the menu.
+
+#### Soraka
+
+- Force E, Flee, automatic healing, and reactive casts now yield while Evade is active, and Force E/Flee are connected to the LMB selector.
+
+#### Teemo
+
+- The safety gate now prevents Semi, Flee, and trap logic from issuing orders during active Evade, while Semi Q/R, pause, and Flee can be assigned to LMB.
 
 ### 简体中文
 
@@ -148,23 +192,46 @@ All 173 champions are supported on the official 16.15 data. The list below is th
 
 #### 核心与菜单
 
-- 版本：v2.21.3。基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端原始数据支持 173 位英雄，专属模块增至 28 个（共用引擎 145 个）。
-- 本补丁为专属模块全面审查：新麦林炮手模块的 API 用法对齐项目标准，并移除火药桶连锁队列中的一处死锁。
+- 版本：v2.22.0。基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端数据，继续支持 173 位英雄（28 个专属模块、145 个共用模块）。
+- 共用引擎新增 Evade 行动优先权、实时技能伤害斩杀确认、按突进到达时间触发的反突进、保留主目标的多目标瞄准、位移落点验证与队友生命阈值。
+- 共用快捷键现在包含 Semi Q/W/E/R、`J` 自动 Q、`X1MB` 手动位移/翻墙，以及暂停自动施法。补刀模式会阻止自动 Q，暂停只阻止脚本自动订单，不会停止原生走砍移动和普攻。
+- 共用菜单和全部 28 个专属菜单新增下拉框与 `Set LMB` 按钮，可把已有手动动作绑定到鼠标左键；选择器若引用未声明的 keybind，静态检查会直接失败。
+- FXT 的 173 个英雄文件仅作为无许可证的只读行为参考进行审查，未把文件、函数、常量或旧 API 复制进发布包。
 
-#### Tristana
+#### Annie
 
-- R 反突进改用项目标准的 `path.endPos`（z/y 回退）读取冲刺落点。旧的 `path.point2D` 索引是未验证字段，可能使落点判定失效。
-- E 附着炸弹跟踪从对象同一性比较改为 networkID 比较（项目标准），层数统计对目标对象重建保持安全。
+- 生成配置已把 E 修正为队友/自身保护技能，不再误判成对敌技能，避免共用连招尝试向敌人施放。
 
-#### Gangplank
+#### Jayce
 
-- E-Q-E 后续桶队列在充能为 0 时立即解除。旧逻辑会在 6 秒超时前每帧阻塞其他所有动作（包括 W 净化/回血）。
-<!-- MESH-AIO:RELEASE:v2.21.3:END -->
+- 在完整 Q→E 状态连招实现前，加速之门的自动路径现在默认关闭；手动 Semi E 仍可正常使用。
+
+#### Jhin
+
+- 专属 pre-tick 会在暴击重试、Semi 或大招引导逻辑前先让出给活动中的 Evade，现有手动动作也可绑定到 LMB。
+
+#### Malphite
+
+- Evade 活动时专属模块不再发出逃跑、Semi 或自动技能订单，并在 LMB 选择器中提供现有 Semi 动作。
+
+#### Pyke
+
+- Evade 现在优先于 Q 蓄力、E 位移和闪现连招；Semi Q/R 与 Delivery/E-Flash 动作可在菜单中改绑到 LMB。
+
+#### Soraka
+
+- Evade 活动时 Force E、逃跑、自动治疗与反应施法都会让出，并把 Force E 和逃跑键接入 LMB 选择器。
+
+#### Teemo
+
+- 安全门会阻止 Semi、逃跑和蘑菇逻辑在 Evade 活动时发出订单，同时支持把 Semi Q/R、暂停与逃跑动作绑定到 LMB。
+<!-- MESH-AIO:RELEASE:v2.22.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.21.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.21.3)
 - [v2.21.2](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.21.2)
 - [v2.21.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.21.1)
 - [v2.20.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.20.0)
