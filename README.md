@@ -10,14 +10,16 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v2.22.0:START -->
-## v2.22.0
+<!-- MESH-AIO:RELEASE:v2.23.0:START -->
+## v2.23.0
 
 ### 한국어
 
 #### 지원 챔피언
 
-공식 16.15 데이터 기준 173챔피언 전체를 지원합니다. 아래는 세부 로직을 직접 제작한 전용 모듈 28개이며, 나머지 챔피언은 공용 엔진 베이스라인으로 동작합니다.
+공식 16.15 데이터 기준 173챔피언 전체를 지원합니다. 아래는 세부 상태 머신을
+직접 제작한 전용 모듈 28개이며, 나머지 145챔피언은 각자의 행동 계약을 공용
+엔진에서 실행합니다.
 
 - 아리
 - 아칼리
@@ -50,45 +52,60 @@
 
 #### 핵심 및 메뉴
 
-- 버전: v2.22.0. Riot Data Dragon 16.15.1과 패치 고정 16.15 클라이언트 원본 기준 173챔피언 지원(전용 28, 공용 145)을 유지합니다.
-- 공용 엔진에 Evade 우선권, 실제 live spell 피해 기반 처치 확정, 돌진 도착시간 안티갭, 주 대상을 보존하는 다중 적중 조준, 이동기 착지 검증과 아군 체력 임계값을 추가했습니다.
-- 공용 Hotkeys에 Semi Q/W/E/R, `J` Auto Q, `X1MB` 수동 이동기/벽넘기, 자동 시전 일시정지를 정리했습니다. Last Hit 중에는 Auto Q가 작동하지 않고, 일시정지는 자동 주문만 막아 기본 오브워커 이동과 공격은 유지합니다.
-- 공용 메뉴와 전용 28개 메뉴에 dropdown + `Set LMB` 버튼을 추가했습니다. 이미 구현된 수동 동작을 골라 왼쪽 마우스에 배정하며, 존재하지 않는 keybind를 선택지에 넣으면 정적 검사가 실패합니다.
-- FXT 173개 챔피언 파일은 라이선스 미확인 읽기 전용 행동 자료로만 전수 감사했습니다. 파일·함수·상수·구형 API는 배포물에 복사하지 않았습니다.
+- 버전 v2.23.0에서 173개 `profile.lua` 전부에 Combo/Harass/Farm/Flee/Reactive/Weave 순서, 실행 동작, 상태·자원 특성 계약을 추가했습니다. 공식 목록과 173/173 일치하지 않으면 빌드가 실패합니다.
+- 현재 계약은 실행 동작 440개와 상태·정책 특성 275개입니다. 공용 145챔피언은 하나의 전역 Q/W/E/R 순서 대신 자기 계약을 실제로 읽고, 전용 28챔피언은 기존 실측 상태 머신을 유지합니다.
+- 각 공용 챔피언은 필요한 수동·강제·커서·아군·처형·자동·일시정지·스킬→점멸·점멸→스킬·벽 동작만 `Champion Actions`에 표시합니다. 새 키는 기본 미지정이며 dropdown + `Set LMB`로 배정합니다.
+- 공식 `mClientData.mTargeterDefinitions`의 Line/Cone/Aoe/Range 사거리·반경·폭을 일반식으로 읽어 누락되거나 잘못 생성되던 판정을 복구했습니다. 글로벌 R과 이동속도 기반 동적 사거리도 공식 계약으로 고정했습니다.
+- FXT 173파일은 라이선스 미확인 읽기 전용 행동 자료로만 감사했습니다. 파일·함수·상수·수치·구형 API는 복사하지 않았고 Riot 고정 데이터와 현재 Hanbot API로 독립 구현했습니다.
+- 새 다단계·점멸 동작은 정적 검사와 Lua 5.1 검사를 통과했지만 라이브 서버 타이밍은 F12 확인 대상입니다. 버프·스택·무기·소환물처럼 live 상태가 필요한 기능은 추측 시전하지 않고 안전하게 닫힙니다.
 
-#### Annie
+#### Aatrox
 
-- E를 적 대상 주문으로 오분류하던 생성 프로필을 아군/자기 보호 주문으로 바로잡아 공용 콤보가 적에게 시전하려는 경로를 차단했습니다.
+- Q의 공식 850/400 판정과 E 300/50 판정을 nested targeter에서 복구하고, 수동 W·Q→점멸·Q 단계 상태 계약을 프로필에 추가했습니다.
+
+#### Aphelios
+
+- 무기 상태 특성을 보존하면서 수동 Q/R, 강제 R, 자동 W 일시정지 동작을 독립 키로 노출했습니다.
 
 #### Jayce
 
-- 완전한 Q→E 상태 연계 없이 Acceleration Gate만 자동 시전하지 않도록 fail-closed 처리했습니다. 수동 Semi E는 그대로 사용할 수 있습니다.
+- 자세 상태와 정확한 live form을 기준으로 수동 Q/EQ, 커서 EQ, E→점멸, 강제 E, 자동 R 일시정지 계약을 추가했습니다.
 
-#### Jhin
+#### Seraphine
 
-- Evade가 활성인 틱에는 치명타 재시도와 Semi/채널 로직보다 먼저 반환하도록 전용 pre-tick 안전 순서를 보강했고, 기존 수동 키를 LMB로 배정할 수 있게 했습니다.
+- R의 공식 1300/160 판정을 복구하고 수동 E/R, E·R→점멸, 패시브 일시정지, 이중 시전·에코 상태를 기록했습니다.
 
-#### Malphite
+#### Sett
 
-- Evade 활성 중에는 Flee·Semi·자동 시전이 주문을 내지 않도록 전용 모듈을 공용 틱 소유권 표준에 맞추고, Semi 키 LMB 배정 버튼을 추가했습니다.
+- W 공식 805/210 판정을 복구하고 수동 W/E/EW/R, W→점멸, 점멸→E/R, 강제 R과 W 조준 보정 계약을 추가했습니다.
 
-#### Pyke
+#### Sion
 
-- Evade가 Q 차징·E 이동·점멸 연계보다 먼저 틱을 소유하도록 보강했으며, Semi Q/R과 Delivery/E-Flash 키를 메뉴에서 LMB로 재지정할 수 있습니다.
+- Q의 공식 750/180 판정을 복구하고 W·E→점멸, Q 충전, R 조향 상태를 공용 계약에 반영했습니다.
 
-#### Soraka
+#### TwistedFate
 
-- Evade가 활성인 동안 Force E, Flee, 자동 치유·반응 주문이 실행되지 않도록 했고, Force E와 Flee 키를 LMB 선택기에 연결했습니다.
+- Q의 공식 1400/40 판정을 복구하고 수동 Q/W, 카드 색 선택, 카드 평타 위빙·공격 일시정지 상태를 분리했습니다.
 
-#### Teemo
+#### Warwick
 
-- Evade 중 Semi/Flee/함정 로직이 이동·시전 주문을 내지 않도록 안전 게이트를 앞당기고, Semi Q/R·일시정지·Flee 키의 LMB 배정을 지원합니다.
+- R 사거리를 이동속도 x2.5, 최대 2500으로 계산하고 수동 R, Q→점멸, 점멸→E, 강제 Q와 Q 홀드 상태를 추가했습니다.
+
+#### Yasuo
+
+- 커서 E, 자동 R, Q→점멸, EQ→점멸, E 모드, Q 스택과 대상별 돌진 표식 계약을 추가했습니다.
+
+#### Zeri
+
+- Q 평타 상태를 보존하면서 수동 W, 자동 Q, 강제 Q→Q, 커서 방향 벽 E를 추가했습니다. 지형 확인이 필요한 W/E는 자동 조준으로 추측하지 않습니다.
 
 ### English
 
 #### Supported Champions
 
-All 173 champions are supported on the official 16.15 data. The list below is the 28 hand-tuned dedicated modules; every other champion runs on the shared-engine baseline.
+All 173 champions are supported on the official 16.15 data. The following 28
+use hand-tuned state machines; the other 145 execute their own behaviour
+contracts through the shared engine.
 
 - Ahri
 - Akali
@@ -121,45 +138,59 @@ All 173 champions are supported on the official 16.15 data. The list below is th
 
 #### Core & Menu
 
-- Version: v2.22.0. Support remains at 173 champions (28 dedicated and 145 shared) on Riot Data Dragon 16.15.1 and the patch-pinned 16.15 client data.
-- The shared engine gains Evade ownership, exact live-spell damage kill confirmation, arrival-timed anti-gapclose, primary-preserving multi-hit aim, mobility landing validation, and ally-health thresholds.
-- Shared Hotkeys now organize Semi Q/W/E/R, `J` Auto Q, `X1MB` manual mobility/wall hop, and a pause-automatic-casts action. Auto Q stays out of Last Hit, while pause suppresses script automation without stopping native orbwalker movement or attacks.
-- The shared menu and all 28 dedicated menus gain a dropdown plus `Set LMB` button. It binds the left mouse button to an existing manual action, and static validation rejects any selector entry without a declared keybind.
-- All 173 FXT champion files were audited only as unlicensed, read-only behavioural references. No file, function, constant, or legacy API was copied into the package.
+- Version v2.23.0 gives all 173 `profile.lua` files independent Combo, Harass, Farm, Flee, Reactive, and Weave orders plus executable actions and state/resource traits. Generation fails unless the catalog matches the official roster 173/173.
+- The catalog contains 440 executable actions and 275 state/policy traits. The 145 shared champions consume their own contracts instead of one global Q/W/E/R order, while the 28 dedicated champions retain their measured state machines.
+- Each shared champion exposes only its relevant manual, force, cursor, ally, execute, auto, pause, spell-to-Flash, Flash-to-spell, and wall actions under `Champion Actions`. New bindings default to unassigned and support dropdown + `Set LMB` mapping.
+- General extraction of official Line/Cone/Aoe/Range geometry from `mClientData.mTargeterDefinitions` restores missing or incorrect targeting. Global ultimates and movement-speed-scaled ranges are also pinned as official contracts.
+- The 173 FXT files were used only as unlicensed, read-only behavioural references. No file, function, constant, numeric value, or legacy API was copied; Riot-pinned data and the current Hanbot API drive the independent implementation.
+- New multi-step and Flash actions pass static and Lua 5.1 validation, but their live server timing remains an F12 test item. Buff-, stack-, weapon-, and summon-dependent logic fails closed instead of guessing live state.
 
-#### Annie
+#### Aatrox
 
-- The generated profile now classifies E as an ally/self protection spell instead of an enemy spell, preventing the shared combo engine from trying to cast it on opponents.
+- Restored official 850/400 Q and 300/50 E geometry from nested targeters, then added Manual W, Q-to-Flash, and Q-stage contracts.
+
+#### Aphelios
+
+- Preserved weapon-state traits while exposing Manual Q/R, Force R, and Pause Automatic W as independent actions.
 
 #### Jayce
 
-- Acceleration Gate now fails closed for automation until a complete Q-to-E state sequence exists. Manual Semi E remains available.
+- Added stance-aware Manual Q/EQ, Cursor EQ, E-to-Flash, Force E, and Pause Automatic R contracts against exact live forms.
 
-#### Jhin
+#### Seraphine
 
-- The dedicated pre-tick now yields to active Evade before critical-retry, Semi, or channel logic, and its existing manual actions can be assigned to LMB.
+- Restored official 1300/160 R geometry and recorded Manual E/R, E/R-to-Flash, passive pause, double-cast, and Echo behaviour.
 
-#### Malphite
+#### Sett
 
-- The dedicated module now emits no Flee, Semi, or automatic spell orders while Evade is active, and its Semi actions are available in the LMB selector.
+- Restored official 805/210 W geometry and added Manual W/E/EW/R, W-to-Flash, Flash-to-E/R, Force R, and W-adjustment contracts.
 
-#### Pyke
+#### Sion
 
-- Evade now owns the tick before Q charging, E movement, or Flash sequences; Semi Q/R and Delivery/E-Flash actions can be rebound to LMB from the menu.
+- Restored official 750/180 Q geometry and added W/E-to-Flash, Q-charge, and R-steering contracts.
 
-#### Soraka
+#### TwistedFate
 
-- Force E, Flee, automatic healing, and reactive casts now yield while Evade is active, and Force E/Flee are connected to the LMB selector.
+- Restored official 1400/40 Q geometry and separated Manual Q/W, card selection, card-attack weaving, and attack-pause state.
 
-#### Teemo
+#### Warwick
 
-- The safety gate now prevents Semi, Flee, and trap logic from issuing orders during active Evade, while Semi Q/R, pause, and Flee can be assigned to LMB.
+- R now uses movement speed x2.5 up to 2500, with Manual R, Q-to-Flash, Flash-to-E, Force Q, and Q-hold contracts.
+
+#### Yasuo
+
+- Added Cursor E, Auto R, Q-to-Flash, EQ-to-Flash, E mode, Q stacks, and per-target dash-mark contracts.
+
+#### Zeri
+
+- Preserved Q-as-attack state while adding Manual W, Auto Q, Force Q-to-Q, and cursor-directed wall E. Terrain-dependent W/E stays fail-closed for automatic aim.
 
 ### 简体中文
 
 #### 支持英雄
 
-基于官方 16.15 数据支持全部 173 位英雄。下方为 28 个手工制作的专属模块；其余英雄由共用引擎基线驱动。
+基于官方 16.15 数据支持全部 173 位英雄。以下 28 位使用手工状态机；其余 145 位
+通过共用引擎执行各自的行为契约。
 
 - 九尾妖狐
 - 离群之刺
@@ -192,45 +223,59 @@ All 173 champions are supported on the official 16.15 data. The list below is th
 
 #### 核心与菜单
 
-- 版本：v2.22.0。基于 Riot Data Dragon 16.15.1 与补丁锁定的 16.15 客户端数据，继续支持 173 位英雄（28 个专属模块、145 个共用模块）。
-- 共用引擎新增 Evade 行动优先权、实时技能伤害斩杀确认、按突进到达时间触发的反突进、保留主目标的多目标瞄准、位移落点验证与队友生命阈值。
-- 共用快捷键现在包含 Semi Q/W/E/R、`J` 自动 Q、`X1MB` 手动位移/翻墙，以及暂停自动施法。补刀模式会阻止自动 Q，暂停只阻止脚本自动订单，不会停止原生走砍移动和普攻。
-- 共用菜单和全部 28 个专属菜单新增下拉框与 `Set LMB` 按钮，可把已有手动动作绑定到鼠标左键；选择器若引用未声明的 keybind，静态检查会直接失败。
-- FXT 的 173 个英雄文件仅作为无许可证的只读行为参考进行审查，未把文件、函数、常量或旧 API 复制进发布包。
+- v2.23.0 为全部 173 个 `profile.lua` 加入独立的 Combo、Harass、Farm、Flee、Reactive、Weave 顺序，以及执行动作和状态/资源特性；契约目录若未与官方名单 173/173 完全一致，生成会失败。
+- 当前目录包含 440 个可执行动作和 275 个状态/策略特性。145 个共用英雄读取自己的契约，不再使用单一全局 Q/W/E/R 顺序；28 个专属英雄保留实测状态机。
+- 每位共用英雄只在 `Champion Actions` 中显示自己需要的手动、强制、鼠标方向、队友、斩杀、自动、暂停、技能→闪现、闪现→技能和翻墙动作。新按键默认未绑定，可通过下拉框与 `Set LMB` 分配。
+- 现在会从官方 `mClientData.mTargeterDefinitions` 统一提取 Line/Cone/Aoe/Range 的距离、半径和宽度，修复缺失或错误的目标几何；全图大招和移速动态距离也固定为官方契约。
+- FXT 的 173 个文件仅作为无许可证的只读行为参考。没有复制文件、函数、常量、数值或旧 API；独立实现只使用锁定的 Riot 数据和当前 Hanbot API。
+- 新增多段与闪现动作已通过静态及 Lua 5.1 检查，但实时服务器时序仍需 F12 验证。依赖增益、层数、武器和召唤物的逻辑在状态不明时会安全拒绝。
 
-#### Annie
+#### Aatrox
 
-- 生成配置已把 E 修正为队友/自身保护技能，不再误判成对敌技能，避免共用连招尝试向敌人施放。
+- 从嵌套目标数据恢复 Q 的官方 850/400 与 E 的 300/50 几何，并加入手动 W、Q→闪现和 Q 阶段契约。
+
+#### Aphelios
+
+- 保留武器状态特性，同时把手动 Q/R、强制 R、暂停自动 W 作为独立动作开放。
 
 #### Jayce
 
-- 在完整 Q→E 状态连招实现前，加速之门的自动路径现在默认关闭；手动 Semi E 仍可正常使用。
+- 按精确实时形态加入姿态相关的手动 Q/EQ、鼠标 EQ、E→闪现、强制 E 和暂停自动 R 契约。
 
-#### Jhin
+#### Seraphine
 
-- 专属 pre-tick 会在暴击重试、Semi 或大招引导逻辑前先让出给活动中的 Evade，现有手动动作也可绑定到 LMB。
+- 恢复 R 的官方 1300/160 几何，并记录手动 E/R、E/R→闪现、被动暂停、双重施法与回响行为。
 
-#### Malphite
+#### Sett
 
-- Evade 活动时专属模块不再发出逃跑、Semi 或自动技能订单，并在 LMB 选择器中提供现有 Semi 动作。
+- 恢复 W 的官方 805/210 几何，并加入手动 W/E/EW/R、W→闪现、闪现→E/R、强制 R 和 W 调整契约。
 
-#### Pyke
+#### Sion
 
-- Evade 现在优先于 Q 蓄力、E 位移和闪现连招；Semi Q/R 与 Delivery/E-Flash 动作可在菜单中改绑到 LMB。
+- 恢复 Q 的官方 750/180 几何，并加入 W/E→闪现、Q 蓄力与 R 转向契约。
 
-#### Soraka
+#### TwistedFate
 
-- Evade 活动时 Force E、逃跑、自动治疗与反应施法都会让出，并把 Force E 和逃跑键接入 LMB 选择器。
+- 恢复 Q 的官方 1400/40 几何，并拆分手动 Q/W、选牌、卡牌普攻穿插与攻击暂停状态。
 
-#### Teemo
+#### Warwick
 
-- 安全门会阻止 Semi、逃跑和蘑菇逻辑在 Evade 活动时发出订单，同时支持把 Semi Q/R、暂停与逃跑动作绑定到 LMB。
-<!-- MESH-AIO:RELEASE:v2.22.0:END -->
+- R 现在按移速 x2.5 计算且最高 2500，并加入手动 R、Q→闪现、闪现→E、强制 Q 与 Q 长按契约。
+
+#### Yasuo
+
+- 加入鼠标 E、自动 R、Q→闪现、EQ→闪现、E 模式、Q 层数和目标冲刺标记契约。
+
+#### Zeri
+
+- 保留 Q 作为攻击的状态，同时加入手动 W、自动 Q、强制 Q→Q 与鼠标方向墙体 E；依赖地形的 W/E 不会自动猜测瞄准。
+<!-- MESH-AIO:RELEASE:v2.23.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v2.22.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.22.0)
 - [v2.21.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.21.3)
 - [v2.21.2](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.21.2)
 - [v2.21.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.21.1)
