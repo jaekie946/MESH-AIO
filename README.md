@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.0.3:START -->
-## v3.0.3
+<!-- MESH-AIO:RELEASE:v3.1.1:START -->
+## v3.1.1
 
 ### 한국어
 
@@ -193,44 +193,58 @@
 
 #### 핵심 및 메뉴
 
-- v3.0.3은 사용자 제공 44개 스크립트 자료와 HanbotDB의 Rift/Classic 채택 데이터를 다시 대조해 현대 173명과 League Classic 60명의 Q/W/E/R, 반응, 팜, 도주, 수동 입력, 상태 전이를 source-first로 전수 의미 감사했습니다. 읽을 수 있는 선정 원본의 메뉴 ID·기본값·동작 순서를 우선하고 Riot 16.15 형태·수치를 최종 권위로 사용합니다.
-- DrMundo와 Naafiri가 버프 상수를 `_G[...]`로 찾다가 Hanbot 로드 단계에서 종료되던 오류를 제거했습니다. 모든 962개 Lua 표면과 릴리즈 CI가 런타임에 없는 `_G` 전역 환경 테이블의 재유입을 차단합니다.
-- 현대 173명의 primary 분포는 FXT 135, CXJ AIO 17, MasterAio 5, Q-Aio 4, [HGPro]AIO 2, CNo1AIO 2, [HGVip]AIO 2, SA_AIO 2, Pixel-AIO 1, NG-AIO 1, KleeAIO 1, [Viktor]AIO 1입니다. loader·외부 의존 껍데기는 우선 원본으로 세지 않고 다음 readable 구현을 선택했습니다.
-- League Classic 60명의 행동 primary는 FXT 50, BrianSharp 7, CXJ AIO 2, CSX AIO 1이며, 구형 스킬 형상은 FXT 59명과 CSX Rammus 1명을 사용합니다. JADE live 이름과 재시전 상태가 확인되지 않은 경로는 현대 폴백 없이 닫힙니다.
-- 모든 자동 경로는 Evade 활성 틱을 먼저 반환하고 한 틱에 서버가 수락한 시전 하나만 허용합니다. 팜 스킬은 `(LaneClear | LastHit) && MMB`에서만 열리고 Last Hit은 처치 확정 대상만 사용하며, 자동 R·자동 변신 master는 기본 OFF입니다. 피해 판단은 도착 시점 HP, 버프 잔여시간과 live 모드 보정을 반영합니다.
-- 이번 결과는 Lua와 정적 계약을 통과한 의미 감사이지 F12 인게임 검증 완료 선언이 아닙니다. 실제 spell alias, 승인·재시전·채널, 지형·점멸·타워 타이밍은 게임에서 확인해야 하며 정적으로 확정하지 못한 운송은 실패 폐쇄했습니다.
+- v3.1.1은 모든 현대 173명과 League Classic 60명의 메뉴를 Hanbot 본체 언어에 맞춥니다. Hanbot이 중국어면 간체 중국어, 그 외에는 영어로 자동 표시하며 스크립트 안에 별도 언어 선택지는 만들지 않습니다.
+- 총 234개 메뉴 루트와 13,213개 정적 문구를 전체 문구 단위로 처리합니다. 기존 동작 옵션 ID·키·저장값은 유지하고 새 HUD/오버레이는 새 ID를 사용하며, 동적 아군·적군 목록도 같은 언어의 접두어를 사용합니다.
+- 중국어 메뉴는 UTF-8 한자를 직접 넘기지 않고 Hanbot이 요구하는 CP936/GBK 바이트를 Lua 10진 이스케이프로 생성합니다. 한글 전체 카탈로그는 향후 Hanbot 글꼴 지원용으로 보존하지만, 현재 렌더러가 한글을 `?`로 표시하므로 런타임에서는 로드하지 않습니다.
+- 메뉴에 보이던 FXT/CXJ/CNo1 같은 참고 구현 이름을 제거하고, 모든 라벨은 사용자가 켜는 기능만 설명하도록 정리했습니다.
+- 챔피언 아래 공용 상태 HUD는 기본으로 두 번째 줄의 `Farm: ON/OFF` 하나만 표시합니다. 기존 다른 상태 옵션은 메뉴에 유지되고 `Show other status lines`를 켜면 다시 보이며, 탄환·스택 같은 실제 자원은 숨기지 않습니다.
+- 번역·문자 폭을 캐시하고 대상별 스택/피해/남은 HP 계산을 0.15~0.2초 snapshot으로 제한해 매 프레임 문자열·피해 계산으로 생기던 프레임 드랍을 막았습니다.
+- 번역 생성기와 전수 검사기가 누락·오염·stale 생성물, 언어 혼입, raw UTF-8 중국어, 스크립트 selector 재도입, 234개 루트의 공용 래퍼 우회를 릴리즈 전에 차단합니다. 전체 Lua 표면은 966개입니다.
+- 한글 글꼴 미지원과 GBK 중국어 출력은 인게임 증거로 확인했지만, 새 MESH shard의 실제 중국어 클라이언트 메뉴 표본은 F12 확인 대상으로 남깁니다.
 
-#### Gangplank
+#### Kalista
 
-- CNo1AIO의 단일·이중·삼중 배럴 상태기와 E 배치·연결 변형을 현재 API로 이식했습니다. 예상 배럴 체력과 폭발 시점으로 Q·평타·패시브·Sheen 우선순위를 중재하고 EEQ/EEA, fake-AA, anti-dash, 귀환 및 업그레이드 R 판단을 연결했으며 자동 R은 기본 OFF입니다.
+- E 자동 리셋을 시전 직전에 다시 계산합니다. live Rend 스택과 표식 잔여시간을 확인하고 공식식/실시간 피해 중 낮은 값, 물리·전체 실드, 10 또는 2%의 오차 여유를 반영해 확실한 처치만 허용합니다. Combo를 누르는 동안 챔피언이 사거리 밖이면 레인 미니언·실제 정글 몬스터·적 타워를 계속 공격 대상으로 잡아 평타와 Martial Poise 이동을 유지하며 식물은 제외합니다. 표식 대상 위에는 0.15초 캐시로 `E xN | -피해 | HP 현재 > 이후`를 표시합니다.
 
-#### Hwei
+#### Tristana
 
-- FXT의 10개 Q/W/E 팔레트 결정을 exact live form과 서버 승인 응답을 기다리는 2단계 시전으로 재구성했습니다. R→E2→Q2 후속, CC·갭클로저·인터럽트·스테이시스·팜 반응을 연결하고 stale palette는 안전하게 닫으며 자동 R master는 기본 OFF입니다.
+- 부착된 E 대상 위에 현재 스택, 지금 터질 E 단독 피해, 폭발 후 HP를 함께 표시합니다. 물리·전체 실드를 반영하며 R+E 콤보 피해로 E 표시를 잘못 빨갛게 만들지 않습니다. 새 오버레이 글자 크기 ID를 사용해 예전 저장값과 충돌하지 않고 0.15초 캐시로 프레임별 재계산을 피합니다.
 
-#### Jayce
+#### LeeSin
 
-- FXT를 주계약으로 캐논/해머 exact form, 기존 가속 관문 재사용, EQ 미니언 스플래시, 전투·팜·인터럽트·도주 변신 순서를 복원했습니다. 반대 폼 HUD와 캐논 W 타워 위빙을 유지하되 모든 비수동 변신은 기본 OFF master 아래에서만 열립니다.
+- Q 선형 예측과 충돌 검사가 `radius`만 받아 `pred/linear`·`pred/collision`에서 종료되던 문제를 `width=60`으로 수정했습니다. Star Combo의 Flash 옵션도 재로드 시 충돌하지 않는 고유 ID로 바꿨습니다.
 
-#### Pyke
+#### Fiora
 
-- Q-Aio의 차징·처형 결정을 기준으로 차징 Q→평타→E, W 접근→E→Q, 커서 Delivery E→Q를 독립 상태기로 연결했습니다. Q 차징 중 R 처형 선점과 E-Flash/Q-Flash 승인 순서를 보존하며 자동 R master는 기본 OFF입니다.
+- Q 이동 지점용 선형 예측에 필수 width를 넣어 같은 nil 예측 오류를 막았습니다.
 
-#### Sylas
+#### Hecarim
 
-- FXT 14,203줄 원본과 173개 궁 소유자 exact alias를 대조해 훔친 궁의 승인·재시전·차징·채널 상태를 소유자별로 해석합니다. Kai'Sa, Brand, Yasuo, Nidalee/Jayce, Master Yi/Jax, Olaf, Xerath, Kha'Zix, Janna, Azir, Lee Sin, Hwei 전술을 연결했고 모든 자동 훔친 궁은 기본 OFF master를 요구합니다.
+- R 이동 경로 예측에 공식 265 폭을 명시했습니다.
 
-#### Viego
+#### KSante
 
-- [Viktor]AIO의 원본 비에고 결정을 유지하면서 빙의 중 Q/W/E를 원래 소유자의 Riot 16.15 profile과 모드별 순서로 해석합니다. 두 개 이상의 live alias가 같은 소유자를 가리킬 때만 열고 재시전·차징·채널·변신처럼 소유자 상태가 필요한 형태는 실패 폐쇄하며 자동 영혼 획득과 자동 R은 기본 OFF입니다.
+- Q와 W 충전 경로의 선형 예측 입력을 각각 공식 폭 필드로 교정했습니다.
 
-#### Yasuo
+#### Lillia
 
-- CXJ AIO의 Q1/Q2/Q3, 안전한 E 이동 대상, Q3 보존, 공중 체공 잔여시간 기반 EQR·역순 QR·직접 R 결정을 이식했습니다. EQ3-Flash, 벽넘기 도주, 팜 상태기를 분리했으며 자동 R과 자동 EQ3-Flash는 각각 기본 OFF master 아래에 있습니다.
+- 장거리로 굴러가는 E의 선형 예측에 공식 80 폭을 명시했습니다.
 
-#### Zeri
+#### Milio
 
-- Q-Aio를 기준으로 Q를 전투·파밍의 주공격으로 고정하고 일반 평타는 예측 막타, 완충 패시브 또는 사용자가 누른 Double Q 준비일 때만 엽니다. 실제 평타 백스윙의 Q→E 더블 Q, 협곡 90개·칼바람 14개 벽타기 경로와 Arena live scan, `I` 비효율 R 차단을 연결했으며 자동 R은 기본 OFF입니다.
+- Q 선형 예측과 충돌 검사가 같은 width 입력을 사용하도록 교정했습니다.
+
+#### Renekton
+
+- E 돌진 조준의 선형 예측에 공식 50 폭을 명시했습니다.
+
+#### TwistedFate
+
+- Q Wild Cards의 선형 예측에 공식 40 폭을 명시했습니다.
+
+#### Yone
+
+- Q/Q3/W/R의 직선 예측 입력이 `radius`만 전달해 Hanbot `pred/linear`에서 `width` nil로 종료되던 문제를 수정했습니다. Riot 16.15의 Q 55, Q3 80, W 100, R 225 폭을 명시하고 같은 회귀를 막는 전용 계약 검사를 추가했습니다.
 
 ### English
 
@@ -412,44 +426,58 @@
 
 #### Core & Menu
 
-- v3.0.3 re-audits all 44 user-provided script archives and HanbotDB Rift/Classic adoption data, then reviews Q/W/E/R, reactions, farming, flee, manual inputs, and state transitions source-first for 173 modern and 60 League Classic champions. Selected readable menu IDs, defaults, and action order lead; Riot 16.15 forms and values remain authoritative.
-- Fixed a Hanbot load-time crash in DrMundo and Naafiri caused by resolving buff constants through `_G[...]`. All 962 Lua surfaces and release CI now reject the unavailable `_G` environment table from runtime sources.
-- The 173 modern primaries are FXT 135, CXJ AIO 17, MasterAio 5, Q-Aio 4, [HGPro]AIO 2, CNo1AIO 2, [HGVip]AIO 2, SA_AIO 2, Pixel-AIO 1, NG-AIO 1, KleeAIO 1, and [Viktor]AIO 1. Loader shells and unavailable external dependencies do not outrank the next readable implementation.
-- League Classic's 60 behavior primaries are FXT 50, BrianSharp 7, CXJ AIO 2, and CSX AIO 1; old-kit geometry comes from FXT for 59 champions and CSX for Rammus. Unconfirmed JADE live names and recast states close instead of falling back to a modern kit.
-- Every automatic path yields to Evade and permits only one server-accepted cast per tick. Farm spells require `(LaneClear | LastHit) && MMB`, Last Hit remains lethal-only, and automatic R or transformation masters default off. Damage decisions use impact-time health, remaining buff time, and live mode balance.
-- These results are semantic, Lua, and static-contract validation—not a claim that F12 in-game testing is complete. Live spell aliases, acknowledgements, recasts, channels, terrain, Flash, turret, and timing behavior still require field verification; transports that cannot be proven statically fail closed.
+- v3.1.1 makes all 173 modern and 60 League Classic champion menus follow Hanbot's own language. A Chinese Hanbot client gets Simplified Chinese; every other client gets English, with no script-side language selector.
+- All 234 menu roots and 13,213 static display strings are handled as whole strings. Existing behavior-option IDs, keys, and saved values stay intact; new HUD/overlay controls use new IDs, and dynamic ally/enemy lists use the active-language prefix.
+- Chinese menu text is emitted as CP936/GBK bytes in Lua decimal escapes rather than raw UTF-8 Chinese. The complete Korean catalogue remains dormant for a future Hanbot font update, because the current renderer substitutes every Hangul glyph with `?`.
+- Reference implementation names such as FXT, CXJ, and CNo1 were removed from visible menus; every label now describes only the feature the user controls.
+- The shared under-champion HUD shows only `Farm: ON/OFF` on the second row by default. Existing status options remain available behind `Show other status lines`, while true resources such as ammo and stacks remain visible under their own controls.
+- Translation and text-width results are cached, while per-target stack, damage, and remaining-HP snapshots refresh every 0.15–0.2 seconds, avoiding per-frame string and damage work.
+- Generation and exhaustive checks reject missing, contaminated, or stale translations, cross-language leakage, raw UTF-8 Chinese, a script-side selector, and any of the 234 roots bypassing the shared wrapper. The shard contains 966 Lua surfaces.
+- In-game evidence established the missing Hangul glyphs and working GBK Chinese output; a Chinese-client sample of the new MESH shard still requires F12 verification.
 
-#### Gangplank
+#### Kalista
 
-- Ported CNo1AIO's single-, double-, and triple-barrel state machines plus E placement and link variants to the current API. Predicted keg health and detonation timing arbitrate Q, attacks, passive, and Sheen; EEQ/EEA, fake-AA, anti-dash, recall, and upgraded-R decisions are connected, with automatic R off by default.
+- Automatic Rend resets are recalculated immediately before cast. They require a live marker that survives the cast window and use the lower of Riot-formula and live damage, physical/all shields, plus a 10-damage or 2% safety margin. While Combo is held and the champion is out of reach, lane minions, real jungle monsters, or enemy turrets remain attack carriers so attacks and Martial Poise movement continue; plants are excluded. A 0.15-second cached line above marked targets shows `E xN | -damage | HP current > after`.
 
-#### Hwei
+#### Tristana
 
-- Rebuilt FXT's ten Q/W/E palette decisions as two-step casts that require the exact live form and a server acknowledgement. R→E2→Q2 follow-up and CC, gapclose, interrupt, stasis, and farm reactions are connected; stale palettes close safely and the automatic-R master defaults off.
+- The attached E target now shows current stacks, current E-only detonation damage, and post-explosion HP together. Physical/all shields are included, and R+E combo damage no longer turns the E overlay lethal red. A new overlay-size ID avoids old-save collisions, and a 0.15-second cache prevents per-frame recalculation.
 
-#### Jayce
+#### LeeSin
 
-- Restored FXT as the primary contract for exact Cannon/Hammer forms, existing-gate reuse, EQ minion splash, and combat, farm, interrupt, and flee transformations. The opposite-form HUD and Cannon-W turret weave remain, while every non-manual transformation requires the default-off master.
+- Fixed Q linear prediction and collision inputs that passed only `radius` and terminated inside `pred/linear` or `pred/collision`; both now use `width=60`. Star Combo's Flash option also has a unique reload-safe ID.
 
-#### Pyke
+#### Fiora
 
-- Kept Q-Aio charge and execute decisions while separating charged Q→AA→E, W approach→E→Q, and cursor Delivery E→Q into explicit states. R execution can preempt a Q charge, E-Flash/Q-Flash wait for owned acknowledgements, and the automatic-R master defaults off.
+- Added the required width to Q movement-point linear prediction, preventing the same nil prediction failure.
 
-#### Sylas
+#### Hecarim
 
-- Cross-checked the 14,203-line FXT source against exact aliases for all 173 ultimate owners, then tracked acknowledgement, recast, charge, and channel state per owner. Dedicated Kai'Sa, Brand, Yasuo, Nidalee/Jayce, Master Yi/Jax, Olaf, Xerath, Kha'Zix, Janna, Azir, Lee Sin, and Hwei tactics all require the default-off stolen-R master when automatic.
+- R path prediction now provides the official 265 width.
 
-#### Viego
+#### KSante
 
-- Retained [Viktor]AIO's native Viego decisions and now resolves possessed Q/W/E through the original owner's Riot 16.15 profile and mode-specific order. Borrowed actions open only when at least two live aliases agree on one owner; recasts, charges, channels, and transforms that need owner state fail closed, and automatic soul taking and R remain off by default.
+- Q and charged-W linear prediction inputs now provide their official width fields.
 
-#### Yasuo
+#### Lillia
 
-- Ported CXJ AIO's Q1/Q2/Q3 handling, safe E bodies, Q3 conservation, and airborne-time decisions for EQR, reverse QR, and direct R. EQ3-Flash, wall-flee, and farm states are separate, with automatic R and automatic EQ3-Flash protected by independent default-off masters.
+- Long-range rolling E prediction now provides the official 80 width.
 
-#### Zeri
+#### Milio
 
-- Made Q-Aio's Q the primary combat and farming attack; an ordinary basic attack opens only for a predicted last hit, a fully charged passive, or a user-held Double Q. Added the real-backswing Q→E sequence, 90 Rift and 14 Howling Abyss wall routes plus Arena live scan, and the `I` ineffective-R block, while automatic R stays off by default.
+- Q linear prediction and collision now share the same width-bearing input.
+
+#### Renekton
+
+- E dash aiming now provides the official 50 width.
+
+#### TwistedFate
+
+- Wild Cards linear prediction now provides the official 40 width.
+
+#### Yone
+
+- Fixed Q/Q3/W/R linear prediction inputs that passed only `radius`, causing Hanbot `pred/linear` to terminate when `width` was nil. The Riot 16.15 widths—Q 55, Q3 80, W 100, and R 225—are explicit, with a dedicated regression contract.
 
 ### 简体中文
 
@@ -631,50 +659,65 @@
 
 #### 核心与菜单
 
-- v3.0.3 重新核对用户提供的 44 份脚本资料与 HanbotDB 的 Rift/Classic 采用数据，并对 173 个现代英雄和 60 个 League Classic 英雄的 Q/W/E/R、反应、清线、逃跑、手动输入与状态转换进行 source-first 语义审计。优先采用可读原版的菜单 ID、默认值和动作顺序，Riot 16.15 的形态与数值仍是最终依据。
-- 修复 DrMundo 与 Naafiri 通过 `_G[...]` 查找增益常量而导致的 Hanbot 加载阶段崩溃。全部 962 个 Lua 表面与发布 CI 现在都会拒绝运行时不存在的 `_G` 全局环境表。
-- 现代 173 个 primary 的分布为 FXT 135、CXJ AIO 17、MasterAio 5、Q-Aio 4、[HGPro]AIO 2、CNo1AIO 2、[HGVip]AIO 2、SA_AIO 2、Pixel-AIO 1、NG-AIO 1、KleeAIO 1、[Viktor]AIO 1。只有加载器外壳或依赖不可用的来源不会压过下一份可读实现。
-- League Classic 60 个行为 primary 为 FXT 50、BrianSharp 7、CXJ AIO 2、CSX AIO 1；旧技能几何由 FXT 提供 59 个，Rammus 使用 CSX。未确认的 JADE live 名称与再次施放状态会直接关闭，不回退到现代技能组。
-- 所有自动路径先让 Evade 接管，每 tick 只允许一次服务器接受的施法。清线技能必须满足 `(LaneClear | LastHit) && MMB`，Last Hit 仅对确认可击杀目标使用，自动 R 与自动变形总开关默认关闭；伤害判断使用命中时生命值、剩余增益时间与实时模式平衡。
-- 本次结果代表语义、Lua 与静态契约验证通过，并不表示 F12 游戏内测试已经完成。实际技能别名、确认、再次施放、引导、地形、Flash、防御塔与时序仍需实战验证；无法静态确认的施法传输会失败关闭。
+- v3.1.1 让全部 173 个现代英雄与 60 个 League Classic 英雄菜单自动跟随 Hanbot 主程序语言。Hanbot 为中文时显示简体中文，其他语言显示 English，脚本内不再提供独立语言选择。
+- 234 个菜单根与 13,213 条静态显示文本全部按完整句子处理。现有功能选项 ID、按键与保存值保持不变；新增 HUD/伤害显示使用新 ID，动态友军/敌军列表也使用当前语言的前缀。
+- 中文菜单不直接传入 UTF-8 汉字，而是生成 Hanbot 所需的 CP936/GBK 字节与 Lua 十进制转义。完整韩文目录为未来字体支持保留，但当前渲染器会把所有韩文字形替换为 `?`，因此运行时不加载。
+- 已从可见菜单中删除 FXT、CXJ、CNo1 等参考实现名称；所有标签只说明用户实际控制的功能。
+- 英雄下方的共享状态栏默认只在第二行显示 `Farm: ON/OFF`。其他原有状态选项仍保留，可通过 `Show other status lines` 重新开启；弹药、层数等真实资源不受此开关影响。
+- 翻译与文字宽度使用缓存；每个目标的层数、伤害与剩余生命值只每 0.15–0.2 秒刷新一次，避免每帧创建字符串和重复伤害计算。
+- 生成器与全量检查会阻止缺失、污染或过期翻译、跨语言混入、raw UTF-8 中文、脚本语言选择器回归，以及 234 个菜单根绕过共享包装器。当前共有 966 个 Lua 表面。
+- 游戏内证据已确认 Hanbot 缺少韩文字形且 GBK 中文可正常显示；新 MESH shard 的中文客户端菜单样本仍需 F12 验证。
 
-#### Gangplank
+#### Kalista
 
-- 将 CNo1AIO 的单桶、双桶、三连桶状态机以及 E 的放置和连接变化迁移到当前 API。通过预测火药桶血量与爆炸时机协调 Q、普攻、被动和 Sheen，并接入 EEQ/EEA、假普攻、反突进、回城与升级 R 判断；自动 R 默认关闭。
+- E 自动重置会在施放前立即重新计算：要求 Rend 标记能覆盖施法窗口，并取 Riot 公式与实时伤害中的较低值，同时计入物理/全护盾和 10 点或 2% 安全余量。按住 Combo 且英雄不在射程内时，会持续选择兵线单位、真实野怪或敌方防御塔作为攻击载体，让普攻与 Martial Poise 位移继续；植物会被排除。带标记目标上方以 0.15 秒缓存显示 `E xN | -伤害 | HP 当前 > 之后`。
 
-#### Hwei
+#### Tristana
 
-- 将 FXT 的十种 Q/W/E 调色板决策重建为等待 exact live form 与服务器确认的两步施法。接入 R→E2→Q2 后续，以及控制、突进、打断、凝滞和清线反应；过期调色板会安全关闭，自动 R 总开关默认关闭。
+- E 附着目标上方现在同时显示当前层数、当前 E 单独爆炸伤害和爆炸后生命值。计算包含物理/全护盾，并且不会再用 R+E 连招伤害把 E 显示误判为红色可击杀。新的字体大小 ID 避免旧存档冲突，0.15 秒缓存避免逐帧重算。
 
-#### Jayce
+#### LeeSin
 
-- 以 FXT 为主契约，恢复炮形态/锤形态 exact form、复用现有加速之门、EQ 小兵溅射，以及战斗、清线、打断和逃跑变形顺序。保留另一形态 HUD 与炮形态 W 防御塔衔接，所有非手动变形都必须经过默认关闭的总开关。
+- 修复 Q 直线预测与碰撞输入只传 `radius`，导致 `pred/linear` 或 `pred/collision` 终止的问题；现在统一使用 `width=60`。Star Combo 的 Flash 选项也改为重新加载时不会冲突的独立 ID。
 
-#### Pyke
+#### Fiora
 
-- 保留 Q-Aio 的蓄力和斩杀决策，并将蓄力 Q→普攻→E、W 接近→E→Q、鼠标 Delivery E→Q 拆分为明确状态。R 斩杀可抢占 Q 蓄力，E-Flash/Q-Flash 等待自身施法确认，自动 R 总开关默认关闭。
+- Q 位移落点的直线预测补充必需的 width，避免同类 nil 预测错误。
 
-#### Sylas
+#### Hecarim
 
-- 将 14,203 行 FXT 原版与 173 个大招拥有者的 exact alias 逐一对照，按拥有者跟踪确认、再次施放、蓄力与引导状态。Kai'Sa、Brand、Yasuo、Nidalee/Jayce、Master Yi/Jax、Olaf、Xerath、Kha'Zix、Janna、Azir、Lee Sin、Hwei 的专属战术在自动使用时都要求默认关闭的偷取大招总开关。
+- R 路径预测现在明确传入官方 265 宽度。
 
-#### Viego
+#### KSante
 
-- 保留 [Viktor]AIO 的原生 Viego 决策，并在附身时按原拥有者的 Riot 16.15 profile 与模式顺序解析 Q/W/E。只有至少两个 live alias 指向同一拥有者时才开放；需要拥有者状态的再次施放、蓄力、引导和变形会失败关闭，自动夺魂与自动 R 默认关闭。
+- Q 与蓄力 W 的直线预测输入现在都传入对应官方宽度。
 
-#### Yasuo
+#### Lillia
 
-- 迁移 CXJ AIO 的 Q1/Q2/Q3、安全 E 目标、Q3 保留，以及按击飞剩余时间执行 EQR、反向 QR、直接 R 的判断。EQ3-Flash、穿墙逃跑和清线使用独立状态，自动 R 与自动 EQ3-Flash 分别由默认关闭的总开关保护。
+- 长距离滚动 E 的直线预测现在传入官方 80 宽度。
 
-#### Zeri
+#### Milio
 
-- 按 Q-Aio 将 Q 固定为战斗与清线主攻击，普通攻击只在预测补刀、满充能被动或玩家按住 Double Q 时开放。加入真实普攻后摇的 Q→E、峡谷 90 条与嚎哭深渊 14 条翻墙路线和 Arena 实时扫描，并用 `I` 阻止无效 R；自动 R 仍默认关闭。
-<!-- MESH-AIO:RELEASE:v3.0.3:END -->
+- Q 直线预测与碰撞检测现在共用带 width 的同一输入。
+
+#### Renekton
+
+- E 冲刺瞄准现在传入官方 50 宽度。
+
+#### TwistedFate
+
+- Q 万能牌直线预测现在传入官方 40 宽度。
+
+#### Yone
+
+- 修复 Q/Q3/W/R 直线预测仅传入 `radius`，导致 Hanbot `pred/linear` 因 `width` 为 nil 而终止的问题。现在明确使用 Riot 16.15 的宽度：Q 55、Q3 80、W 100、R 225，并加入专用回归契约。
+<!-- MESH-AIO:RELEASE:v3.1.1:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.0.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.0.3)
 - [v3.0.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.0.1)
 - [v2.26.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.26.0)
 - [v2.25.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.25.1)
