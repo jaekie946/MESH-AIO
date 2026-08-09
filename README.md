@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.1.2:START -->
-## v3.1.2
+<!-- MESH-AIO:RELEASE:v3.1.3:START -->
+## v3.1.3
 
 ### 한국어
 
@@ -193,40 +193,15 @@
 
 #### 핵심 및 메뉴
 
-- v3.1.2는 현대 173명과 League Classic 60명 전부의 팜 동작 설정을 하나의 `Farm` 패널에 Q/W/E/R/Other로 모았습니다. 기존 옵션 ID·키·저장값·main getter는 유지하므로 저장 설정을 지울 필요가 없습니다.
-- 중복 Clear/Last Hit 패널은 Farm으로 합치고, FXT/CXJ/CNo1 같은 참고 구현 패널은 숨긴 뒤 내부 옵션을 일반 Q/W/E/R/Hotkeys/Drawings/Additional behavior에 배치했습니다. 메뉴 구성은 로드 직후 한 번만 실행되고 callback이 제거됩니다.
-- 234개 메뉴 루트와 13,215개 전체 문구는 Hanbot 본체가 중국어면 CP936/GBK 간체 중국어, 그 외에는 영어로 표시됩니다. 스크립트 언어 선택지는 없고, 한글 카탈로그는 미래 글꼴 지원용 dormant 상태로 남습니다.
-- 챔피언 아래 공용 HUD는 기본 `Farm: ON/OFF` 한 줄만 유지합니다. General Debug를 켠 동안에만 1초마다 모드·맵·orb 키·현재 대상·windup·lock·Q/W/E/R live 상태를 `[mesh-debug]`로 기록하고, 끄면 공용 tick callback 자체가 없습니다.
-- 일반 협곡의 `gameMode=CLASSIC`과 League Classic을 분리했습니다. JADE는 `Jade_*` 런타임 이름만 사용하고, 칼바람은 현대 챔피언 모듈과 ARAM 피해 보정을 유지합니다.
-- 차징·채널형 스킬을 전수 감사해 이미 시작된 상태가 시작 키를 놓았다는 이유로 멈추지 않게 했습니다. 정적 검사와 캐시는 프레임 드랍 회귀를 막지만, 실제 서버 승인과 FPS는 F12/연습 도구에서 계속 확인해야 합니다.
+- v3.1.3은 저장된 기존 설정을 보존하면서, 사용자용 메뉴가 아닌 호환 옵션 묶음을 로드 즉시 숨기고 Hanbot의 늦은 BSON 복원 뒤에도 0.75초 안에 한 번만 다시 숨깁니다. 상시 tick callback은 남기지 않습니다.
+- 키바인드에 지원되지 않는 `visible` 속성을 쓰던 경로를 제거해, 메뉴 초기화 때 발생하던 `menuconfig/keybind` 치명 오류를 막았습니다.
+- 징크스는 F12에서 두 번 확인된 내부 `orb2/main`의 nil 비교 오류를 피하도록, 같은 엔진 pre-tick 단계의 공개 `cb.pre_tick` 콜백으로 옮겼습니다. Evade 우선·한 틱 한 시전·기존 우선순위는 그대로입니다.
+- 전체 메뉴는 Hanbot 본체 언어를 계속 따릅니다. 중국어 클라이언트는 CP936/GBK 간체 중국어, 그 외에는 영어이며 스크립트 안의 별도 언어 선택기는 없습니다. 한글 카탈로그는 미래 글꼴 지원용으로만 보존합니다.
+- 정적 Lua·메뉴·공식 계약 검사를 통과했지만, 실제 메뉴 복원 순서와 서버 시전 승인은 F12/연습 도구에서 별도로 확인해야 합니다.
 
-#### Ezreal
+#### Jinx
 
-- W는 이제 Q 준비 여부나 Q 예측 성공과 무관하게 자체 준비·마나·예측 조건만으로 사용합니다. W 시전이 승인된 경우에만 다음 Q가 비행 완료를 기다렸다가 표식 대상을 우선합니다.
-
-#### Gangplank
-
-- Farm이 켜진 상태에서 Harass를 누르면 챔피언 견제를 먼저 시도하고, 승인된 견제 시전이 없을 때 Lane Clear와 같은 예측 막타 Q로 미니언을 처치합니다.
-
-#### Irelia
-
-- 이미 승인된 W 충전은 Evade 뒤에서 전역적으로 유지되며 live W2 확인을 기다린 다음 안전하게 release합니다. 시작 모드가 바뀌어도 충전이 고아 상태로 남지 않습니다.
-
-#### Jhin
-
-- 정확한 재장전 버프 또는 공식 패시브 타이머를 확인하면 Combo/Harass에서 유효한 Q를 먼저 사용합니다. 중복 참고 구현 메뉴도 일반 스킬 메뉴로 평탄화했습니다.
-
-#### Kalista
-
-- Rend 표식의 서버 `endTime`을 `game.time`과 비교하도록 고쳐 잘못된 만료·리셋 판단을 제거했습니다. Harass 2단 점프 Q는 완료된 공격의 살아 있는 챔피언 대상이 확인될 때만 열려 허공 Q를 사용하지 않으며, E 판단 로그는 스택·잔여시간·피해·HP·거부 사유를 남깁니다.
-
-#### Xerath
-
-- R은 여전히 Space로만 시작하지만, 채널이 이미 활성화된 뒤에는 Combo를 누르고 있어도 준비되는 즉시 다음 탄을 계속 발사합니다. 자동 처치탄과 공식 탄 간격은 그대로 유지합니다.
-
-#### Zeri
-
-- 타워 Q는 Farm 토글과 실제 Lane Clear가 모두 활성이고, 오브워커가 그 타워를 현재 공격/클리어 대상으로 잡았을 때만 사용합니다. Combo는 타워 Q를 열지 않고 주변 타워를 임의 탐색하지 않습니다.
+- Combo 및 자동 처치 W는 현재 로켓 평타 사거리 밖의 대상에게만 사용합니다. 가까운 대상은 미니건 평타·Q 전환이 우선이며 Semi W와 Flee W는 수동 입력으로 그대로 남습니다. Harass 중 Farm이 켜져 있고 가까운 라인 미니언이 있으면 새 Farm 옵션으로 미니건으로 돌아가 막타를 준비하며, 이 경로는 원거리 로켓 팜이나 W 클리어를 열지 않습니다.
 
 ### English
 
@@ -408,40 +383,15 @@
 
 #### Core & Menu
 
-- v3.1.2 gathers every farm behavior control for all 173 modern and 60 League Classic champions into one Farm panel grouped by Q/W/E/R/Other. Existing option IDs, keys, saved values, and main getters remain authoritative, so saves do not need to be deleted.
-- Duplicate Clear/Last Hit panels are consolidated into Farm. FXT/CXJ/CNo1 reference-family panels are hidden and their controls are placed in the normal spell, hotkey, drawing, Farm, or Additional behavior sections. Finalization runs once after load and removes its callback.
-- All 234 menu roots and 13,215 whole strings follow Hanbot itself: CP936/GBK Simplified Chinese on a Chinese client and English otherwise. There is no script-side selector; the Korean catalogue remains dormant for a future font update.
-- The shared under-champion HUD still defaults to one `Farm: ON/OFF` line. Only while General Debug is enabled, a one-Hz `[mesh-debug]` trace records mode/map, orb keys and target, windup/lock state, and live Q/W/E/R forms; its tick callback is absent when disabled.
-- Ordinary Rift `gameMode=CLASSIC` is separated from League Classic. Only a `Jade_*` runtime champion selects JADE, while Howling Abyss keeps modern champion modules and ARAM damage balance.
-- Charge and channel transports were audited so an accepted state no longer stalls merely because the start key changed. Static gates and caches prevent known frame-drop regressions, while real server acceptance and FPS remain Practice Tool/F12 checks.
+- v3.1.3 keeps saved settings intact while hiding non-user-facing compatibility option groups immediately and once more for at most 0.75 seconds after Hanbot's late BSON restore. No permanent tick callback remains.
+- The path that wrote an unsupported `visible` property to a keybind was removed, preventing the `menuconfig/keybind` fatal menu-initialization error.
+- After two F12 `orb2/main` nil-comparison failures, Jinx now uses the public engine `cb.pre_tick` phase instead of that opaque internal callback adapter. Evade priority, one accepted cast per tick, and the existing priority order remain intact.
+- Menus still follow Hanbot itself: CP936/GBK Simplified Chinese on a Chinese client and English otherwise. There is no script-side language selector; the Korean catalogue remains only for a future font update.
+- Static Lua, menu, and official-contract checks pass, while live menu-restore order and server spell acceptance remain separate F12/Practice Tool checks.
 
-#### Ezreal
+#### Jinx
 
-- W now uses only its own readiness, mana, and prediction gates instead of depending on Q readiness or a successful Q prediction. Only an accepted W flight delays the next Q and gives the marked target priority.
-
-#### Gangplank
-
-- With Farm enabled, holding Harass tries champion harassment first and then uses the same predicted-lethal minion Q last hit as Lane Clear when no harassment cast is accepted.
-
-#### Irelia
-
-- An accepted W charge is maintained globally after Evade, waits for live W2 acknowledgement, and then releases safely even if the mode that started it has changed.
-
-#### Jhin
-
-- A confirmed reload buff or official passive timer now lets Combo/Harass use a valid Q before ordinary attack-windup protection. Duplicate reference-family controls are flattened into the normal spell menus.
-
-#### Kalista
-
-- Rend marker server endTime is now compared with game.time, removing false expiry/reset decisions. Harass double-hop Q requires a live champion from the completed attack and cannot fire at empty space; detailed E logs include stacks, remaining time, damage, HP, and rejection reason.
-
-#### Xerath
-
-- R still starts only from Space, but once its channel is active, held Combo also fires each newly ready follow-up pulse. Automatic lethal shots and the official shot interval remain intact.
-
-#### Zeri
-
-- Turret Q requires both Farm and the real Lane Clear mode, and the turret must be the orbwalker's current attack/clear target. Combo never opens turret Q, and nearby turrets are not scanned into invented targets.
+- Combo and automatic lethal W now fire only at targets outside the current live rocket basic-attack reach. Nearby targets keep minigun attacks and Q-form switching first; Semi W and Flee W remain deliberate manual inputs. While Harass and Farm are both enabled, a new Farm option returns to minigun for nearby lane-minion last hits without opening distant rocket farming or W clearing.
 
 ### 简体中文
 
@@ -623,46 +573,22 @@
 
 #### 核心与菜单
 
-- v3.1.2 将全部 173 个现代英雄与 60 个 League Classic 英雄的清线功能集中到一个 Farm 菜单，并按 Q/W/E/R/Other 分组。原有选项 ID、按键、存档值与 main getter 保持不变，无需删除存档。
-- 重复的 Clear/Last Hit 菜单会合并到 Farm；FXT、CXJ、CNo1 等参考实现面板会隐藏，内部选项移到普通技能、按键、绘制、Farm 或 Additional behavior。整理只在加载后运行一次，并立即移除 callback。
-- 234 个菜单根与 13,215 条完整文本继续跟随 Hanbot 主程序：中文客户端使用 CP936/GBK 简体中文，其他客户端使用 English。脚本内没有语言选择器，韩文目录仅为未来字体支持保留。
-- 英雄下方默认仍只显示一行 `Farm: ON/OFF`。只有开启 General Debug 时，才会每秒输出一次 `[mesh-debug]`，记录模式、地图、orb 按键与目标、windup/lock 以及 Q/W/E/R 实时形态；关闭后没有公共 tick callback。
-- 普通峡谷的 `gameMode=CLASSIC` 与 League Classic 已明确分离。只有 `Jade_*` 运行时英雄会进入 JADE，嚎哭深渊继续使用现代英雄模块与 ARAM 伤害平衡。
-- 已审计蓄力与引导技能，已接受的状态不会因为起始按键改变而停住。静态检查与缓存会阻止已知掉帧回归，真实服务器接受与 FPS 仍需在训练模式/F12 验证。
+- v3.1.3 保留原有存档设置，同时在加载时立即隐藏非用户菜单的兼容选项组，并在 Hanbot 较晚恢复 BSON 后最多 0.75 秒再隐藏一次；不会留下常驻 tick callback。
+- 已移除向 keybind 写入不支持的 `visible` 属性的路径，避免 `menuconfig/keybind` 菜单初始化致命错误。
+- 在 F12 两次确认 `orb2/main` nil 比较失败后，Jinx 已从该不透明内部回调适配器迁移到公开的引擎 `cb.pre_tick` 阶段；Evade 优先级、每 tick 一次成功施放和原有优先级顺序保持不变。
+- 菜单继续跟随 Hanbot 主程序：中文客户端使用 CP936/GBK 简体中文，其他客户端使用 English。脚本内没有语言选择器，韩文目录仅为未来字体支持保留。
+- 静态 Lua、菜单与官方契约检查均已通过；实际菜单恢复顺序和服务器技能接受仍需在 F12/训练模式中单独验证。
 
-#### Ezreal
+#### Jinx
 
-- W 现在只检查自身的准备、法力与预测，不再依赖 Q 是否可用或 Q 预测是否成功。只有 W 施放被接受后，下一次 Q 才等待飞行并优先攻击带标记目标。
-
-#### Gangplank
-
-- Farm 开启时按住 Harass 会先尝试攻击英雄；若没有英雄技能被接受，则使用与 Lane Clear 相同的预测致死 Q 补刀小兵。
-
-#### Irelia
-
-- 已接受的 W 蓄力会在 Evade 之后全局维护，等待实时 W2 确认后安全释放，即使起始模式已经改变也不会留下孤立蓄力。
-
-#### Jhin
-
-- 确认装弹 buff 或官方被动计时后，Combo/Harass 会在普通攻击 windup 保护前使用有效 Q。重复的参考实现控制也已整理到普通技能菜单。
-
-#### Kalista
-
-- Rend 标记的服务器 endTime 现在与 game.time 比较，修复错误过期与重置判断。Harass 双跳 Q 必须来自已完成攻击的存活英雄目标，不会再向空地施放；E 详细日志会记录层数、剩余时间、伤害、生命值与拒绝原因。
-
-#### Xerath
-
-- R 仍只能由 Space 开始，但引导已经激活后，按住 Combo 也会在每发准备好时继续发射。自动致死炮与官方发射间隔保持不变。
-
-#### Zeri
-
-- 防御塔 Q 必须同时开启 Farm 与真实 Lane Clear，而且防御塔必须是 orbwalker 当前攻击/清线目标。Combo 不会开启防御塔 Q，也不会扫描附近防御塔制造目标。
-<!-- MESH-AIO:RELEASE:v3.1.2:END -->
+- Combo 与自动斩杀 W 现在只会对当前火箭普攻范围外的目标施放。近处目标优先使用机枪普攻与 Q 形态切换；Semi W 与 Flee W 仍保持为主动手动输入。Harass 与 Farm 同时开启时，新的 Farm 选项会让近处兵线补刀切回机枪，不会开启远距离火箭清线或 W 清线。
+<!-- MESH-AIO:RELEASE:v3.1.3:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.1.2](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.2)
 - [v3.1.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.1)
 - [v3.0.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.0.3)
 - [v3.0.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.0.1)
