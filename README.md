@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.1.1:START -->
-## v3.1.1
+<!-- MESH-AIO:RELEASE:v3.1.2:START -->
+## v3.1.2
 
 ### 한국어
 
@@ -193,58 +193,40 @@
 
 #### 핵심 및 메뉴
 
-- v3.1.1은 모든 현대 173명과 League Classic 60명의 메뉴를 Hanbot 본체 언어에 맞춥니다. Hanbot이 중국어면 간체 중국어, 그 외에는 영어로 자동 표시하며 스크립트 안에 별도 언어 선택지는 만들지 않습니다.
-- 총 234개 메뉴 루트와 13,213개 정적 문구를 전체 문구 단위로 처리합니다. 기존 동작 옵션 ID·키·저장값은 유지하고 새 HUD/오버레이는 새 ID를 사용하며, 동적 아군·적군 목록도 같은 언어의 접두어를 사용합니다.
-- 중국어 메뉴는 UTF-8 한자를 직접 넘기지 않고 Hanbot이 요구하는 CP936/GBK 바이트를 Lua 10진 이스케이프로 생성합니다. 한글 전체 카탈로그는 향후 Hanbot 글꼴 지원용으로 보존하지만, 현재 렌더러가 한글을 `?`로 표시하므로 런타임에서는 로드하지 않습니다.
-- 메뉴에 보이던 FXT/CXJ/CNo1 같은 참고 구현 이름을 제거하고, 모든 라벨은 사용자가 켜는 기능만 설명하도록 정리했습니다.
-- 챔피언 아래 공용 상태 HUD는 기본으로 두 번째 줄의 `Farm: ON/OFF` 하나만 표시합니다. 기존 다른 상태 옵션은 메뉴에 유지되고 `Show other status lines`를 켜면 다시 보이며, 탄환·스택 같은 실제 자원은 숨기지 않습니다.
-- 번역·문자 폭을 캐시하고 대상별 스택/피해/남은 HP 계산을 0.15~0.2초 snapshot으로 제한해 매 프레임 문자열·피해 계산으로 생기던 프레임 드랍을 막았습니다.
-- 번역 생성기와 전수 검사기가 누락·오염·stale 생성물, 언어 혼입, raw UTF-8 중국어, 스크립트 selector 재도입, 234개 루트의 공용 래퍼 우회를 릴리즈 전에 차단합니다. 전체 Lua 표면은 966개입니다.
-- 한글 글꼴 미지원과 GBK 중국어 출력은 인게임 증거로 확인했지만, 새 MESH shard의 실제 중국어 클라이언트 메뉴 표본은 F12 확인 대상으로 남깁니다.
+- v3.1.2는 현대 173명과 League Classic 60명 전부의 팜 동작 설정을 하나의 `Farm` 패널에 Q/W/E/R/Other로 모았습니다. 기존 옵션 ID·키·저장값·main getter는 유지하므로 저장 설정을 지울 필요가 없습니다.
+- 중복 Clear/Last Hit 패널은 Farm으로 합치고, FXT/CXJ/CNo1 같은 참고 구현 패널은 숨긴 뒤 내부 옵션을 일반 Q/W/E/R/Hotkeys/Drawings/Additional behavior에 배치했습니다. 메뉴 구성은 로드 직후 한 번만 실행되고 callback이 제거됩니다.
+- 234개 메뉴 루트와 13,215개 전체 문구는 Hanbot 본체가 중국어면 CP936/GBK 간체 중국어, 그 외에는 영어로 표시됩니다. 스크립트 언어 선택지는 없고, 한글 카탈로그는 미래 글꼴 지원용 dormant 상태로 남습니다.
+- 챔피언 아래 공용 HUD는 기본 `Farm: ON/OFF` 한 줄만 유지합니다. General Debug를 켠 동안에만 1초마다 모드·맵·orb 키·현재 대상·windup·lock·Q/W/E/R live 상태를 `[mesh-debug]`로 기록하고, 끄면 공용 tick callback 자체가 없습니다.
+- 일반 협곡의 `gameMode=CLASSIC`과 League Classic을 분리했습니다. JADE는 `Jade_*` 런타임 이름만 사용하고, 칼바람은 현대 챔피언 모듈과 ARAM 피해 보정을 유지합니다.
+- 차징·채널형 스킬을 전수 감사해 이미 시작된 상태가 시작 키를 놓았다는 이유로 멈추지 않게 했습니다. 정적 검사와 캐시는 프레임 드랍 회귀를 막지만, 실제 서버 승인과 FPS는 F12/연습 도구에서 계속 확인해야 합니다.
+
+#### Ezreal
+
+- W는 이제 Q 준비 여부나 Q 예측 성공과 무관하게 자체 준비·마나·예측 조건만으로 사용합니다. W 시전이 승인된 경우에만 다음 Q가 비행 완료를 기다렸다가 표식 대상을 우선합니다.
+
+#### Gangplank
+
+- Farm이 켜진 상태에서 Harass를 누르면 챔피언 견제를 먼저 시도하고, 승인된 견제 시전이 없을 때 Lane Clear와 같은 예측 막타 Q로 미니언을 처치합니다.
+
+#### Irelia
+
+- 이미 승인된 W 충전은 Evade 뒤에서 전역적으로 유지되며 live W2 확인을 기다린 다음 안전하게 release합니다. 시작 모드가 바뀌어도 충전이 고아 상태로 남지 않습니다.
+
+#### Jhin
+
+- 정확한 재장전 버프 또는 공식 패시브 타이머를 확인하면 Combo/Harass에서 유효한 Q를 먼저 사용합니다. 중복 참고 구현 메뉴도 일반 스킬 메뉴로 평탄화했습니다.
 
 #### Kalista
 
-- E 자동 리셋을 시전 직전에 다시 계산합니다. live Rend 스택과 표식 잔여시간을 확인하고 공식식/실시간 피해 중 낮은 값, 물리·전체 실드, 10 또는 2%의 오차 여유를 반영해 확실한 처치만 허용합니다. Combo를 누르는 동안 챔피언이 사거리 밖이면 레인 미니언·실제 정글 몬스터·적 타워를 계속 공격 대상으로 잡아 평타와 Martial Poise 이동을 유지하며 식물은 제외합니다. 표식 대상 위에는 0.15초 캐시로 `E xN | -피해 | HP 현재 > 이후`를 표시합니다.
+- Rend 표식의 서버 `endTime`을 `game.time`과 비교하도록 고쳐 잘못된 만료·리셋 판단을 제거했습니다. Harass 2단 점프 Q는 완료된 공격의 살아 있는 챔피언 대상이 확인될 때만 열려 허공 Q를 사용하지 않으며, E 판단 로그는 스택·잔여시간·피해·HP·거부 사유를 남깁니다.
 
-#### Tristana
+#### Xerath
 
-- 부착된 E 대상 위에 현재 스택, 지금 터질 E 단독 피해, 폭발 후 HP를 함께 표시합니다. 물리·전체 실드를 반영하며 R+E 콤보 피해로 E 표시를 잘못 빨갛게 만들지 않습니다. 새 오버레이 글자 크기 ID를 사용해 예전 저장값과 충돌하지 않고 0.15초 캐시로 프레임별 재계산을 피합니다.
+- R은 여전히 Space로만 시작하지만, 채널이 이미 활성화된 뒤에는 Combo를 누르고 있어도 준비되는 즉시 다음 탄을 계속 발사합니다. 자동 처치탄과 공식 탄 간격은 그대로 유지합니다.
 
-#### LeeSin
+#### Zeri
 
-- Q 선형 예측과 충돌 검사가 `radius`만 받아 `pred/linear`·`pred/collision`에서 종료되던 문제를 `width=60`으로 수정했습니다. Star Combo의 Flash 옵션도 재로드 시 충돌하지 않는 고유 ID로 바꿨습니다.
-
-#### Fiora
-
-- Q 이동 지점용 선형 예측에 필수 width를 넣어 같은 nil 예측 오류를 막았습니다.
-
-#### Hecarim
-
-- R 이동 경로 예측에 공식 265 폭을 명시했습니다.
-
-#### KSante
-
-- Q와 W 충전 경로의 선형 예측 입력을 각각 공식 폭 필드로 교정했습니다.
-
-#### Lillia
-
-- 장거리로 굴러가는 E의 선형 예측에 공식 80 폭을 명시했습니다.
-
-#### Milio
-
-- Q 선형 예측과 충돌 검사가 같은 width 입력을 사용하도록 교정했습니다.
-
-#### Renekton
-
-- E 돌진 조준의 선형 예측에 공식 50 폭을 명시했습니다.
-
-#### TwistedFate
-
-- Q Wild Cards의 선형 예측에 공식 40 폭을 명시했습니다.
-
-#### Yone
-
-- Q/Q3/W/R의 직선 예측 입력이 `radius`만 전달해 Hanbot `pred/linear`에서 `width` nil로 종료되던 문제를 수정했습니다. Riot 16.15의 Q 55, Q3 80, W 100, R 225 폭을 명시하고 같은 회귀를 막는 전용 계약 검사를 추가했습니다.
+- 타워 Q는 Farm 토글과 실제 Lane Clear가 모두 활성이고, 오브워커가 그 타워를 현재 공격/클리어 대상으로 잡았을 때만 사용합니다. Combo는 타워 Q를 열지 않고 주변 타워를 임의 탐색하지 않습니다.
 
 ### English
 
@@ -426,58 +408,40 @@
 
 #### Core & Menu
 
-- v3.1.1 makes all 173 modern and 60 League Classic champion menus follow Hanbot's own language. A Chinese Hanbot client gets Simplified Chinese; every other client gets English, with no script-side language selector.
-- All 234 menu roots and 13,213 static display strings are handled as whole strings. Existing behavior-option IDs, keys, and saved values stay intact; new HUD/overlay controls use new IDs, and dynamic ally/enemy lists use the active-language prefix.
-- Chinese menu text is emitted as CP936/GBK bytes in Lua decimal escapes rather than raw UTF-8 Chinese. The complete Korean catalogue remains dormant for a future Hanbot font update, because the current renderer substitutes every Hangul glyph with `?`.
-- Reference implementation names such as FXT, CXJ, and CNo1 were removed from visible menus; every label now describes only the feature the user controls.
-- The shared under-champion HUD shows only `Farm: ON/OFF` on the second row by default. Existing status options remain available behind `Show other status lines`, while true resources such as ammo and stacks remain visible under their own controls.
-- Translation and text-width results are cached, while per-target stack, damage, and remaining-HP snapshots refresh every 0.15–0.2 seconds, avoiding per-frame string and damage work.
-- Generation and exhaustive checks reject missing, contaminated, or stale translations, cross-language leakage, raw UTF-8 Chinese, a script-side selector, and any of the 234 roots bypassing the shared wrapper. The shard contains 966 Lua surfaces.
-- In-game evidence established the missing Hangul glyphs and working GBK Chinese output; a Chinese-client sample of the new MESH shard still requires F12 verification.
+- v3.1.2 gathers every farm behavior control for all 173 modern and 60 League Classic champions into one Farm panel grouped by Q/W/E/R/Other. Existing option IDs, keys, saved values, and main getters remain authoritative, so saves do not need to be deleted.
+- Duplicate Clear/Last Hit panels are consolidated into Farm. FXT/CXJ/CNo1 reference-family panels are hidden and their controls are placed in the normal spell, hotkey, drawing, Farm, or Additional behavior sections. Finalization runs once after load and removes its callback.
+- All 234 menu roots and 13,215 whole strings follow Hanbot itself: CP936/GBK Simplified Chinese on a Chinese client and English otherwise. There is no script-side selector; the Korean catalogue remains dormant for a future font update.
+- The shared under-champion HUD still defaults to one `Farm: ON/OFF` line. Only while General Debug is enabled, a one-Hz `[mesh-debug]` trace records mode/map, orb keys and target, windup/lock state, and live Q/W/E/R forms; its tick callback is absent when disabled.
+- Ordinary Rift `gameMode=CLASSIC` is separated from League Classic. Only a `Jade_*` runtime champion selects JADE, while Howling Abyss keeps modern champion modules and ARAM damage balance.
+- Charge and channel transports were audited so an accepted state no longer stalls merely because the start key changed. Static gates and caches prevent known frame-drop regressions, while real server acceptance and FPS remain Practice Tool/F12 checks.
+
+#### Ezreal
+
+- W now uses only its own readiness, mana, and prediction gates instead of depending on Q readiness or a successful Q prediction. Only an accepted W flight delays the next Q and gives the marked target priority.
+
+#### Gangplank
+
+- With Farm enabled, holding Harass tries champion harassment first and then uses the same predicted-lethal minion Q last hit as Lane Clear when no harassment cast is accepted.
+
+#### Irelia
+
+- An accepted W charge is maintained globally after Evade, waits for live W2 acknowledgement, and then releases safely even if the mode that started it has changed.
+
+#### Jhin
+
+- A confirmed reload buff or official passive timer now lets Combo/Harass use a valid Q before ordinary attack-windup protection. Duplicate reference-family controls are flattened into the normal spell menus.
 
 #### Kalista
 
-- Automatic Rend resets are recalculated immediately before cast. They require a live marker that survives the cast window and use the lower of Riot-formula and live damage, physical/all shields, plus a 10-damage or 2% safety margin. While Combo is held and the champion is out of reach, lane minions, real jungle monsters, or enemy turrets remain attack carriers so attacks and Martial Poise movement continue; plants are excluded. A 0.15-second cached line above marked targets shows `E xN | -damage | HP current > after`.
+- Rend marker server endTime is now compared with game.time, removing false expiry/reset decisions. Harass double-hop Q requires a live champion from the completed attack and cannot fire at empty space; detailed E logs include stacks, remaining time, damage, HP, and rejection reason.
 
-#### Tristana
+#### Xerath
 
-- The attached E target now shows current stacks, current E-only detonation damage, and post-explosion HP together. Physical/all shields are included, and R+E combo damage no longer turns the E overlay lethal red. A new overlay-size ID avoids old-save collisions, and a 0.15-second cache prevents per-frame recalculation.
+- R still starts only from Space, but once its channel is active, held Combo also fires each newly ready follow-up pulse. Automatic lethal shots and the official shot interval remain intact.
 
-#### LeeSin
+#### Zeri
 
-- Fixed Q linear prediction and collision inputs that passed only `radius` and terminated inside `pred/linear` or `pred/collision`; both now use `width=60`. Star Combo's Flash option also has a unique reload-safe ID.
-
-#### Fiora
-
-- Added the required width to Q movement-point linear prediction, preventing the same nil prediction failure.
-
-#### Hecarim
-
-- R path prediction now provides the official 265 width.
-
-#### KSante
-
-- Q and charged-W linear prediction inputs now provide their official width fields.
-
-#### Lillia
-
-- Long-range rolling E prediction now provides the official 80 width.
-
-#### Milio
-
-- Q linear prediction and collision now share the same width-bearing input.
-
-#### Renekton
-
-- E dash aiming now provides the official 50 width.
-
-#### TwistedFate
-
-- Wild Cards linear prediction now provides the official 40 width.
-
-#### Yone
-
-- Fixed Q/Q3/W/R linear prediction inputs that passed only `radius`, causing Hanbot `pred/linear` to terminate when `width` was nil. The Riot 16.15 widths—Q 55, Q3 80, W 100, and R 225—are explicit, with a dedicated regression contract.
+- Turret Q requires both Farm and the real Lane Clear mode, and the turret must be the orbwalker's current attack/clear target. Combo never opens turret Q, and nearby turrets are not scanned into invented targets.
 
 ### 简体中文
 
@@ -659,64 +623,47 @@
 
 #### 核心与菜单
 
-- v3.1.1 让全部 173 个现代英雄与 60 个 League Classic 英雄菜单自动跟随 Hanbot 主程序语言。Hanbot 为中文时显示简体中文，其他语言显示 English，脚本内不再提供独立语言选择。
-- 234 个菜单根与 13,213 条静态显示文本全部按完整句子处理。现有功能选项 ID、按键与保存值保持不变；新增 HUD/伤害显示使用新 ID，动态友军/敌军列表也使用当前语言的前缀。
-- 中文菜单不直接传入 UTF-8 汉字，而是生成 Hanbot 所需的 CP936/GBK 字节与 Lua 十进制转义。完整韩文目录为未来字体支持保留，但当前渲染器会把所有韩文字形替换为 `?`，因此运行时不加载。
-- 已从可见菜单中删除 FXT、CXJ、CNo1 等参考实现名称；所有标签只说明用户实际控制的功能。
-- 英雄下方的共享状态栏默认只在第二行显示 `Farm: ON/OFF`。其他原有状态选项仍保留，可通过 `Show other status lines` 重新开启；弹药、层数等真实资源不受此开关影响。
-- 翻译与文字宽度使用缓存；每个目标的层数、伤害与剩余生命值只每 0.15–0.2 秒刷新一次，避免每帧创建字符串和重复伤害计算。
-- 生成器与全量检查会阻止缺失、污染或过期翻译、跨语言混入、raw UTF-8 中文、脚本语言选择器回归，以及 234 个菜单根绕过共享包装器。当前共有 966 个 Lua 表面。
-- 游戏内证据已确认 Hanbot 缺少韩文字形且 GBK 中文可正常显示；新 MESH shard 的中文客户端菜单样本仍需 F12 验证。
+- v3.1.2 将全部 173 个现代英雄与 60 个 League Classic 英雄的清线功能集中到一个 Farm 菜单，并按 Q/W/E/R/Other 分组。原有选项 ID、按键、存档值与 main getter 保持不变，无需删除存档。
+- 重复的 Clear/Last Hit 菜单会合并到 Farm；FXT、CXJ、CNo1 等参考实现面板会隐藏，内部选项移到普通技能、按键、绘制、Farm 或 Additional behavior。整理只在加载后运行一次，并立即移除 callback。
+- 234 个菜单根与 13,215 条完整文本继续跟随 Hanbot 主程序：中文客户端使用 CP936/GBK 简体中文，其他客户端使用 English。脚本内没有语言选择器，韩文目录仅为未来字体支持保留。
+- 英雄下方默认仍只显示一行 `Farm: ON/OFF`。只有开启 General Debug 时，才会每秒输出一次 `[mesh-debug]`，记录模式、地图、orb 按键与目标、windup/lock 以及 Q/W/E/R 实时形态；关闭后没有公共 tick callback。
+- 普通峡谷的 `gameMode=CLASSIC` 与 League Classic 已明确分离。只有 `Jade_*` 运行时英雄会进入 JADE，嚎哭深渊继续使用现代英雄模块与 ARAM 伤害平衡。
+- 已审计蓄力与引导技能，已接受的状态不会因为起始按键改变而停住。静态检查与缓存会阻止已知掉帧回归，真实服务器接受与 FPS 仍需在训练模式/F12 验证。
+
+#### Ezreal
+
+- W 现在只检查自身的准备、法力与预测，不再依赖 Q 是否可用或 Q 预测是否成功。只有 W 施放被接受后，下一次 Q 才等待飞行并优先攻击带标记目标。
+
+#### Gangplank
+
+- Farm 开启时按住 Harass 会先尝试攻击英雄；若没有英雄技能被接受，则使用与 Lane Clear 相同的预测致死 Q 补刀小兵。
+
+#### Irelia
+
+- 已接受的 W 蓄力会在 Evade 之后全局维护，等待实时 W2 确认后安全释放，即使起始模式已经改变也不会留下孤立蓄力。
+
+#### Jhin
+
+- 确认装弹 buff 或官方被动计时后，Combo/Harass 会在普通攻击 windup 保护前使用有效 Q。重复的参考实现控制也已整理到普通技能菜单。
 
 #### Kalista
 
-- E 自动重置会在施放前立即重新计算：要求 Rend 标记能覆盖施法窗口，并取 Riot 公式与实时伤害中的较低值，同时计入物理/全护盾和 10 点或 2% 安全余量。按住 Combo 且英雄不在射程内时，会持续选择兵线单位、真实野怪或敌方防御塔作为攻击载体，让普攻与 Martial Poise 位移继续；植物会被排除。带标记目标上方以 0.15 秒缓存显示 `E xN | -伤害 | HP 当前 > 之后`。
+- Rend 标记的服务器 endTime 现在与 game.time 比较，修复错误过期与重置判断。Harass 双跳 Q 必须来自已完成攻击的存活英雄目标，不会再向空地施放；E 详细日志会记录层数、剩余时间、伤害、生命值与拒绝原因。
 
-#### Tristana
+#### Xerath
 
-- E 附着目标上方现在同时显示当前层数、当前 E 单独爆炸伤害和爆炸后生命值。计算包含物理/全护盾，并且不会再用 R+E 连招伤害把 E 显示误判为红色可击杀。新的字体大小 ID 避免旧存档冲突，0.15 秒缓存避免逐帧重算。
+- R 仍只能由 Space 开始，但引导已经激活后，按住 Combo 也会在每发准备好时继续发射。自动致死炮与官方发射间隔保持不变。
 
-#### LeeSin
+#### Zeri
 
-- 修复 Q 直线预测与碰撞输入只传 `radius`，导致 `pred/linear` 或 `pred/collision` 终止的问题；现在统一使用 `width=60`。Star Combo 的 Flash 选项也改为重新加载时不会冲突的独立 ID。
-
-#### Fiora
-
-- Q 位移落点的直线预测补充必需的 width，避免同类 nil 预测错误。
-
-#### Hecarim
-
-- R 路径预测现在明确传入官方 265 宽度。
-
-#### KSante
-
-- Q 与蓄力 W 的直线预测输入现在都传入对应官方宽度。
-
-#### Lillia
-
-- 长距离滚动 E 的直线预测现在传入官方 80 宽度。
-
-#### Milio
-
-- Q 直线预测与碰撞检测现在共用带 width 的同一输入。
-
-#### Renekton
-
-- E 冲刺瞄准现在传入官方 50 宽度。
-
-#### TwistedFate
-
-- Q 万能牌直线预测现在传入官方 40 宽度。
-
-#### Yone
-
-- 修复 Q/Q3/W/R 直线预测仅传入 `radius`，导致 Hanbot `pred/linear` 因 `width` 为 nil 而终止的问题。现在明确使用 Riot 16.15 的宽度：Q 55、Q3 80、W 100、R 225，并加入专用回归契约。
-<!-- MESH-AIO:RELEASE:v3.1.1:END -->
+- 防御塔 Q 必须同时开启 Farm 与真实 Lane Clear，而且防御塔必须是 orbwalker 当前攻击/清线目标。Combo 不会开启防御塔 Q，也不会扫描附近防御塔制造目标。
+<!-- MESH-AIO:RELEASE:v3.1.2:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.1.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.1)
 - [v3.0.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.0.3)
 - [v3.0.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.0.1)
 - [v2.26.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v2.26.0)
