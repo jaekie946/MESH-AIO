@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.1.3:START -->
-## v3.1.3
+<!-- MESH-AIO:RELEASE:v3.2.0:START -->
+## v3.2.0
 
 ### 한국어
 
@@ -193,15 +193,44 @@
 
 #### 핵심 및 메뉴
 
-- v3.1.3은 저장된 기존 설정을 보존하면서, 사용자용 메뉴가 아닌 호환 옵션 묶음을 로드 즉시 숨기고 Hanbot의 늦은 BSON 복원 뒤에도 0.75초 안에 한 번만 다시 숨깁니다. 상시 tick callback은 남기지 않습니다.
-- 키바인드에 지원되지 않는 `visible` 속성을 쓰던 경로를 제거해, 메뉴 초기화 때 발생하던 `menuconfig/keybind` 치명 오류를 막았습니다.
-- 징크스는 F12에서 두 번 확인된 내부 `orb2/main`의 nil 비교 오류를 피하도록, 같은 엔진 pre-tick 단계의 공개 `cb.pre_tick` 콜백으로 옮겼습니다. Evade 우선·한 틱 한 시전·기존 우선순위는 그대로입니다.
-- 전체 메뉴는 Hanbot 본체 언어를 계속 따릅니다. 중국어 클라이언트는 CP936/GBK 간체 중국어, 그 외에는 영어이며 스크립트 안의 별도 언어 선택기는 없습니다. 한글 카탈로그는 미래 글꼴 지원용으로만 보존합니다.
-- 정적 Lua·메뉴·공식 계약 검사를 통과했지만, 실제 메뉴 복원 순서와 서버 시전 승인은 F12/연습 도구에서 별도로 확인해야 합니다.
+- v3.2.0은 로드 직후 화면 상단에 현재 MESH AIO 버전을, 화면 중앙에 `MESH TG : Click`을 최대 12초 동안 표시합니다. `Click`에서 마우스를 놓으면 공식 Hanbot 클립보드 API로 텔레그램 초대 링크를 복사합니다.
+- 상점·Tab·가까운 적 챔피언·적 라인 미니언이 있으면 오버레이를 숨기고 클릭 상태를 즉시 폐기합니다. 12초가 끝나면 draw callback 자체를 제거해 정상 플레이 중 프레임 비용을 남기지 않습니다.
+- MGoD Orb와 함께 로드하면 MESH가 같은 텔레그램 표시를 소유하는 12초 마감 시각을 공용 orb 계층에 게시합니다. 갱신된 MGoD는 그동안 중복 링크를 숨겨 두 스크립트가 한 줄씩만 표시됩니다.
+- 모든 메뉴는 Hanbot 본체의 영어/중국어 설정을 계속 따릅니다. 평탄화된 keybind는 지원되지 않는 `set("value")`/`set("visible")`를 호출하지 않고 새 키를 런타임 권위로 쓰므로 로드 치명 오류를 막습니다. 기존에 직접 바꾼 키는 새 패널에서 한 번 재지정해야 할 수 있습니다.
+- 팜 helper 입력의 `damage(unit)`를 전수 검사하고 after-attack 스트림을 사용한 뒤 즉시 닫도록 보강했습니다. 고정 문자열·상태·피해 계산은 로드 또는 저빈도 캐시에만 두어 정상 플레이의 draw/tick 비용도 줄였습니다.
+- Lua·메뉴·공식 계약의 정적 검사는 통과했지만, 두 샤드의 실제 로드 순서·키 저장 복원·클릭 복사·12초 callback 해제·백스윙 타이밍은 F12에서 별도로 확인해야 합니다.
+
+#### Jhin
+
+- W 팜 helper에 실제 W 피해 함수를 제공해 라인 정리 중 `orb2/main` nil 비교가 나지 않도록 했습니다.
 
 #### Jinx
 
-- Combo 및 자동 처치 W는 현재 로켓 평타 사거리 밖의 대상에게만 사용합니다. 가까운 대상은 미니건 평타·Q 전환이 우선이며 Semi W와 Flee W는 수동 입력으로 그대로 남습니다. Harass 중 Farm이 켜져 있고 가까운 라인 미니언이 있으면 새 Farm 옵션으로 미니건으로 돌아가 막타를 준비하며, 이 경로는 원거리 로켓 팜이나 W 클리어를 열지 않습니다.
+- W 팜 helper의 피해 입력 누락을 고쳤고, Q/W 범위는 보이는 Drawings 토글과 준비 상태만 따릅니다. 숨김 출처 옵션이 W OFF를 다시 켜거나 상세 HUD가 기본 표시되는 문제도 제거했습니다.
+
+#### TwistedFate
+
+- Q 팜 helper에 실제 Q 피해 함수를 연결해 라인 정리 대상 비교가 항상 숫자로 계산되도록 했습니다.
+
+#### Lux
+
+- 평타 뒤 표적 기록을 마치거나 Evade가 활성화되면 after-attack 스트림을 즉시 닫아 불필요한 반복 callback을 막았습니다.
+
+#### JarvanIV
+
+- League Classic Jarvan IV의 실제 백스윙 표식 뒤 after-attack 스트림을 닫고, Evade 틱에서는 기록과 동작을 모두 중단합니다.
+
+#### Malphite
+
+- League Classic Malphite의 백스윙 표식은 한 번만 갱신하고 스트림을 즉시 닫아 W 위빙 감시가 상시 반복되지 않게 했습니다.
+
+#### MasterYi
+
+- League Classic Master Yi의 백스윙 표식과 Evade 소유권을 보존하면서 after-attack 스트림을 매 공격마다 종료합니다.
+
+#### MissFortune
+
+- League Classic Miss Fortune의 백스윙 표식 뒤 스트림을 즉시 닫아 다음 실제 평타 전까지 같은 callback이 반복되지 않게 했습니다.
 
 ### English
 
@@ -383,15 +412,44 @@
 
 #### Core & Menu
 
-- v3.1.3 keeps saved settings intact while hiding non-user-facing compatibility option groups immediately and once more for at most 0.75 seconds after Hanbot's late BSON restore. No permanent tick callback remains.
-- The path that wrote an unsupported `visible` property to a keybind was removed, preventing the `menuconfig/keybind` fatal menu-initialization error.
-- After two F12 `orb2/main` nil-comparison failures, Jinx now uses the public engine `cb.pre_tick` phase instead of that opaque internal callback adapter. Evade priority, one accepted cast per tick, and the existing priority order remain intact.
-- Menus still follow Hanbot itself: CP936/GBK Simplified Chinese on a Chinese client and English otherwise. There is no script-side language selector; the Korean catalogue remains only for a future font update.
-- Static Lua, menu, and official-contract checks pass, while live menu-restore order and server spell acceptance remain separate F12/Practice Tool checks.
+- v3.2.0 shows the current MESH AIO version at the top of the screen and `MESH TG : Click` in the middle for up to 12 seconds after load. Releasing the mouse over `Click` copies the Telegram invite through Hanbot's documented clipboard API.
+- The overlay hides in the shop, while Tab is held, or near enemy champions and lane minions, clearing any pending click immediately. Its draw callback removes itself after 12 seconds, leaving no normal-play frame cost.
+- When MGoD Orb is loaded beside MESH, MESH publishes the shared 12-second promotion deadline through the orb layer. The updated MGoD hides its duplicate link during that window, so only one Telegram line is shown.
+- Menus still follow Hanbot's English/Chinese setting. Flattened keybinds no longer call unsupported `set("value")` or `set("visible")`; the new visible key is the runtime authority, preventing the fatal load error. A previously customised key may need to be rebound once in the new panel.
+- Farm-helper `damage(unit)` inputs are exhaustively checked and after-attack streams now close immediately after use. Fixed text, status, and damage work stays in load-time or low-frequency caches to reduce normal draw/tick cost.
+- Static Lua, menu, and official-contract checks pass, while actual dual-shard load order, saved-key restore, clipboard copy, callback removal, and backswing timing remain separate F12 checks.
+
+#### Jhin
+
+- Supplies Jhin W's real damage function to the farm helper, preventing the `orb2/main` nil comparison during lane clear.
 
 #### Jinx
 
-- Combo and automatic lethal W now fire only at targets outside the current live rocket basic-attack reach. Nearby targets keep minigun attacks and Q-form switching first; Semi W and Flee W remain deliberate manual inputs. While Harass and Farm are both enabled, a new Farm option returns to minigun for nearby lane-minion last hits without opening distant rocket farming or W clearing.
+- Fixes the missing W farm damage input. Q/W ranges now obey only the visible Drawings toggles and readiness, so a hidden source switch cannot re-enable W and optional status rows stay opt-in.
+
+#### TwistedFate
+
+- Connects Twisted Fate Q's real damage to the farm helper so every clear-target comparison remains numeric.
+
+#### Lux
+
+- Closes the after-attack stream after recording the target, and immediately closes it without acting on an Evade tick.
+
+#### JarvanIV
+
+- League Classic Jarvan IV now closes the after-attack stream after a real backswing marker and performs no marker work during Evade.
+
+#### Malphite
+
+- League Classic Malphite records one backswing and closes the stream, avoiding continuous monitoring between real W-weave attacks.
+
+#### MasterYi
+
+- League Classic Master Yi preserves its backswing marker and Evade ownership while closing each after-attack stream.
+
+#### MissFortune
+
+- League Classic Miss Fortune closes the stream after its backswing marker so the callback does not repeat before the next real attack.
 
 ### 简体中文
 
@@ -573,21 +631,51 @@
 
 #### 核心与菜单
 
-- v3.1.3 保留原有存档设置，同时在加载时立即隐藏非用户菜单的兼容选项组，并在 Hanbot 较晚恢复 BSON 后最多 0.75 秒再隐藏一次；不会留下常驻 tick callback。
-- 已移除向 keybind 写入不支持的 `visible` 属性的路径，避免 `menuconfig/keybind` 菜单初始化致命错误。
-- 在 F12 两次确认 `orb2/main` nil 比较失败后，Jinx 已从该不透明内部回调适配器迁移到公开的引擎 `cb.pre_tick` 阶段；Evade 优先级、每 tick 一次成功施放和原有优先级顺序保持不变。
-- 菜单继续跟随 Hanbot 主程序：中文客户端使用 CP936/GBK 简体中文，其他客户端使用 English。脚本内没有语言选择器，韩文目录仅为未来字体支持保留。
-- 静态 Lua、菜单与官方契约检查均已通过；实际菜单恢复顺序和服务器技能接受仍需在 F12/训练模式中单独验证。
+- v3.2.0 在加载后最多 12 秒内，于屏幕顶部显示当前 MESH AIO 版本，并在屏幕中部显示 `MESH TG : Click`。在 `Click` 上松开鼠标时，会通过 Hanbot 官方剪贴板 API 复制 Telegram 邀请链接。
+- 商店打开、按住 Tab、附近有敌方英雄或敌方兵线单位时，覆盖层会隐藏并立即清除待处理点击。12 秒后 draw callback 会自行移除，不给正常游戏留下帧开销。
+- 与 MGoD Orb 同时加载时，MESH 会通过共用 orb 层发布 12 秒宣传截止时间。更新后的 MGoD 在该窗口内隐藏重复链接，因此只显示一条 Telegram 信息。
+- 菜单继续跟随 Hanbot 本体的英文/中文设置。扁平化 keybind 不再调用不支持的 `set("value")` 或 `set("visible")`，而由新的可见按键作为运行时权威，从而避免致命加载错误；旧版自定义按键可能需要在新面板中重新绑定一次。
+- 已全量检查农兵 helper 的 `damage(unit)` 输入，并在使用后立即关闭 after-attack 流。固定文本、状态和伤害计算仅放在加载阶段或低频缓存中，降低正常 draw/tick 开销。
+- 静态 Lua、菜单与官方契约检查均已通过；双 shard 加载顺序、按键存档恢复、剪贴板复制、callback 移除和后摇时机仍需 F12 单独确认。
+
+#### Jhin
+
+- 为烬 W 农兵 helper 提供真实伤害函数，避免清线时出现 `orb2/main` 空值比较。
 
 #### Jinx
 
-- Combo 与自动斩杀 W 现在只会对当前火箭普攻范围外的目标施放。近处目标优先使用机枪普攻与 Q 形态切换；Semi W 与 Flee W 仍保持为主动手动输入。Harass 与 Farm 同时开启时，新的 Farm 选项会让近处兵线补刀切回机枪，不会开启远距离火箭清线或 W 清线。
-<!-- MESH-AIO:RELEASE:v3.1.3:END -->
+- 修复金克丝 W 农兵伤害输入缺失。Q/W 范围现在只服从可见 Drawings 开关和技能就绪状态，隐藏来源开关不会重新开启 W，可选状态行也保持手动启用。
+
+#### TwistedFate
+
+- 将崔斯特 Q 的真实伤害连接到农兵 helper，使清线目标比较始终使用数值。
+
+#### Lux
+
+- 拉克丝记录平A目标后立即关闭 after-attack 流，并在 Evade 生效时直接关闭且不执行动作。
+
+#### JarvanIV
+
+- League Classic 嘉文四世在真实后摇标记后关闭 after-attack 流，Evade 期间不记录也不执行。
+
+#### Malphite
+
+- League Classic 墨菲特只记录一次后摇并关闭流，避免在真实 W 穿插攻击之间持续监控。
+
+#### MasterYi
+
+- League Classic 易保留后摇标记与 Evade 所有权，同时在每次攻击后关闭流。
+
+#### MissFortune
+
+- League Classic 厄运小姐在后摇标记后关闭流，避免下次真实攻击前重复 callback。
+<!-- MESH-AIO:RELEASE:v3.2.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.1.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.3)
 - [v3.1.2](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.2)
 - [v3.1.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.1)
 - [v3.0.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.0.3)
