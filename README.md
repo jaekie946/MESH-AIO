@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.2.1:START -->
-## v3.2.1
+<!-- MESH-AIO:RELEASE:v3.3.0:START -->
+## v3.3.0
 
 ### 한국어
 
@@ -193,84 +193,253 @@
 
 #### 핵심 및 메뉴
 
-- v3.2.1은 MESH AIO, MGoD Orb, `[MESH]Evade`를 각각 단독으로 쓸 수 있게 유지하면서 함께 로드했을 때만 공개 Evade API로 주문 소유권을 양보합니다. 어느 구성요소도 다른 둘을 필수로 로드하지 않습니다.
-- 현대 173명과 League Classic 60명 전부의 시작 순서를 감사했습니다. 시작 때 Evade가 없으면 핸들이 영구 nil이던 현대 69명과 Classic 20명은 0.5초 간격으로만 재탐색하고, 발견 즉시 임시 callback을 제거합니다. 이미 늦은 로드를 지원하던 144개 모듈은 그대로 유지했습니다.
-- Evade 활성 중에도 별도 공격·이동·시전을 낼 수 있던 콜백 16곳을 Evade-first로 닫았습니다. 일반 tick뿐 아니라 pre-attack, after-attack, spell, castspell, issue-order 경로가 같은 소유권 규칙을 따릅니다.
-- Evade v1의 targeted collection은 아직 완전 준비 상태가 아니므로 Ezreal, Irelia, Samira, Sivir, Vladimir의 보조 방어는 `targeted_ready=true`일 때만 사용합니다. Sivir는 `is_cc`와 `isHardCC` 양쪽 명칭을 인식합니다.
-- Evade가 설치되지 않은 사용자는 기존 AIO 동작을 그대로 사용합니다. unresolved 상태의 공용 resolver는 매 tick 시간 비교만 하고 실제 module 조회는 0.5초마다 제한해 프레임 비용을 억제합니다.
-- Lua·173 AIO·60 Classic·메뉴·팜·공식 데이터·위빙 계약의 정적 검사는 통과했지만, 임의 로드 순서와 실제 회피 시작 틱의 주문 양보, targeted readiness 전환은 F12에서 별도로 확인해야 합니다.
+- v3.3.0은 실제 사용자 로그에서 확인된 5개 MESH 치명 오류를 원인별로 닫았습니다. 메뉴 color/keybind의 금지된 setter, 원형 예측 speed 누락, 선언되지 않은 상수, Hanbot vec2/vec3 프록시의 벡터 곱을 각각 전수 검사로 고정했습니다.
+- 현대 173명·Classic 60명·공용 코어의 237개 `main.lua`에서 자동 논타겟 조준을 전수 감사했습니다. 62개 Lua 경로가 예측 실패 뒤 현재 위치·커서·오래된 경로로 시전하지 않도록 교정됐고, 새 검사는 같은 폴백이 다시 추가되면 릴리즈를 막습니다.
+- 아군 Blitzcrank/Thresh/Nautilus/Pyke 같은 끌기·밀치기 중에는 장지연 스킬을 대상의 현재 위치가 아니라 공식 강제이동 도착점에 맞춥니다. 도착점을 증명할 수 없으면 자동 시전하지 않습니다.
+- AIO, MGoD Orb, `[MESH]Evade`는 계속 각각 단독으로 동작합니다. AIO는 오직 `meshevade` 공개 facade만 0.5초 제한 재탐색하며 native Evade3나 다른 스크립트를 생성·필수 로드하지 않습니다.
+- Zoe는 Kiri의 Q/Q2·벽 E·안전 R·W 파편·수면 평타 억제 교리를 현재 API로 재구성했고, Yone은 HGPro의 Q3 몸 대시/피격선 분리·Q-W-E-R·E 복귀·R 착지 안전·Q3-Flash를 수작업 상태기로 이식했습니다. 보호 loader나 외부 의존성은 포함하지 않았습니다.
+- Classic 8개 모듈(Corki, Fiddlesticks, Heimerdinger, Janna, Malphite, Nidalee, Olaf, Pantheon)의 장지연·예측 실패 자동 시전도 같은 실패 폐쇄 계약으로 교정했습니다.
+- Lua 5.1, 173 AIO, 60 Classic, 234 메뉴, 233 Farm, 공식 16.15 데이터, 선형 폭, 벡터 연산, 상수, 강제이동, 자동 조준, 위빙 계약을 CI에서 함께 검사합니다. 실제 live 이름·서버 승인·차징 해제 시각은 F12 후속 검증 항목입니다.
 
-#### Akshan
+#### Aatrox
 
-- Evade 활성 중 pre-attack이 두 번째 평타 상태를 바꾸지 않도록 했습니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 로그의 `number` 대 `struct109` 비교 원인이던 벡터 프록시 곱을 명시적 성분 내적으로 바꾸고 Q 자동 조준을 실패 폐쇄했습니다.
 
-#### Briar
+#### Ahri
 
-- 포탑 spell callback의 자동 Q보다 Evade 소유권과 pending 정리를 먼저 처리합니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
-#### Camille
+#### Anivia
 
-- pre-attack 자동 Q가 Evade 틱에 실행되지 않습니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Annie
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Aphelios
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Bard
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Belveth
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Cassiopeia
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Corki
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Ekko
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
 #### Ezreal
 
-- targeted Evade 데이터가 완전 준비됐다고 명시된 경우에만 해당 보조 방어를 사용합니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
-#### Hecarim
+#### Gragas
 
-- Evade 활성 중 사용자 공격 명령을 차단하거나 공격 pause를 걸지 않도록 issue-order 순서를 교정했습니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Hwei
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
 #### Illaoi
 
-- 영혼 끌기 반응 R보다 Evade 소유권을 먼저 확인합니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
 #### Irelia
 
-- pre-attack E와 targeted 보조 판정을 모두 Evade 활성·readiness 계약 뒤로 옮겼습니다.
-
-#### JarvanIV
-
-- pre-attack E가 Evade 틱에는 실행되지 않습니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
 #### Jhin
 
-- 치명타 취소용 pause와 이동보다 Evade를 먼저 확인하고 pending 상태를 안전하게 정리합니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- W/E가 아군 그랩 대상의 이동 전 위치에 쏘지 않으며, 공식 강제이동 도착점을 얻은 경우에만 그 위치를 우선합니다.
+
+#### Kled
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### KogMaw
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Leona
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Lillia
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Lissandra
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Locke
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Lux
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
 #### Malphite
 
-- W pre-attack/after-attack 두 경로를 모두 Evade-first로 닫고 after-attack 스트림도 종료합니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
-#### RekSai
+#### Malzahar
 
-- pre-attack Q가 Evade 틱에는 실행되지 않습니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
-#### Samira
+#### Maokai
 
-- Evade 활성 중 pre-attack 타깃을 오브워커에 다시 주입하지 않으며 targeted 보조는 readiness를 확인합니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
-#### Sivir
+#### Mel
 
-- targeted 보조는 readiness를 확인하고 하드 CC 데이터는 `is_cc`와 `isHardCC`를 모두 지원합니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
-#### Teemo
+#### Milio
 
-- after-attack 이모트/Q보다 Evade를 먼저 확인하고 스트림을 즉시 닫습니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
-#### Thresh
+#### Mordekaiser
 
-- spell callback의 자동 랜턴보다 Evade 소유권을 먼저 확인합니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
-#### TwistedFate
+#### Ornn
 
-- 평타 callback의 자동 Q보다 Evade를 먼저 확인하고 카드 reset 상태를 정리합니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
-#### Vladimir
+#### Pantheon
 
-- targeted Evade collection이 준비된 경우에만 해당 보조 방어를 사용합니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
 
-#### Warwick
+#### Poppy
 
-- castspell callback에서 Q release보다 Evade 소유권을 먼저 확인합니다.
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Pyke
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Rumble
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Senna
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Seraphine
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Shaco
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Shyvana
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Soraka
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Taliyah
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Taric
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Tristana
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Trundle
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Urgot
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Varus
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Veigar
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Velkoz
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Viego
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Viktor
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 벡터 프록시 오류를 제거하고 W/R의 강제이동 도착점 조준 및 실패 시전 억제를 적용해 과도한 연속 요청을 줄였습니다.
+
+#### Xerath
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- R 채널 시작과 R2 탄환 상태를 분리해 Combo 키를 누르는 동안 준비된 탄환을 매 틱 안전하게 재시도하며, 예측 실패 시 현재 위치로 쏘지 않습니다.
+
+#### XinZhao
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Zac
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Zed
+
+- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+
+#### Chogath
+
+- 원형 Q 예측 입력에 누락되지 않는 즉시형 speed를 보장해 nil 산술 치명 오류를 막았습니다.
+
+#### Sylas
+
+- 선언되지 않은 `Q_DETONATION` 산술을 실제 Q 폭발 지연 상수로 교체하고 상수 전수 검사에 등록했습니다.
+
+#### Yasuo
+
+- Q1/Q2/Q3와 EQ가 유효한 예측·대시 도착점을 얻지 못하면 허공에 시전하지 않도록 상태기와 신뢰도 게이트를 교정했습니다.
+
+#### Yone
+
+- HGPro 교리를 현재 공식 16.15 형태와 결합했습니다: Q3 대시 450/피격선 1050 분리, Q-W-E-R, 안전 E 복귀·처형, R 착지 검증, 2틱 Q3-Flash, 실제 Semi R 우선순위.
+
+#### Zeri
+
+- Farm이 켜진 Lane Clear에서 유효한 미니언 Q와 오브워커가 실제 공격 중인 적 포탑 Q를 모두 지원합니다. 주변 구조물을 임의 탐색하거나 Combo에서 포탑을 고르지 않으며, Q 경로 뒤에만 네이티브 평타 막타를 폴백합니다.
+
+#### Zoe
+
+- Kiri 교리를 보호 코드 없이 이식해 Q1-Q2 소유권, 최대 2875 벽 E, 안전한 R 복귀, W 파편, CC/채널/갭 반응, 수면 평타 차단, Semi E 우선순위를 정리했습니다.
 
 ### English
 
@@ -452,84 +621,253 @@
 
 #### Core & Menu
 
-- v3.2.1 keeps MESH AIO, MGoD Orb, and `[MESH]Evade` independently usable. When combined, AIO yields order ownership only through the public Evade facade; none of the three hard-loads either companion.
-- Startup order was audited across all 173 modern and 60 League Classic modules. The 69 modern and 20 Classic modules whose Evade handle could remain permanently nil now retry only every 0.5 seconds and remove the temporary callback immediately after adoption. The existing 144 lazy paths remain unchanged.
-- Sixteen action callbacks that could still attack, move, or cast during Evade are now Evade-first, including pre-attack, after-attack, spell, castspell, and issue-order paths.
-- Evade v1 does not yet claim a complete targeted collection. Ezreal, Irelia, Samira, Sivir, and Vladimir therefore consume those defenses only when `targeted_ready=true`; Sivir accepts both `is_cc` and `isHardCC` aliases.
-- Users without Evade retain the existing AIO behavior. While unresolved, the shared resolver performs only a time check each tick and limits the actual module lookup to once every 0.5 seconds.
-- Static Lua, 173-AIO, 60-Classic, menu, farm, official-data, and weave checks pass. Arbitrary live load order, first-threat order yielding, and targeted-readiness transitions remain separate F12 checks.
+- v3.3.0 closes five distinct MESH fatal errors observed in user logs. Release gates now cover forbidden color/keybind setters, missing circular-prediction speed, undeclared constants, and vector multiplication on Hanbot vec2/vec3 proxy objects.
+- Automatic non-targeted aiming was audited across all 237 `main.lua` files: 173 modern champions, 60 Classic champions, and the shared core. Sixty-two Lua paths no longer cast at current, cursor, or stale positions after prediction failure, and a new mutation checker blocks regressions.
+- Long-delay spells now aim at the verified landing point of allied pulls and knockbacks such as Blitzcrank, Thresh, Nautilus, and Pyke. If that endpoint cannot be established, automation fails closed.
+- AIO, MGoD Orb, and `[MESH]Evade` remain independently usable. AIO only resolves the public `meshevade` facade, throttled to 0.5 seconds, and neither creates native Evade3 nor hard-loads a companion script.
+- Zoe rebuilds Kiri's Q/Q2, wall-E, safe-R, W-shard, and sleep-AA doctrine on the current API. Yone ports HGPro's split Q3 dash/hit ranges, Q-W-E-R flow, E return, R landing safety, and Q3-Flash into a hand-owned state machine without protected loaders or external dependencies.
+- Eight Classic modules (Corki, Fiddlesticks, Heimerdinger, Janna, Malphite, Nidalee, Olaf, Pantheon) now apply the same fail-closed contract to long-delay and failed-prediction automation.
+- CI jointly validates Lua 5.1, 173 AIO, 60 Classic, 234 menus, 233 Farm layouts, official 16.15 data, linear width, vectors, constants, forced movement, automatic aim, and weaving. Live names, server acceptance, and charge-release timing remain explicit F12 boundaries.
 
-#### Akshan
+#### Aatrox
 
-- The pre-attack callback no longer mutates second-shot state while Evade is active.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- Replaced the proxy-vector multiplication behind the logged `number` versus `struct109` error with an explicit component dot product and made automatic Q fail closed.
 
-#### Briar
+#### Ahri
 
-- Evade ownership and pending cleanup now run before the turret-spell callback can cast Q.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
-#### Camille
+#### Anivia
 
-- The automatic pre-attack Q no longer fires on an Evade-owned tick.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Annie
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Aphelios
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Bard
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Belveth
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Cassiopeia
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Corki
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Ekko
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
 #### Ezreal
 
-- Targeted Evade defenses are used only when the facade explicitly reports that collection ready.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
-#### Hecarim
+#### Gragas
 
-- Issue-order now checks Evade before suppressing a user attack or applying an attack pause.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Hwei
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
 #### Illaoi
 
-- Evade ownership is checked before the spirit-grab reactive R.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
 #### Irelia
 
-- Both pre-attack E and targeted defenses now sit behind Evade-active and readiness contracts.
-
-#### JarvanIV
-
-- The pre-attack E no longer fires during Evade.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
 #### Jhin
 
-- Crit-cancel pause and movement check Evade first and safely discard pending state.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- W/E no longer aim at the pre-pull position of an allied hook target and prefer an officially derived forced-movement endpoint only when it is valid.
+
+#### Kled
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### KogMaw
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Leona
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Lillia
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Lissandra
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Locke
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Lux
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
 #### Malphite
 
-- Both W pre-attack and after-attack paths are Evade-first and close the after-attack stream.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
-#### RekSai
+#### Malzahar
 
-- The pre-attack Q no longer fires during Evade.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
-#### Samira
+#### Maokai
 
-- Pre-attack no longer injects an orbwalker target during Evade, and targeted defenses require readiness.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
-#### Sivir
+#### Mel
 
-- Targeted defenses require readiness and hard-CC metadata accepts both `is_cc` and `isHardCC`.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
-#### Teemo
+#### Milio
 
-- After-attack emote/Q checks Evade first and closes the stream immediately.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
-#### Thresh
+#### Mordekaiser
 
-- Spell-callback lantern automation now checks Evade ownership first.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
-#### TwistedFate
+#### Ornn
 
-- Attack-callback Q checks Evade first and clears the card-reset state.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
-#### Vladimir
+#### Pantheon
 
-- Targeted Evade defenses run only after the collection reports ready.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
 
-#### Warwick
+#### Poppy
 
-- The castspell callback checks Evade ownership before releasing Q.
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Pyke
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Rumble
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Senna
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Seraphine
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Shaco
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Shyvana
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Soraka
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Taliyah
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Taric
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Tristana
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Trundle
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Urgot
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Varus
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Veigar
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Velkoz
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Viego
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Viktor
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- Removed proxy-vector arithmetic, uses forced-movement landing points for W/R, and suppresses failed repeated casts that could flood the server.
+
+#### Xerath
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- Separates R channel start from R2 shots, retries a ready shot every tick while Combo is held, and never falls back to current position after prediction failure.
+
+#### XinZhao
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Zac
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Zed
+
+- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+
+#### Chogath
+
+- Circular Q prediction now always supplies a non-missing instant-speed value, preventing the logged nil arithmetic failure.
+
+#### Sylas
+
+- Replaced arithmetic on the undeclared `Q_DETONATION` field with the owned Q detonation-delay constant and registered it with the constant checker.
+
+#### Yasuo
+
+- Q1/Q2/Q3 and EQ now require a valid prediction or dash endpoint, preventing empty-space casts.
+
+#### Yone
+
+- Rebuilt on HGPro doctrine with official 16.15 forms: Q3 dash 450 versus hit line 1050, Q-W-E-R, safe E return/execute, R landing checks, two-tick Q3-Flash, and reachable Semi R priority.
+
+#### Zeri
+
+- With Farm enabled, Lane Clear Q supports both valid minions and the enemy turret the orbwalker is actually attacking. It neither scans arbitrary structures nor selects turrets in Combo, and native-AA last hitting remains a fallback after the Q paths.
+
+#### Zoe
+
+- Ports Kiri doctrine without protected code: Q1-Q2 ownership, bounded 2875 wall E, safe R return, W shards, CC/channel/gap reactions, sleep-AA hold, and Semi E priority.
 
 ### 简体中文
 
@@ -711,90 +1049,260 @@
 
 #### 核心与菜单
 
-- v3.2.1 保持 MESH AIO、MGoD Orb 与 `[MESH]Evade` 均可独立使用；共同加载时，AIO 只通过公开 Evade facade 让出指令所有权，三者互不硬加载。
-- 已审计 173 个现代英雄与 60 个 League Classic 模块的加载顺序。原本可能永久保留空 Evade 句柄的 69 个现代模块和 20 个 Classic 模块，现在最多每 0.5 秒重查一次，接入后立即移除临时 callback；原有 144 条延迟加载路径保持不变。
-- 16 个原本可能在 Evade 期间继续攻击、移动或施法的回调已改为 Evade-first，覆盖 pre-attack、after-attack、spell、castspell 与 issue-order。
-- Evade v1 尚未声明完整 targeted collection，因此 Ezreal、Irelia、Samira、Sivir、Vladimir 仅在 `targeted_ready=true` 时使用该防御；Sivir 同时识别 `is_cc` 与 `isHardCC`。
-- 未安装 Evade 的用户保持原有 AIO 行为。未解析时，共用 resolver 每 tick 只做时间比较，实际 module 查询限制为每 0.5 秒一次。
-- 静态 Lua、173 AIO、60 Classic、菜单、农兵、官方数据与 weave 检查均已通过；真实任意加载顺序、首个威胁 tick 的指令让权和 targeted readiness 变化仍需 F12 验证。
+- v3.3.0 按根因修复了用户日志中的 5 类 MESH 致命错误。发布门禁现已覆盖非法 color/keybind setter、圆形预测缺少 speed、未声明常量，以及 Hanbot vec2/vec3 代理对象的向量乘法。
+- 已审计全部 237 个 `main.lua` 的自动非指向瞄准：173 个现代英雄、60 个 Classic 英雄和共用核心。62 条 Lua 路径在预测失败后不再向当前位置、鼠标或过期路径施法，并由新的变异测试阻止回归。
+- 长延迟技能会瞄准 Blitzcrank、Thresh、Nautilus、Pyke 等友方拉拽/击退的已验证落点；无法证明落点时自动逻辑会安全失败。
+- AIO、MGoD Orb 与 `[MESH]Evade` 仍可分别独立使用。AIO 只解析公开 `meshevade` facade，并将重查限制为 0.5 秒；不会创建原生 Evade3，也不会硬加载其他脚本。
+- Zoe 以当前 API 重建 Kiri 的 Q/Q2、穿墙 E、安全 R、W 碎片与睡眠普攻抑制；Yone 将 HGPro 的 Q3 冲刺/命中距离分离、Q-W-E-R、E 返回、R 落点安全和 Q3-Flash 移植为自有状态机，不包含保护 loader 或外部依赖。
+- 8 个 Classic 模块（Corki、Fiddlesticks、Heimerdinger、Janna、Malphite、Nidalee、Olaf、Pantheon）的长延迟与预测失败自动施法也统一采用安全失败契约。
+- CI 同时验证 Lua 5.1、173 AIO、60 Classic、234 菜单、233 Farm、官方 16.15 数据、线性宽度、向量、常量、强制位移、自动瞄准与 weave。实际名称、服务器接受与蓄力释放时序仍列为 F12 验证边界。
 
-#### Akshan
+#### Aatrox
 
-- Evade 生效时，pre-attack 不再修改第二次普攻状态。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 将日志中 `number` 与 `struct109` 比较错误的代理向量乘法改为显式分量点积，并使自动 Q 安全失败。
 
-#### Briar
+#### Ahri
 
-- 炮塔 spell callback 自动施放 Q 前，先处理 Evade 所有权与 pending 清理。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
-#### Camille
+#### Anivia
 
-- Evade 所有的 tick 中不再自动触发 pre-attack Q。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Annie
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Aphelios
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Bard
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Belveth
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Cassiopeia
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Corki
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Ekko
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
 #### Ezreal
 
-- 仅在 facade 明确报告 targeted collection 已就绪时使用该防御。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
-#### Hecarim
+#### Gragas
 
-- issue-order 会先检查 Evade，再决定是否拦截用户攻击或添加攻击暂停。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Hwei
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
 #### Illaoi
 
-- 灵魂拉取后的反应 R 之前先检查 Evade 所有权。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
 #### Irelia
 
-- pre-attack E 与 targeted 防御均受 Evade active 和 readiness 契约保护。
-
-#### JarvanIV
-
-- Evade 期间不再触发 pre-attack E。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
 #### Jhin
 
-- 暴击取消的暂停与移动先检查 Evade，并安全清除 pending 状态。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- W/E 不再瞄准友方钩子目标位移前的位置，仅在有效时优先使用官方推导的强制位移落点。
+
+#### Kled
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### KogMaw
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Leona
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Lillia
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Lissandra
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Locke
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Lux
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
 #### Malphite
 
-- W 的 pre-attack 与 after-attack 两条路径均改为 Evade-first，并关闭 after-attack 流。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
-#### RekSai
+#### Malzahar
 
-- Evade 期间不再触发 pre-attack Q。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
-#### Samira
+#### Maokai
 
-- Evade 期间 pre-attack 不再注入目标，targeted 防御也要求 readiness。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
-#### Sivir
+#### Mel
 
-- targeted 防御要求 readiness，硬控数据同时支持 `is_cc` 与 `isHardCC`。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
-#### Teemo
+#### Milio
 
-- after-attack 的表情/Q 先检查 Evade，并立即关闭该流。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
-#### Thresh
+#### Mordekaiser
 
-- spell callback 的自动灯笼现在先检查 Evade 所有权。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
-#### TwistedFate
+#### Ornn
 
-- 普攻 callback 的自动 Q 先检查 Evade，并清理卡牌 reset 状态。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
-#### Vladimir
+#### Pantheon
 
-- 仅在 targeted Evade collection 报告就绪后使用该防御。
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
 
-#### Warwick
+#### Poppy
 
-- castspell callback 会在释放 Q 前先检查 Evade 所有权。
-<!-- MESH-AIO:RELEASE:v3.2.1:END -->
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Pyke
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Rumble
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Senna
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Seraphine
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Shaco
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Shyvana
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Soraka
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Taliyah
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Taric
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Tristana
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Trundle
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Urgot
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Varus
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Veigar
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Velkoz
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Viego
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Viktor
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 移除代理向量算术，W/R 使用强制位移落点，并抑制可能造成服务器请求洪泛的失败重复施法。
+
+#### Xerath
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 分离 R 开启与 R2 弹体状态，按住 Combo 时每 tick 重试已就绪弹体，预测失败后不再向当前位置施放。
+
+#### XinZhao
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Zac
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Zed
+
+- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+
+#### Chogath
+
+- 圆形 Q 预测始终提供非空的瞬时 speed，避免日志中的 nil 算术致命错误。
+
+#### Sylas
+
+- 用自有 Q 爆炸延迟常量替代未声明 `Q_DETONATION` 的算术，并加入常量检查。
+
+#### Yasuo
+
+- Q1/Q2/Q3 与 EQ 现在必须取得有效预测或冲刺终点，避免向空处施法。
+
+#### Yone
+
+- 按 HGPro 与官方 16.15 形态重建：Q3 冲刺 450/命中线 1050、Q-W-E-R、安全 E 返回与处决、R 落点检查、两 tick Q3-Flash，以及可达的 Semi R 优先级。
+
+#### Zeri
+
+- Farm 开启的 Lane Clear 中，Q 同时支持有效小兵和走砍器正在实际攻击的敌方防御塔；不会任意扫描建筑，也不会在 Combo 选择防御塔，原生普攻补刀仅作为 Q 路径之后的后备。
+
+#### Zoe
+
+- 不含保护代码地移植 Kiri：Q1-Q2 所有权、最多 2875 穿墙 E、安全 R 返回、W 碎片、CC/引导/突进反应、睡眠普攻抑制与 Semi E 优先级。
+<!-- MESH-AIO:RELEASE:v3.3.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.2.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.2.1)
 - [v3.2.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.2.0)
 - [v3.1.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.3)
 - [v3.1.2](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.2)
