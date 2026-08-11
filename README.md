@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.2.0:START -->
-## v3.2.0
+<!-- MESH-AIO:RELEASE:v3.2.1:START -->
+## v3.2.1
 
 ### 한국어
 
@@ -193,44 +193,84 @@
 
 #### 핵심 및 메뉴
 
-- v3.2.0은 로드 직후 화면 상단에 현재 MESH AIO 버전을, 화면 중앙에 `MESH TG : Click`을 최대 12초 동안 표시합니다. `Click`에서 마우스를 놓으면 공식 Hanbot 클립보드 API로 텔레그램 초대 링크를 복사합니다.
-- 상점·Tab·가까운 적 챔피언·적 라인 미니언이 있으면 오버레이를 숨기고 클릭 상태를 즉시 폐기합니다. 12초가 끝나면 draw callback 자체를 제거해 정상 플레이 중 프레임 비용을 남기지 않습니다.
-- MGoD Orb와 함께 로드하면 MESH가 같은 텔레그램 표시를 소유하는 12초 마감 시각을 공용 orb 계층에 게시합니다. 갱신된 MGoD는 그동안 중복 링크를 숨겨 두 스크립트가 한 줄씩만 표시됩니다.
-- 모든 메뉴는 Hanbot 본체의 영어/중국어 설정을 계속 따릅니다. 평탄화된 keybind는 지원되지 않는 `set("value")`/`set("visible")`를 호출하지 않고 새 키를 런타임 권위로 쓰므로 로드 치명 오류를 막습니다. 기존에 직접 바꾼 키는 새 패널에서 한 번 재지정해야 할 수 있습니다.
-- 팜 helper 입력의 `damage(unit)`를 전수 검사하고 after-attack 스트림을 사용한 뒤 즉시 닫도록 보강했습니다. 고정 문자열·상태·피해 계산은 로드 또는 저빈도 캐시에만 두어 정상 플레이의 draw/tick 비용도 줄였습니다.
-- Lua·메뉴·공식 계약의 정적 검사는 통과했지만, 두 샤드의 실제 로드 순서·키 저장 복원·클릭 복사·12초 callback 해제·백스윙 타이밍은 F12에서 별도로 확인해야 합니다.
+- v3.2.1은 MESH AIO, MGoD Orb, `[MESH]Evade`를 각각 단독으로 쓸 수 있게 유지하면서 함께 로드했을 때만 공개 Evade API로 주문 소유권을 양보합니다. 어느 구성요소도 다른 둘을 필수로 로드하지 않습니다.
+- 현대 173명과 League Classic 60명 전부의 시작 순서를 감사했습니다. 시작 때 Evade가 없으면 핸들이 영구 nil이던 현대 69명과 Classic 20명은 0.5초 간격으로만 재탐색하고, 발견 즉시 임시 callback을 제거합니다. 이미 늦은 로드를 지원하던 144개 모듈은 그대로 유지했습니다.
+- Evade 활성 중에도 별도 공격·이동·시전을 낼 수 있던 콜백 16곳을 Evade-first로 닫았습니다. 일반 tick뿐 아니라 pre-attack, after-attack, spell, castspell, issue-order 경로가 같은 소유권 규칙을 따릅니다.
+- Evade v1의 targeted collection은 아직 완전 준비 상태가 아니므로 Ezreal, Irelia, Samira, Sivir, Vladimir의 보조 방어는 `targeted_ready=true`일 때만 사용합니다. Sivir는 `is_cc`와 `isHardCC` 양쪽 명칭을 인식합니다.
+- Evade가 설치되지 않은 사용자는 기존 AIO 동작을 그대로 사용합니다. unresolved 상태의 공용 resolver는 매 tick 시간 비교만 하고 실제 module 조회는 0.5초마다 제한해 프레임 비용을 억제합니다.
+- Lua·173 AIO·60 Classic·메뉴·팜·공식 데이터·위빙 계약의 정적 검사는 통과했지만, 임의 로드 순서와 실제 회피 시작 틱의 주문 양보, targeted readiness 전환은 F12에서 별도로 확인해야 합니다.
 
-#### Jhin
+#### Akshan
 
-- W 팜 helper에 실제 W 피해 함수를 제공해 라인 정리 중 `orb2/main` nil 비교가 나지 않도록 했습니다.
+- Evade 활성 중 pre-attack이 두 번째 평타 상태를 바꾸지 않도록 했습니다.
 
-#### Jinx
+#### Briar
 
-- W 팜 helper의 피해 입력 누락을 고쳤고, Q/W 범위는 보이는 Drawings 토글과 준비 상태만 따릅니다. 숨김 출처 옵션이 W OFF를 다시 켜거나 상세 HUD가 기본 표시되는 문제도 제거했습니다.
+- 포탑 spell callback의 자동 Q보다 Evade 소유권과 pending 정리를 먼저 처리합니다.
 
-#### TwistedFate
+#### Camille
 
-- Q 팜 helper에 실제 Q 피해 함수를 연결해 라인 정리 대상 비교가 항상 숫자로 계산되도록 했습니다.
+- pre-attack 자동 Q가 Evade 틱에 실행되지 않습니다.
 
-#### Lux
+#### Ezreal
 
-- 평타 뒤 표적 기록을 마치거나 Evade가 활성화되면 after-attack 스트림을 즉시 닫아 불필요한 반복 callback을 막았습니다.
+- targeted Evade 데이터가 완전 준비됐다고 명시된 경우에만 해당 보조 방어를 사용합니다.
+
+#### Hecarim
+
+- Evade 활성 중 사용자 공격 명령을 차단하거나 공격 pause를 걸지 않도록 issue-order 순서를 교정했습니다.
+
+#### Illaoi
+
+- 영혼 끌기 반응 R보다 Evade 소유권을 먼저 확인합니다.
+
+#### Irelia
+
+- pre-attack E와 targeted 보조 판정을 모두 Evade 활성·readiness 계약 뒤로 옮겼습니다.
 
 #### JarvanIV
 
-- League Classic Jarvan IV의 실제 백스윙 표식 뒤 after-attack 스트림을 닫고, Evade 틱에서는 기록과 동작을 모두 중단합니다.
+- pre-attack E가 Evade 틱에는 실행되지 않습니다.
+
+#### Jhin
+
+- 치명타 취소용 pause와 이동보다 Evade를 먼저 확인하고 pending 상태를 안전하게 정리합니다.
 
 #### Malphite
 
-- League Classic Malphite의 백스윙 표식은 한 번만 갱신하고 스트림을 즉시 닫아 W 위빙 감시가 상시 반복되지 않게 했습니다.
+- W pre-attack/after-attack 두 경로를 모두 Evade-first로 닫고 after-attack 스트림도 종료합니다.
 
-#### MasterYi
+#### RekSai
 
-- League Classic Master Yi의 백스윙 표식과 Evade 소유권을 보존하면서 after-attack 스트림을 매 공격마다 종료합니다.
+- pre-attack Q가 Evade 틱에는 실행되지 않습니다.
 
-#### MissFortune
+#### Samira
 
-- League Classic Miss Fortune의 백스윙 표식 뒤 스트림을 즉시 닫아 다음 실제 평타 전까지 같은 callback이 반복되지 않게 했습니다.
+- Evade 활성 중 pre-attack 타깃을 오브워커에 다시 주입하지 않으며 targeted 보조는 readiness를 확인합니다.
+
+#### Sivir
+
+- targeted 보조는 readiness를 확인하고 하드 CC 데이터는 `is_cc`와 `isHardCC`를 모두 지원합니다.
+
+#### Teemo
+
+- after-attack 이모트/Q보다 Evade를 먼저 확인하고 스트림을 즉시 닫습니다.
+
+#### Thresh
+
+- spell callback의 자동 랜턴보다 Evade 소유권을 먼저 확인합니다.
+
+#### TwistedFate
+
+- 평타 callback의 자동 Q보다 Evade를 먼저 확인하고 카드 reset 상태를 정리합니다.
+
+#### Vladimir
+
+- targeted Evade collection이 준비된 경우에만 해당 보조 방어를 사용합니다.
+
+#### Warwick
+
+- castspell callback에서 Q release보다 Evade 소유권을 먼저 확인합니다.
 
 ### English
 
@@ -412,44 +452,84 @@
 
 #### Core & Menu
 
-- v3.2.0 shows the current MESH AIO version at the top of the screen and `MESH TG : Click` in the middle for up to 12 seconds after load. Releasing the mouse over `Click` copies the Telegram invite through Hanbot's documented clipboard API.
-- The overlay hides in the shop, while Tab is held, or near enemy champions and lane minions, clearing any pending click immediately. Its draw callback removes itself after 12 seconds, leaving no normal-play frame cost.
-- When MGoD Orb is loaded beside MESH, MESH publishes the shared 12-second promotion deadline through the orb layer. The updated MGoD hides its duplicate link during that window, so only one Telegram line is shown.
-- Menus still follow Hanbot's English/Chinese setting. Flattened keybinds no longer call unsupported `set("value")` or `set("visible")`; the new visible key is the runtime authority, preventing the fatal load error. A previously customised key may need to be rebound once in the new panel.
-- Farm-helper `damage(unit)` inputs are exhaustively checked and after-attack streams now close immediately after use. Fixed text, status, and damage work stays in load-time or low-frequency caches to reduce normal draw/tick cost.
-- Static Lua, menu, and official-contract checks pass, while actual dual-shard load order, saved-key restore, clipboard copy, callback removal, and backswing timing remain separate F12 checks.
+- v3.2.1 keeps MESH AIO, MGoD Orb, and `[MESH]Evade` independently usable. When combined, AIO yields order ownership only through the public Evade facade; none of the three hard-loads either companion.
+- Startup order was audited across all 173 modern and 60 League Classic modules. The 69 modern and 20 Classic modules whose Evade handle could remain permanently nil now retry only every 0.5 seconds and remove the temporary callback immediately after adoption. The existing 144 lazy paths remain unchanged.
+- Sixteen action callbacks that could still attack, move, or cast during Evade are now Evade-first, including pre-attack, after-attack, spell, castspell, and issue-order paths.
+- Evade v1 does not yet claim a complete targeted collection. Ezreal, Irelia, Samira, Sivir, and Vladimir therefore consume those defenses only when `targeted_ready=true`; Sivir accepts both `is_cc` and `isHardCC` aliases.
+- Users without Evade retain the existing AIO behavior. While unresolved, the shared resolver performs only a time check each tick and limits the actual module lookup to once every 0.5 seconds.
+- Static Lua, 173-AIO, 60-Classic, menu, farm, official-data, and weave checks pass. Arbitrary live load order, first-threat order yielding, and targeted-readiness transitions remain separate F12 checks.
 
-#### Jhin
+#### Akshan
 
-- Supplies Jhin W's real damage function to the farm helper, preventing the `orb2/main` nil comparison during lane clear.
+- The pre-attack callback no longer mutates second-shot state while Evade is active.
 
-#### Jinx
+#### Briar
 
-- Fixes the missing W farm damage input. Q/W ranges now obey only the visible Drawings toggles and readiness, so a hidden source switch cannot re-enable W and optional status rows stay opt-in.
+- Evade ownership and pending cleanup now run before the turret-spell callback can cast Q.
 
-#### TwistedFate
+#### Camille
 
-- Connects Twisted Fate Q's real damage to the farm helper so every clear-target comparison remains numeric.
+- The automatic pre-attack Q no longer fires on an Evade-owned tick.
 
-#### Lux
+#### Ezreal
 
-- Closes the after-attack stream after recording the target, and immediately closes it without acting on an Evade tick.
+- Targeted Evade defenses are used only when the facade explicitly reports that collection ready.
+
+#### Hecarim
+
+- Issue-order now checks Evade before suppressing a user attack or applying an attack pause.
+
+#### Illaoi
+
+- Evade ownership is checked before the spirit-grab reactive R.
+
+#### Irelia
+
+- Both pre-attack E and targeted defenses now sit behind Evade-active and readiness contracts.
 
 #### JarvanIV
 
-- League Classic Jarvan IV now closes the after-attack stream after a real backswing marker and performs no marker work during Evade.
+- The pre-attack E no longer fires during Evade.
+
+#### Jhin
+
+- Crit-cancel pause and movement check Evade first and safely discard pending state.
 
 #### Malphite
 
-- League Classic Malphite records one backswing and closes the stream, avoiding continuous monitoring between real W-weave attacks.
+- Both W pre-attack and after-attack paths are Evade-first and close the after-attack stream.
 
-#### MasterYi
+#### RekSai
 
-- League Classic Master Yi preserves its backswing marker and Evade ownership while closing each after-attack stream.
+- The pre-attack Q no longer fires during Evade.
 
-#### MissFortune
+#### Samira
 
-- League Classic Miss Fortune closes the stream after its backswing marker so the callback does not repeat before the next real attack.
+- Pre-attack no longer injects an orbwalker target during Evade, and targeted defenses require readiness.
+
+#### Sivir
+
+- Targeted defenses require readiness and hard-CC metadata accepts both `is_cc` and `isHardCC`.
+
+#### Teemo
+
+- After-attack emote/Q checks Evade first and closes the stream immediately.
+
+#### Thresh
+
+- Spell-callback lantern automation now checks Evade ownership first.
+
+#### TwistedFate
+
+- Attack-callback Q checks Evade first and clears the card-reset state.
+
+#### Vladimir
+
+- Targeted Evade defenses run only after the collection reports ready.
+
+#### Warwick
+
+- The castspell callback checks Evade ownership before releasing Q.
 
 ### 简体中文
 
@@ -631,50 +711,91 @@
 
 #### 核心与菜单
 
-- v3.2.0 在加载后最多 12 秒内，于屏幕顶部显示当前 MESH AIO 版本，并在屏幕中部显示 `MESH TG : Click`。在 `Click` 上松开鼠标时，会通过 Hanbot 官方剪贴板 API 复制 Telegram 邀请链接。
-- 商店打开、按住 Tab、附近有敌方英雄或敌方兵线单位时，覆盖层会隐藏并立即清除待处理点击。12 秒后 draw callback 会自行移除，不给正常游戏留下帧开销。
-- 与 MGoD Orb 同时加载时，MESH 会通过共用 orb 层发布 12 秒宣传截止时间。更新后的 MGoD 在该窗口内隐藏重复链接，因此只显示一条 Telegram 信息。
-- 菜单继续跟随 Hanbot 本体的英文/中文设置。扁平化 keybind 不再调用不支持的 `set("value")` 或 `set("visible")`，而由新的可见按键作为运行时权威，从而避免致命加载错误；旧版自定义按键可能需要在新面板中重新绑定一次。
-- 已全量检查农兵 helper 的 `damage(unit)` 输入，并在使用后立即关闭 after-attack 流。固定文本、状态和伤害计算仅放在加载阶段或低频缓存中，降低正常 draw/tick 开销。
-- 静态 Lua、菜单与官方契约检查均已通过；双 shard 加载顺序、按键存档恢复、剪贴板复制、callback 移除和后摇时机仍需 F12 单独确认。
+- v3.2.1 保持 MESH AIO、MGoD Orb 与 `[MESH]Evade` 均可独立使用；共同加载时，AIO 只通过公开 Evade facade 让出指令所有权，三者互不硬加载。
+- 已审计 173 个现代英雄与 60 个 League Classic 模块的加载顺序。原本可能永久保留空 Evade 句柄的 69 个现代模块和 20 个 Classic 模块，现在最多每 0.5 秒重查一次，接入后立即移除临时 callback；原有 144 条延迟加载路径保持不变。
+- 16 个原本可能在 Evade 期间继续攻击、移动或施法的回调已改为 Evade-first，覆盖 pre-attack、after-attack、spell、castspell 与 issue-order。
+- Evade v1 尚未声明完整 targeted collection，因此 Ezreal、Irelia、Samira、Sivir、Vladimir 仅在 `targeted_ready=true` 时使用该防御；Sivir 同时识别 `is_cc` 与 `isHardCC`。
+- 未安装 Evade 的用户保持原有 AIO 行为。未解析时，共用 resolver 每 tick 只做时间比较，实际 module 查询限制为每 0.5 秒一次。
+- 静态 Lua、173 AIO、60 Classic、菜单、农兵、官方数据与 weave 检查均已通过；真实任意加载顺序、首个威胁 tick 的指令让权和 targeted readiness 变化仍需 F12 验证。
 
-#### Jhin
+#### Akshan
 
-- 为烬 W 农兵 helper 提供真实伤害函数，避免清线时出现 `orb2/main` 空值比较。
+- Evade 生效时，pre-attack 不再修改第二次普攻状态。
 
-#### Jinx
+#### Briar
 
-- 修复金克丝 W 农兵伤害输入缺失。Q/W 范围现在只服从可见 Drawings 开关和技能就绪状态，隐藏来源开关不会重新开启 W，可选状态行也保持手动启用。
+- 炮塔 spell callback 自动施放 Q 前，先处理 Evade 所有权与 pending 清理。
 
-#### TwistedFate
+#### Camille
 
-- 将崔斯特 Q 的真实伤害连接到农兵 helper，使清线目标比较始终使用数值。
+- Evade 所有的 tick 中不再自动触发 pre-attack Q。
 
-#### Lux
+#### Ezreal
 
-- 拉克丝记录平A目标后立即关闭 after-attack 流，并在 Evade 生效时直接关闭且不执行动作。
+- 仅在 facade 明确报告 targeted collection 已就绪时使用该防御。
+
+#### Hecarim
+
+- issue-order 会先检查 Evade，再决定是否拦截用户攻击或添加攻击暂停。
+
+#### Illaoi
+
+- 灵魂拉取后的反应 R 之前先检查 Evade 所有权。
+
+#### Irelia
+
+- pre-attack E 与 targeted 防御均受 Evade active 和 readiness 契约保护。
 
 #### JarvanIV
 
-- League Classic 嘉文四世在真实后摇标记后关闭 after-attack 流，Evade 期间不记录也不执行。
+- Evade 期间不再触发 pre-attack E。
+
+#### Jhin
+
+- 暴击取消的暂停与移动先检查 Evade，并安全清除 pending 状态。
 
 #### Malphite
 
-- League Classic 墨菲特只记录一次后摇并关闭流，避免在真实 W 穿插攻击之间持续监控。
+- W 的 pre-attack 与 after-attack 两条路径均改为 Evade-first，并关闭 after-attack 流。
 
-#### MasterYi
+#### RekSai
 
-- League Classic 易保留后摇标记与 Evade 所有权，同时在每次攻击后关闭流。
+- Evade 期间不再触发 pre-attack Q。
 
-#### MissFortune
+#### Samira
 
-- League Classic 厄运小姐在后摇标记后关闭流，避免下次真实攻击前重复 callback。
-<!-- MESH-AIO:RELEASE:v3.2.0:END -->
+- Evade 期间 pre-attack 不再注入目标，targeted 防御也要求 readiness。
+
+#### Sivir
+
+- targeted 防御要求 readiness，硬控数据同时支持 `is_cc` 与 `isHardCC`。
+
+#### Teemo
+
+- after-attack 的表情/Q 先检查 Evade，并立即关闭该流。
+
+#### Thresh
+
+- spell callback 的自动灯笼现在先检查 Evade 所有权。
+
+#### TwistedFate
+
+- 普攻 callback 的自动 Q 先检查 Evade，并清理卡牌 reset 状态。
+
+#### Vladimir
+
+- 仅在 targeted Evade collection 报告就绪后使用该防御。
+
+#### Warwick
+
+- castspell callback 会在释放 Q 前先检查 Evade 所有权。
+<!-- MESH-AIO:RELEASE:v3.2.1:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.2.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.2.0)
 - [v3.1.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.3)
 - [v3.1.2](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.2)
 - [v3.1.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.1)
