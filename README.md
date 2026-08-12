@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.3.0:START -->
-## v3.3.0
+<!-- MESH-AIO:RELEASE:v3.4.0:START -->
+## v3.4.0
 
 ### 한국어
 
@@ -193,253 +193,259 @@
 
 #### 핵심 및 메뉴
 
-- v3.3.0은 실제 사용자 로그에서 확인된 5개 MESH 치명 오류를 원인별로 닫았습니다. 메뉴 color/keybind의 금지된 setter, 원형 예측 speed 누락, 선언되지 않은 상수, Hanbot vec2/vec3 프록시의 벡터 곱을 각각 전수 검사로 고정했습니다.
-- 현대 173명·Classic 60명·공용 코어의 237개 `main.lua`에서 자동 논타겟 조준을 전수 감사했습니다. 62개 Lua 경로가 예측 실패 뒤 현재 위치·커서·오래된 경로로 시전하지 않도록 교정됐고, 새 검사는 같은 폴백이 다시 추가되면 릴리즈를 막습니다.
-- 아군 Blitzcrank/Thresh/Nautilus/Pyke 같은 끌기·밀치기 중에는 장지연 스킬을 대상의 현재 위치가 아니라 공식 강제이동 도착점에 맞춥니다. 도착점을 증명할 수 없으면 자동 시전하지 않습니다.
-- AIO, MGoD Orb, `[MESH]Evade`는 계속 각각 단독으로 동작합니다. AIO는 오직 `meshevade` 공개 facade만 0.5초 제한 재탐색하며 native Evade3나 다른 스크립트를 생성·필수 로드하지 않습니다.
-- Zoe는 Kiri의 Q/Q2·벽 E·안전 R·W 파편·수면 평타 억제 교리를 현재 API로 재구성했고, Yone은 HGPro의 Q3 몸 대시/피격선 분리·Q-W-E-R·E 복귀·R 착지 안전·Q3-Flash를 수작업 상태기로 이식했습니다. 보호 loader나 외부 의존성은 포함하지 않았습니다.
-- Classic 8개 모듈(Corki, Fiddlesticks, Heimerdinger, Janna, Malphite, Nidalee, Olaf, Pantheon)의 장지연·예측 실패 자동 시전도 같은 실패 폐쇄 계약으로 교정했습니다.
-- Lua 5.1, 173 AIO, 60 Classic, 234 메뉴, 233 Farm, 공식 16.15 데이터, 선형 폭, 벡터 연산, 상수, 강제이동, 자동 조준, 위빙 계약을 CI에서 함께 검사합니다. 실제 live 이름·서버 승인·차징 해제 시각은 F12 후속 검증 항목입니다.
-
-#### Aatrox
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-- 로그의 `number` 대 `struct109` 비교 원인이던 벡터 프록시 곱을 명시적 성분 내적으로 바꾸고 Q 자동 조준을 실패 폐쇄했습니다.
+- v3.4.0은 Riot 26.16의 7개 챔피언 밸런스와 변경 아이템 10종을 공식 노트·직접 client-bin fixture로 반영했습니다. Data Dragon 16.16.1과 아직 16.15인 CommunityDragon을 섞지 않도록 전체 갱신은 실패 폐쇄합니다.
+- League Classic 전용 모듈은 60명에서 63명으로 늘었습니다. Akali, Kennen, Shen은 Riot F6 game manifest의 exact `Jade_*` 이름·old-kit 형상·피해식만 사용하며 현대 스킬 폴백은 없습니다.
+- 현대 173명 wrapper와 직접 시전 426곳을 전수 검사합니다. 서버가 `false`를 반환한 요청은 시전 성공으로 처리하지 않아 Flash 연계·차징 해제·조향·후속 콤보가 거짓으로 진행되지 않습니다.
+- 기존 Classic 60명의 스킬·Flash·와드·아이템 경로도 accepted-only로 통일했습니다. 실패한 요청은 예산이나 상태를 소비하지 않고, 성공한 한 요청만 한 틱을 소유합니다.
+- 변경 아이템 ID의 Lua 소비를 전수 검사해 오래된 Eclipse, Sterak, Sundered Sky, Sunfire, Black Cleaver 계수를 스크립트가 하드코딩하지 않도록 고정했습니다.
+- Lua 981개, 현대 AIO 173명, Classic 63명, 메뉴 237개, Farm 236명, 자동 조준 240개와 공식 계약 629개를 CI에서 함께 검사합니다. 새 JADE buff/particle와 실제 서버 ACK는 F12 후속 경계입니다.
 
 #### Ahri
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
 
-#### Anivia
+#### Alistar
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
 
-#### Annie
+#### Amumu
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
 
-#### Aphelios
+#### AurelionSol
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Bard
+#### Aurora
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Belveth
+#### Briar
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Cassiopeia
+#### Caitlyn
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Corki
+#### Draven
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Ekko
+#### Janna
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Ezreal
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Gragas
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Hwei
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Illaoi
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Irelia
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
 #### Jhin
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-- W/E가 아군 그랩 대상의 이동 전 위치에 쏘지 않으며, 공식 강제이동 도착점을 얻은 경우에만 그 위치를 우선합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Kled
+#### KSante
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### KogMaw
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Leona
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Lillia
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Lissandra
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
 #### Locke
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
+- Riot 26.16 ARAM Mayhem 피해량 105%·받는 피해 95%를 생성 모드 밸런스에 반영했습니다.
 
 #### Lux
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
 
 #### Malphite
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Malzahar
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Maokai
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
 
 #### Mel
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Milio
+#### Neeko
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Mordekaiser
+#### Nilah
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Ornn
+#### Orianna
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Pantheon
+#### Rakan
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Poppy
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Pyke
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
 #### Rumble
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Senna
+#### Sion
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
 
-#### Seraphine
+#### Skarner
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
 
-#### Shaco
+#### Teemo
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Shyvana
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Soraka
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Taliyah
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Taric
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Tristana
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Trundle
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Urgot
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
 
 #### Varus
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Veigar
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
 #### Velkoz
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### Viego
+#### Warwick
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-
-#### Viktor
-
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-- 벡터 프록시 오류를 제거하고 W/R의 강제이동 도착점 조준 및 실패 시전 억제를 적용해 과도한 연속 요청을 줄였습니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
 #### Xerath
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
-- R 채널 시작과 R2 탄환 상태를 분리해 Combo 키를 누르는 동안 준비된 탄환을 매 틱 안전하게 재시도하며, 예측 실패 시 현재 위치로 쏘지 않습니다.
+- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
 
-#### XinZhao
+#### Blitzcrank
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
 
-#### Zac
+#### Corki
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
 
-#### Zed
+#### DrMundo
 
-- 자동 논타겟 스킬이 유효한 예측점·강제이동 도착점·대시 도착점을 얻지 못하면 현재 위치나 커서로 추측해 허공에 시전하지 않고 실패 폐쇄합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
 
-#### Chogath
+#### Evelynn
 
-- 원형 Q 예측 입력에 누락되지 않는 즉시형 speed를 보장해 nil 산술 치명 오류를 막았습니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
 
-#### Sylas
+#### Ezreal
 
-- 선언되지 않은 `Q_DETONATION` 산술을 실제 Q 폭발 지연 상수로 교체하고 상수 전수 검사에 등록했습니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
 
-#### Yasuo
+#### Fiddlesticks
 
-- Q1/Q2/Q3와 EQ가 유효한 예측·대시 도착점을 얻지 못하면 허공에 시전하지 않도록 상태기와 신뢰도 게이트를 교정했습니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
 
-#### Yone
+#### Gangplank
 
-- HGPro 교리를 현재 공식 16.15 형태와 결합했습니다: Q3 대시 450/피격선 1050 분리, Q-W-E-R, 안전 E 복귀·처형, R 착지 검증, 2틱 Q3-Flash, 실제 Semi R 우선순위.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
 
-#### Zeri
+#### Garen
 
-- Farm이 켜진 Lane Clear에서 유효한 미니언 Q와 오브워커가 실제 공격 중인 적 포탑 Q를 모두 지원합니다. 주변 구조물을 임의 탐색하거나 Combo에서 포탑을 고르지 않으며, Q 경로 뒤에만 네이티브 평타 막타를 폴백합니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
 
-#### Zoe
+#### Heimerdinger
 
-- Kiri 교리를 보호 코드 없이 이식해 Q1-Q2 소유권, 최대 2875 벽 E, 안전한 R 복귀, W 파편, CC/채널/갭 반응, 수면 평타 차단, Semi E 우선순위를 정리했습니다.
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
+
+#### JarvanIV
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+
+#### Jax
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+
+#### Kassadin
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+
+#### Katarina
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
+
+#### Kayle
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+
+#### KogMaw
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+
+#### Leona
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+
+#### MissFortune
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
+
+#### Ryze
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+
+#### Twitch
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
+
+#### Vayne
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+
+#### Veigar
+
+- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
+
+#### Akali
+
+- League Classic Akali를 exact Q/W/E/R old-kit 상태기로 추가했습니다. 저체력 W는 독립적으로 작동하고 현대 E/R 재시전을 추측하지 않습니다.
+
+#### Azir
+
+- Riot 26.16 Q 기본 피해를 랭크별 75/95/115/135/155로 갱신했습니다.
+
+#### Belveth
+
+- Riot 26.16의 레벨당 체력과 R 공격 속도 변경을 공식 회귀 fixture에 고정하고 런타임 live 능력치를 권위로 유지합니다.
+
+#### Camille
+
+- Riot 26.16 W 외곽 최대 체력 피해, passive 보호막 레벨 구간과 cooldown, W cooldown을 갱신했습니다.
+
+#### Gwen
+
+- Riot 26.16 passive 회복 비율과 챔피언별 회복 상한을 공식 계약에 고정해 오래된 상한을 다시 넣지 못하게 했습니다.
+
+#### Kennen
+
+- 현대 R 피해/AP 계수와 저항 증가를 26.16에 맞췄고, Classic은 exact Q 투사체·E 몸체·R 오라 상태기로 별도 추가했습니다.
+
+#### Nasus
+
+- Riot 26.16 Q 기본/대형 대상 스택 4/10 계약을 고정하고 실제 스택은 live 상태를 사용합니다.
+
+#### Poppy
+
+- Riot 26.16 기본 능력치와 Q 체력 비율·비챔피언 상한·추가 AD 계수, W 저항 변경을 반영했습니다.
+
+#### Shen
+
+- League Classic Shen을 targeted Q, self W, 575 거리 E 도발 대시, 아군 R 채널의 exact old-kit 상태기로 추가했습니다.
 
 ### English
 
@@ -621,253 +627,259 @@
 
 #### Core & Menu
 
-- v3.3.0 closes five distinct MESH fatal errors observed in user logs. Release gates now cover forbidden color/keybind setters, missing circular-prediction speed, undeclared constants, and vector multiplication on Hanbot vec2/vec3 proxy objects.
-- Automatic non-targeted aiming was audited across all 237 `main.lua` files: 173 modern champions, 60 Classic champions, and the shared core. Sixty-two Lua paths no longer cast at current, cursor, or stale positions after prediction failure, and a new mutation checker blocks regressions.
-- Long-delay spells now aim at the verified landing point of allied pulls and knockbacks such as Blitzcrank, Thresh, Nautilus, and Pyke. If that endpoint cannot be established, automation fails closed.
-- AIO, MGoD Orb, and `[MESH]Evade` remain independently usable. AIO only resolves the public `meshevade` facade, throttled to 0.5 seconds, and neither creates native Evade3 nor hard-loads a companion script.
-- Zoe rebuilds Kiri's Q/Q2, wall-E, safe-R, W-shard, and sleep-AA doctrine on the current API. Yone ports HGPro's split Q3 dash/hit ranges, Q-W-E-R flow, E return, R landing safety, and Q3-Flash into a hand-owned state machine without protected loaders or external dependencies.
-- Eight Classic modules (Corki, Fiddlesticks, Heimerdinger, Janna, Malphite, Nidalee, Olaf, Pantheon) now apply the same fail-closed contract to long-delay and failed-prediction automation.
-- CI jointly validates Lua 5.1, 173 AIO, 60 Classic, 234 menus, 233 Farm layouts, official 16.15 data, linear width, vectors, constants, forced movement, automatic aim, and weaving. Live names, server acceptance, and charge-release timing remain explicit F12 boundaries.
-
-#### Aatrox
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-- Replaced the proxy-vector multiplication behind the logged `number` versus `struct109` error with an explicit component dot product and made automatic Q fail closed.
+- v3.4.0 applies Riot 26.16 balance changes for seven champions and ten changed items from official notes and direct client-bin fixtures. A full refresh fails closed instead of mixing Data Dragon 16.16.1 with CommunityDragon 16.15.
+- The dedicated League Classic roster grows from 60 to 63. Akali, Kennen, and Shen use only exact `Jade_*` names, old-kit geometry, and damage from Riot's F6 game manifest, with no modern-spell fallback.
+- All 173 modern wrappers and 426 direct casts are audited. A request returning `false` no longer advances Flash chains, charge release, steering, follow-ups, local pause, or the one-tick cast budget.
+- Spell, Flash, ward, and item paths across the original 60 Classic modules now follow the same accepted-only contract: a rejected request consumes no state, while one accepted request owns the tick.
+- Every Lua consumer of changed item IDs is allowlisted, preventing stale Eclipse, Sterak, Sundered Sky, Sunfire, or Black Cleaver coefficients from being hardcoded back into champion scripts.
+- CI jointly validates 981 Lua files, 173 modern AIO modules, 63 Classic modules, 237 menus, 236 Farm layouts, 240 automatic-aim paths, and 629 official contracts. New JADE buffs, particles, and server acknowledgements remain explicit F12 boundaries.
 
 #### Ahri
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
 
-#### Anivia
+#### Alistar
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
 
-#### Annie
+#### Amumu
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
 
-#### Aphelios
+#### AurelionSol
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Bard
+#### Aurora
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Belveth
+#### Briar
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Cassiopeia
+#### Caitlyn
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Corki
+#### Draven
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Ekko
+#### Janna
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Ezreal
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Gragas
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Hwei
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Illaoi
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Irelia
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
 #### Jhin
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-- W/E no longer aim at the pre-pull position of an allied hook target and prefer an officially derived forced-movement endpoint only when it is valid.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Kled
+#### KSante
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### KogMaw
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Leona
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Lillia
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Lissandra
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
 #### Locke
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
+- Applied Riot 26.16 ARAM Mayhem modifiers of 105% damage dealt and 95% damage taken to generated mode balance data.
 
 #### Lux
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
 
 #### Malphite
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Malzahar
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Maokai
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
 
 #### Mel
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Milio
+#### Neeko
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Mordekaiser
+#### Nilah
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Ornn
+#### Orianna
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Pantheon
+#### Rakan
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Poppy
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Pyke
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
 #### Rumble
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Senna
+#### Sion
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
 
-#### Seraphine
+#### Skarner
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
 
-#### Shaco
+#### Teemo
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Shyvana
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Soraka
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Taliyah
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Taric
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Tristana
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Trundle
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Urgot
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
 
 #### Varus
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Veigar
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
 #### Velkoz
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### Viego
+#### Warwick
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-
-#### Viktor
-
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-- Removed proxy-vector arithmetic, uses forced-movement landing points for W/R, and suppresses failed repeated casts that could flood the server.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
 #### Xerath
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
-- Separates R channel start from R2 shots, retries a ready shot every tick while Combo is held, and never falls back to current position after prediction failure.
+- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
 
-#### XinZhao
+#### Blitzcrank
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
 
-#### Zac
+#### Corki
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
 
-#### Zed
+#### DrMundo
 
-- Automatic skillshots now fail closed instead of guessing the current position or cursor when no valid prediction, forced-movement endpoint, or dash endpoint exists.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
 
-#### Chogath
+#### Evelynn
 
-- Circular Q prediction now always supplies a non-missing instant-speed value, preventing the logged nil arithmetic failure.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
 
-#### Sylas
+#### Ezreal
 
-- Replaced arithmetic on the undeclared `Q_DETONATION` field with the owned Q detonation-delay constant and registered it with the constant checker.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
 
-#### Yasuo
+#### Fiddlesticks
 
-- Q1/Q2/Q3 and EQ now require a valid prediction or dash endpoint, preventing empty-space casts.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
 
-#### Yone
+#### Gangplank
 
-- Rebuilt on HGPro doctrine with official 16.15 forms: Q3 dash 450 versus hit line 1050, Q-W-E-R, safe E return/execute, R landing checks, two-tick Q3-Flash, and reachable Semi R priority.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
 
-#### Zeri
+#### Garen
 
-- With Farm enabled, Lane Clear Q supports both valid minions and the enemy turret the orbwalker is actually attacking. It neither scans arbitrary structures nor selects turrets in Combo, and native-AA last hitting remains a fallback after the Q paths.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
 
-#### Zoe
+#### Heimerdinger
 
-- Ports Kiri doctrine without protected code: Q1-Q2 ownership, bounded 2875 wall E, safe R return, W shards, CC/channel/gap reactions, sleep-AA hold, and Semi E priority.
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
+
+#### JarvanIV
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+
+#### Jax
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+
+#### Kassadin
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+
+#### Katarina
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
+
+#### Kayle
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+
+#### KogMaw
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+
+#### Leona
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+
+#### MissFortune
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
+
+#### Ryze
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+
+#### Twitch
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
+
+#### Vayne
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+
+#### Veigar
+
+- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
+
+#### Akali
+
+- Added League Classic Akali as an exact Q/W/E/R old-kit state machine. Low-health W remains independent, and modern E/R recasts are never guessed.
+
+#### Azir
+
+- Updated Riot 26.16 Q base damage to 75/95/115/135/155 by rank.
+
+#### Belveth
+
+- Pinned Riot 26.16 health-per-level and R attack-speed changes while keeping live runtime stats authoritative.
+
+#### Camille
+
+- Updated Riot 26.16 outer-W max-health damage, passive shield level bands and cooldown, and W cooldown.
+
+#### Gwen
+
+- Pinned Riot 26.16 passive healing ratio and champion healing cap so stale caps cannot be restored.
+
+#### Kennen
+
+- Updated modern R damage/AP scaling and resistance gains for 26.16, and added a separate Classic exact-Q, moving-E-body, and attached-R-aura state machine.
+
+#### Nasus
+
+- Pinned Riot 26.16 Q stack gains of 4/10 while continuing to read the actual live stack state.
+
+#### Poppy
+
+- Applied Riot 26.16 base stats, Q health ratio, non-champion cap and bonus-AD ratio, plus the W resistance change.
+
+#### Shen
+
+- Added League Classic Shen with targeted Q, self W, a 575-range E taunt dash, and the exact ally-targeted R channel.
 
 ### 简体中文
 
@@ -1049,259 +1061,266 @@
 
 #### 核心与菜单
 
-- v3.3.0 按根因修复了用户日志中的 5 类 MESH 致命错误。发布门禁现已覆盖非法 color/keybind setter、圆形预测缺少 speed、未声明常量，以及 Hanbot vec2/vec3 代理对象的向量乘法。
-- 已审计全部 237 个 `main.lua` 的自动非指向瞄准：173 个现代英雄、60 个 Classic 英雄和共用核心。62 条 Lua 路径在预测失败后不再向当前位置、鼠标或过期路径施法，并由新的变异测试阻止回归。
-- 长延迟技能会瞄准 Blitzcrank、Thresh、Nautilus、Pyke 等友方拉拽/击退的已验证落点；无法证明落点时自动逻辑会安全失败。
-- AIO、MGoD Orb 与 `[MESH]Evade` 仍可分别独立使用。AIO 只解析公开 `meshevade` facade，并将重查限制为 0.5 秒；不会创建原生 Evade3，也不会硬加载其他脚本。
-- Zoe 以当前 API 重建 Kiri 的 Q/Q2、穿墙 E、安全 R、W 碎片与睡眠普攻抑制；Yone 将 HGPro 的 Q3 冲刺/命中距离分离、Q-W-E-R、E 返回、R 落点安全和 Q3-Flash 移植为自有状态机，不包含保护 loader 或外部依赖。
-- 8 个 Classic 模块（Corki、Fiddlesticks、Heimerdinger、Janna、Malphite、Nidalee、Olaf、Pantheon）的长延迟与预测失败自动施法也统一采用安全失败契约。
-- CI 同时验证 Lua 5.1、173 AIO、60 Classic、234 菜单、233 Farm、官方 16.15 数据、线性宽度、向量、常量、强制位移、自动瞄准与 weave。实际名称、服务器接受与蓄力释放时序仍列为 F12 验证边界。
-
-#### Aatrox
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-- 将日志中 `number` 与 `struct109` 比较错误的代理向量乘法改为显式分量点积，并使自动 Q 安全失败。
+- v3.4.0 根据官方说明和直接 client-bin fixture 应用 Riot 26.16 的 7 名英雄与 10 件装备改动。完整刷新会安全失败，避免把 Data Dragon 16.16.1 与 CommunityDragon 16.15 混合。
+- League Classic 独立模块从 60 名增至 63 名。Akali、Kennen、Shen 只使用 Riot F6 game manifest 的精确 `Jade_*` 名称、旧版几何与伤害，不回退到现代技能。
+- 审计全部 173 个现代 wrapper 与 426 个直接施法。返回 `false` 的请求不再错误推进闪现连段、蓄力释放、引导转向、后续状态、本地暂停或单 tick 预算。
+- 原 60 个 Classic 模块的技能、闪现、守卫与装备路径统一采用 accepted-only 契约：拒绝的请求不消耗状态，只有一个已接受请求占用该 tick。
+- 对改动装备 ID 的全部 Lua 使用点实施白名单，防止在英雄脚本中重新硬编码旧版 Eclipse、Sterak、Sundered Sky、Sunfire 或 Black Cleaver 系数。
+- CI 同时验证 981 个 Lua 文件、173 个现代 AIO、63 个 Classic 模块、237 个菜单、236 个 Farm 布局、240 条自动瞄准路径与 629 条官方契约。新 JADE buff、粒子和服务器确认仍为 F12 验证边界。
 
 #### Ahri
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
 
-#### Anivia
+#### Alistar
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
 
-#### Annie
+#### Amumu
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
 
-#### Aphelios
+#### AurelionSol
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Bard
+#### Aurora
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Belveth
+#### Briar
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Cassiopeia
+#### Caitlyn
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Corki
+#### Draven
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Ekko
+#### Janna
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Ezreal
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Gragas
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Hwei
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Illaoi
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Irelia
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
 #### Jhin
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-- W/E 不再瞄准友方钩子目标位移前的位置，仅在有效时优先使用官方推导的强制位移落点。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Kled
+#### KSante
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### KogMaw
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Leona
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Lillia
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Lissandra
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
 #### Locke
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
+- 在生成的模式平衡数据中应用 Riot 26.16 ARAM Mayhem 造成伤害 105%、承受伤害 95%。
 
 #### Lux
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
 
 #### Malphite
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Malzahar
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Maokai
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
 
 #### Mel
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Milio
+#### Neeko
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Mordekaiser
+#### Nilah
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Ornn
+#### Orianna
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Pantheon
+#### Rakan
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Poppy
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Pyke
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
 #### Rumble
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Senna
+#### Sion
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
 
-#### Seraphine
+#### Skarner
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
 
-#### Shaco
+#### Teemo
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Shyvana
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Soraka
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Taliyah
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Taric
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Tristana
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Trundle
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Urgot
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
 
 #### Varus
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Veigar
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
 #### Velkoz
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### Viego
+#### Warwick
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-
-#### Viktor
-
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-- 移除代理向量算术，W/R 使用强制位移落点，并抑制可能造成服务器请求洪泛的失败重复施法。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
 #### Xerath
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
-- 分离 R 开启与 R2 弹体状态，按住 Combo 时每 tick 重试已就绪弹体，预测失败后不再向当前位置施放。
+- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
 
-#### XinZhao
+#### Blitzcrank
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
 
-#### Zac
+#### Corki
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
 
-#### Zed
+#### DrMundo
 
-- 自动非指向技能在无法取得有效预测点、强制位移落点或冲刺终点时会安全失败，不再猜测当前位置或鼠标位置。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
 
-#### Chogath
+#### Evelynn
 
-- 圆形 Q 预测始终提供非空的瞬时 speed，避免日志中的 nil 算术致命错误。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
 
-#### Sylas
+#### Ezreal
 
-- 用自有 Q 爆炸延迟常量替代未声明 `Q_DETONATION` 的算术，并加入常量检查。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
 
-#### Yasuo
+#### Fiddlesticks
 
-- Q1/Q2/Q3 与 EQ 现在必须取得有效预测或冲刺终点，避免向空处施法。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
 
-#### Yone
+#### Gangplank
 
-- 按 HGPro 与官方 16.15 形态重建：Q3 冲刺 450/命中线 1050、Q-W-E-R、安全 E 返回与处决、R 落点检查、两 tick Q3-Flash，以及可达的 Semi R 优先级。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
 
-#### Zeri
+#### Garen
 
-- Farm 开启的 Lane Clear 中，Q 同时支持有效小兵和走砍器正在实际攻击的敌方防御塔；不会任意扫描建筑，也不会在 Combo 选择防御塔，原生普攻补刀仅作为 Q 路径之后的后备。
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
 
-#### Zoe
+#### Heimerdinger
 
-- 不含保护代码地移植 Kiri：Q1-Q2 所有权、最多 2875 穿墙 E、安全 R 返回、W 碎片、CC/引导/突进反应、睡眠普攻抑制与 Semi E 优先级。
-<!-- MESH-AIO:RELEASE:v3.3.0:END -->
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
+
+#### JarvanIV
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+
+#### Jax
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+
+#### Kassadin
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+
+#### Katarina
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
+
+#### Kayle
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+
+#### KogMaw
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+
+#### Leona
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+
+#### MissFortune
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
+
+#### Ryze
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+
+#### Twitch
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
+
+#### Vayne
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+
+#### Veigar
+
+- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
+
+#### Akali
+
+- 新增 League Classic Akali 精确 Q/W/E/R 旧版状态机；低血量 W 独立工作，且不会猜测现代 E/R 重施。
+
+#### Azir
+
+- 将 Riot 26.16 Q 基础伤害更新为每级 75/95/115/135/155。
+
+#### Belveth
+
+- 固定 Riot 26.16 每级生命与 R 攻速改动，同时继续以运行时 live 属性为权威。
+
+#### Camille
+
+- 更新 Riot 26.16 W 外圈最大生命伤害、被动护盾等级区间与冷却，以及 W 冷却。
+
+#### Gwen
+
+- 固定 Riot 26.16 被动治疗比例和对英雄治疗上限，阻止旧上限回归。
+
+#### Kennen
+
+- 更新现代 R 伤害/AP 系数和抗性增益，并新增独立 Classic 精确 Q、移动 E 身体与附着 R 光环状态机。
+
+#### Nasus
+
+- 固定 Riot 26.16 Q 叠层 4/10，并继续读取实际 live 层数。
+
+#### Poppy
+
+- 应用 Riot 26.16 基础属性、Q 生命比例、非英雄上限与额外 AD 系数，以及 W 抗性改动。
+
+#### Shen
+
+- 新增 League Classic Shen：目标 Q、自身 W、575 距离 E 嘲讽冲刺，以及精确的友军目标 R 引导。
+<!-- MESH-AIO:RELEASE:v3.4.0:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.3.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.3.0)
 - [v3.2.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.2.1)
 - [v3.2.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.2.0)
 - [v3.1.3](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.1.3)
