@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.4.0:START -->
-## v3.4.0
+<!-- MESH-AIO:RELEASE:v3.4.10:START -->
+## v3.4.10
 
 ### 한국어
 
@@ -193,259 +193,58 @@
 
 #### 핵심 및 메뉴
 
-- v3.4.0은 Riot 26.16의 7개 챔피언 밸런스와 변경 아이템 10종을 공식 노트·직접 client-bin fixture로 반영했습니다. Data Dragon 16.16.1과 아직 16.15인 CommunityDragon을 섞지 않도록 전체 갱신은 실패 폐쇄합니다.
-- League Classic 전용 모듈은 60명에서 63명으로 늘었습니다. Akali, Kennen, Shen은 Riot F6 game manifest의 exact `Jade_*` 이름·old-kit 형상·피해식만 사용하며 현대 스킬 폴백은 없습니다.
-- 현대 173명 wrapper와 직접 시전 426곳을 전수 검사합니다. 서버가 `false`를 반환한 요청은 시전 성공으로 처리하지 않아 Flash 연계·차징 해제·조향·후속 콤보가 거짓으로 진행되지 않습니다.
-- 기존 Classic 60명의 스킬·Flash·와드·아이템 경로도 accepted-only로 통일했습니다. 실패한 요청은 예산이나 상태를 소비하지 않고, 성공한 한 요청만 한 틱을 소유합니다.
-- 변경 아이템 ID의 Lua 소비를 전수 검사해 오래된 Eclipse, Sterak, Sundered Sky, Sunfire, Black Cleaver 계수를 스크립트가 하드코딩하지 않도록 고정했습니다.
-- Lua 981개, 현대 AIO 173명, Classic 63명, 메뉴 237개, Farm 236명, 자동 조준 240개와 공식 계약 629개를 CI에서 함께 검사합니다. 새 JADE buff/particle와 실제 서버 ACK는 F12 후속 경계입니다.
-
-#### Ahri
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### Alistar
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### Amumu
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
-
-#### AurelionSol
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Aurora
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Briar
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Caitlyn
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Draven
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Janna
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Jhin
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### KSante
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Locke
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-- Riot 26.16 ARAM Mayhem 피해량 105%·받는 피해 95%를 생성 모드 밸런스에 반영했습니다.
-
-#### Lux
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
-
-#### Malphite
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### Mel
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Neeko
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Nilah
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Orianna
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Rakan
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Rumble
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Sion
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### Skarner
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
-
-#### Teemo
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### Varus
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Velkoz
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Warwick
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Xerath
-
-- 서버가 자동 스킬 요청을 거부하면 로컬 한 틱 시전 예산·pause·후속 상태를 소비하지 않고, 조건이 유지되는 다음 틱에 다시 시도합니다.
-
-#### Blitzcrank
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
-
-#### Corki
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### DrMundo
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
-
-#### Evelynn
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### Ezreal
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- 현대 173명과 League Classic 63명의 Console Debug를 고정 메뉴 루트 `[MESH AIO] - Global Settings > AIO Console Debug` 하나로 통합했습니다. 한 번 설정하면 챔피언을 바꾸거나 스크립트를 다시 불러와도 같은 값이 유지됩니다.
+- 로더가 실제 런타임 `charName`을 공식 alias 표로 정규화한 뒤 챔피언 폴더를 찾습니다. Fiddlesticks처럼 런타임 이름과 공식 키가 다른 챔피언이 전용 모듈 대신 공용 경로로 떨어지던 문제를 없앴고, 로드 성공·실패 경로를 콘솔에 남깁니다.
+- 236챔피언의 원형 논타겟 자동 조준 146곳을 전수 점검해, 예측 지점이 실제 사거리 밖일 때 사거리 경계로 끌어당겨 쏘던 21개 경로를 실패 폐쇄했습니다. 이제 사거리 안에 들어온 예측 지점에만 시전합니다.
+- 공식 데이터를 Data Dragon 16.16.1과 클라이언트 16.16.8049184로 재수집해 173챔피언·868아이템·참고자료 50종을 같은 패치로 맞췄습니다. 173개 스크립트 시트도 공식 캐시 전용 생성기로 16.16에서 다시 만들었습니다.
+- 선택 설치형 `[MESH]Evade`가 실제 위험을 게시한 틱에는 수동키를 포함한 모든 자동 동작이 회피에 우선권을 넘깁니다. Evade를 나중에 켜도 0.5초 간격 재탐색으로 연결됩니다.
+
+#### Brand
+
+- W는 예측 중심점이 실제 사거리 안일 때만 시전합니다. 도망치는 적을 향해 사거리 끝으로 던져 빗나가던 자동 W가 사라졌습니다.
+- E는 Q용 원거리 조준점과 분리해 675 사거리 안의 적을 다시 고릅니다. Q가 먼 대상을 노리는 동안 E가 사거리 밖으로 나가지 않습니다.
 
 #### Fiddlesticks
 
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- 런타임 이름이 공식 키와 달라 전용 모듈 대신 공용 경로로 로드되던 문제를 alias 표로 고쳤습니다. 이제 전용 상태기가 실제로 실행됩니다.
+- League Classic 까마귀 폭풍은 보존된 시전 도착 지점에 실제로 도달한 뒤에만 채널 상태로 넘어갑니다.
 
-#### Gangplank
+#### Graves
 
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### Garen
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### Heimerdinger
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
-
-#### JarvanIV
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### Jax
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### Kassadin
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-
-#### Katarina
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
-
-#### Kayle
-
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- 평타 백스윙이 열린 직후의 E 대시를 Q/W 위빙보다 먼저 시도해 AA-E-AA 리셋을 놓치지 않습니다.
+- Combo R을 자동 R 마스터 옵션에서 분리했습니다. 자동 R을 꺼도 Combo 중 R이 계속 나갑니다.
 
 #### KogMaw
 
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- 메뉴에 없던 숨은 자동 마스터 스위치를 제거했습니다. Combo·Harass·Auto R 옵션이 각각 직접 시전을 소유하므로 켠 항목이 그대로 동작합니다.
+- 세미 R 입력은 여전히 자동 R보다 먼저 처리되어 수동 조준이 자동 판단에 밀리지 않습니다.
 
-#### Leona
+#### MasterYi
 
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- E에 걸려 있던 숨은 패시브·Q·R·공격속도 조건을 제거했습니다. 메뉴에서 켠 조건대로만 E가 나갑니다.
+- 평타 백스윙에서 W가 서버에 수락되면 즉시 평타를 리셋하고 후속 공격 명령을 보내 AA-W-AA를 실제로 완성합니다.
 
-#### MissFortune
+#### Mordekaiser
 
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
+- Riot 16.16 원본에서 사라진 아레나 전용 R 능력치 탈취 0.08 오버라이드를 더 이상 쓰지 않습니다. 모든 모드에서 공식 수치 0.10으로 피해와 처치 표시를 계산합니다.
 
-#### Ryze
+#### Viktor
 
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- Debug를 켠 상태에서 같은 슬롯의 시전 로그를 250ms 단위로 묶고 억제된 횟수를 1초 상태 줄에 합쳐 콘솔 폭주를 없앴습니다. 시전 타이밍 자체는 바뀌지 않습니다.
+- Evade가 소유한 틱과 일시정지 틱에서는 화면 표시에만 쓰는 피해 계산을 건너뛰고, 상태 표시줄 문자열과 테이블을 재사용해 프레임 비용을 줄였습니다.
 
-#### Twitch
+#### Xayah
 
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
+- `Farm (MMB)` 토글이 네이티브 키와 저장값 하나만 권위로 씁니다. 이전에는 내부 미러값이 남아 실제로는 꺼져 있는데 켜진 것처럼 동작하던 경우가 있었습니다.
+- E는 깃털마다 귀환 도착 시각까지 현재선과 예측선을 모두 지나는 대상만 셉니다. 깃털이 많이 깔린 구간의 표시와 계산량도 함께 줄였습니다.
 
-#### Vayne
+#### XinZhao
 
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
+- 화면 표시 캐시의 만료 시간 계산 오류를 고쳐 사거리·표식 표시가 갱신되지 않고 멈추던 문제를 없앴습니다.
 
-#### Veigar
+#### Zeri
 
-- League Classic 전용 상태기도 스킬·점멸·아이템·와드 요청이 실제로 수락된 뒤에만 콤보 단계와 시전 예산을 진행합니다.
-- League Classic old-kit의 피해식·폭·사거리·재시전 값은 승인 자료와 Riot F6 원본에 다시 고정해 현대 키트 값을 섞지 않습니다.
-
-#### Akali
-
-- League Classic Akali를 exact Q/W/E/R old-kit 상태기로 추가했습니다. 저체력 W는 독립적으로 작동하고 현대 E/R 재시전을 추측하지 않습니다.
-
-#### Azir
-
-- Riot 26.16 Q 기본 피해를 랭크별 75/95/115/135/155로 갱신했습니다.
-
-#### Belveth
-
-- Riot 26.16의 레벨당 체력과 R 공격 속도 변경을 공식 회귀 fixture에 고정하고 런타임 live 능력치를 권위로 유지합니다.
-
-#### Camille
-
-- Riot 26.16 W 외곽 최대 체력 피해, passive 보호막 레벨 구간과 cooldown, W cooldown을 갱신했습니다.
-
-#### Gwen
-
-- Riot 26.16 passive 회복 비율과 챔피언별 회복 상한을 공식 계약에 고정해 오래된 상한을 다시 넣지 못하게 했습니다.
-
-#### Kennen
-
-- 현대 R 피해/AP 계수와 저항 증가를 26.16에 맞췄고, Classic은 exact Q 투사체·E 몸체·R 오라 상태기로 별도 추가했습니다.
-
-#### Nasus
-
-- Riot 26.16 Q 기본/대형 대상 스택 4/10 계약을 고정하고 실제 스택은 live 상태를 사용합니다.
-
-#### Poppy
-
-- Riot 26.16 기본 능력치와 Q 체력 비율·비챔피언 상한·추가 AD 계수, W 저항 변경을 반영했습니다.
-
-#### Shen
-
-- League Classic Shen을 targeted Q, self W, 575 거리 E 도발 대시, 아군 R 채널의 exact old-kit 상태기로 추가했습니다.
+- 파밍 Q가 같은 미니언에 대해 예측·충돌·지형 검사를 막타용과 푸시용으로 두 번 수행하던 경로를 한 번의 결과 재사용으로 줄였습니다. 대상 선택 결과는 같습니다.
 
 ### English
 
@@ -627,259 +426,58 @@
 
 #### Core & Menu
 
-- v3.4.0 applies Riot 26.16 balance changes for seven champions and ten changed items from official notes and direct client-bin fixtures. A full refresh fails closed instead of mixing Data Dragon 16.16.1 with CommunityDragon 16.15.
-- The dedicated League Classic roster grows from 60 to 63. Akali, Kennen, and Shen use only exact `Jade_*` names, old-kit geometry, and damage from Riot's F6 game manifest, with no modern-spell fallback.
-- All 173 modern wrappers and 426 direct casts are audited. A request returning `false` no longer advances Flash chains, charge release, steering, follow-ups, local pause, or the one-tick cast budget.
-- Spell, Flash, ward, and item paths across the original 60 Classic modules now follow the same accepted-only contract: a rejected request consumes no state, while one accepted request owns the tick.
-- Every Lua consumer of changed item IDs is allowlisted, preventing stale Eclipse, Sterak, Sundered Sky, Sunfire, or Black Cleaver coefficients from being hardcoded back into champion scripts.
-- CI jointly validates 981 Lua files, 173 modern AIO modules, 63 Classic modules, 237 menus, 236 Farm layouts, 240 automatic-aim paths, and 629 official contracts. New JADE buffs, particles, and server acknowledgements remain explicit F12 boundaries.
-
-#### Ahri
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### Alistar
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### Amumu
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
-
-#### AurelionSol
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Aurora
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Briar
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Caitlyn
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Draven
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Janna
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Jhin
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### KSante
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Locke
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-- Applied Riot 26.16 ARAM Mayhem modifiers of 105% damage dealt and 95% damage taken to generated mode balance data.
-
-#### Lux
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
-
-#### Malphite
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### Mel
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Neeko
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Nilah
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Orianna
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Rakan
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Rumble
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Sion
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### Skarner
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
-
-#### Teemo
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### Varus
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Velkoz
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Warwick
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Xerath
-
-- When the server rejects an automatic cast, the local one-tick budget, pause, and follow-up state remain untouched so the action can retry on the next valid tick.
-
-#### Blitzcrank
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
-
-#### Corki
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### DrMundo
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
-
-#### Evelynn
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### Ezreal
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- Console Debug for all 173 modern and 63 League Classic champions now lives in one fixed menu root, `[MESH AIO] - Global Settings > AIO Console Debug`. Set it once and the value survives champion swaps and script reloads.
+- The loader normalizes the live runtime `charName` through an official alias table before resolving the champion folder. Champions whose runtime name differs from their official key, such as Fiddlesticks, no longer fall back to the shared path, and both load success and failure are printed to the console.
+- All 146 circular non-targeted auto-aim call sites across 236 champions were audited. The 21 paths that clamped an out-of-range prediction back onto the range boundary now fail closed, so these spells only fire when the predicted centre is genuinely inside range.
+- Official data was recollected at Data Dragon 16.16.1 and client 16.16.8049184, aligning 173 champions, 868 items, and 50 reference sources on one patch. The 173 script sheets are regenerated at 16.16 from an official-cache-only generator.
+- When the optional `[MESH]Evade` publishes real danger on a tick, every automatic action including manual hotkeys yields to the dodge. Enabling Evade later still connects through a 0.5 second rediscovery pass.
+
+#### Brand
+
+- W only fires when the predicted centre is genuinely inside range, removing the auto W that used to be thrown at the range edge toward a fleeing target and miss.
+- E now picks its own target inside 675 range instead of reusing Q's long-range anchor, so E no longer fires out of range while Q is aiming at a distant enemy.
 
 #### Fiddlesticks
 
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- The alias table fixes the case where the live runtime name differed from the official key, which loaded the shared path instead of the dedicated module. The dedicated state machine now actually runs.
+- League Classic Crowstorm only transitions into its channel state after it truly arrives at the preserved cast endpoint.
 
-#### Gangplank
+#### Graves
 
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### Garen
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### Heimerdinger
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
-
-#### JarvanIV
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### Jax
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### Kassadin
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-
-#### Katarina
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
-
-#### Kayle
-
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- The E dash is attempted ahead of Q/W weaving right after the attack backswing opens, so the AA-E-AA reset is no longer skipped.
+- Combo R is separated from the automatic R master option, so R still fires during Combo while automatic R is off.
 
 #### KogMaw
 
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- The hidden automatic master switch that never appeared in the menu is gone. Combo, Harass, and Auto R each own their own casts, so whatever you enable is what runs.
+- Semi R input is still processed ahead of automatic R, so manual aiming is never overridden by the automatic decision.
 
-#### Leona
+#### MasterYi
 
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- The hidden passive, Q, R, and attack-speed gates on E are removed, so E fires exactly on the conditions you enabled in the menu.
+- When W is accepted by the server during the attack backswing, the attack is reset immediately and a follow-up attack order is issued, which actually completes AA-W-AA.
 
-#### MissFortune
+#### Mordekaiser
 
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
+- The Arena-only 0.08 R stat-steal override, which no longer exists in the Riot 16.16 source, is gone. Damage and kill indicators now use the official 0.10 value in every mode.
 
-#### Ryze
+#### Viktor
 
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- With Debug on, cast logs for the same slot are grouped into 250 ms buckets and the suppressed count is folded into the 1 Hz status line, which stops the console flood. Cast timing itself is unchanged.
+- On ticks owned by Evade and on paused ticks, the draw-only damage computation is skipped and the status line strings and tables are reused, lowering per-frame cost.
 
-#### Twitch
+#### Xayah
 
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
+- The `Farm (MMB)` toggle now uses the native key and a single saved value as its only authority. Previously a stale internal mirror could keep the feature acting enabled while the visible toggle was off.
+- E counts only the targets that cross both the current and predicted line up to each feather's own recall arrival time, and the draw and computation cost in dense feather situations is reduced.
 
-#### Vayne
+#### XinZhao
 
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
+- Fixed the draw cache expiry calculation so the range and mark overlays no longer freeze instead of refreshing.
 
-#### Veigar
+#### Zeri
 
-- League Classic state machines advance spell, Flash, item, and ward sequences only after the request is accepted by the server.
-- League Classic old-kit damage, width, range, and recast values are pinned to authorized sources and Riot F6 data without borrowing modern-kit values.
-
-#### Akali
-
-- Added League Classic Akali as an exact Q/W/E/R old-kit state machine. Low-health W remains independent, and modern E/R recasts are never guessed.
-
-#### Azir
-
-- Updated Riot 26.16 Q base damage to 75/95/115/135/155 by rank.
-
-#### Belveth
-
-- Pinned Riot 26.16 health-per-level and R attack-speed changes while keeping live runtime stats authoritative.
-
-#### Camille
-
-- Updated Riot 26.16 outer-W max-health damage, passive shield level bands and cooldown, and W cooldown.
-
-#### Gwen
-
-- Pinned Riot 26.16 passive healing ratio and champion healing cap so stale caps cannot be restored.
-
-#### Kennen
-
-- Updated modern R damage/AP scaling and resistance gains for 26.16, and added a separate Classic exact-Q, moving-E-body, and attached-R-aura state machine.
-
-#### Nasus
-
-- Pinned Riot 26.16 Q stack gains of 4/10 while continuing to read the actual live stack state.
-
-#### Poppy
-
-- Applied Riot 26.16 base stats, Q health ratio, non-champion cap and bonus-AD ratio, plus the W resistance change.
-
-#### Shen
-
-- Added League Classic Shen with targeted Q, self W, a 575-range E taunt dash, and the exact ally-targeted R channel.
+- Farm Q used to run prediction, collision, and wall checks twice on the same minion, once for the last hit and once for the push. It now reuses a single result, and the target selection outcome is unchanged.
 
 ### 简体中文
 
@@ -1061,265 +659,65 @@
 
 #### 核心与菜单
 
-- v3.4.0 根据官方说明和直接 client-bin fixture 应用 Riot 26.16 的 7 名英雄与 10 件装备改动。完整刷新会安全失败，避免把 Data Dragon 16.16.1 与 CommunityDragon 16.15 混合。
-- League Classic 独立模块从 60 名增至 63 名。Akali、Kennen、Shen 只使用 Riot F6 game manifest 的精确 `Jade_*` 名称、旧版几何与伤害，不回退到现代技能。
-- 审计全部 173 个现代 wrapper 与 426 个直接施法。返回 `false` 的请求不再错误推进闪现连段、蓄力释放、引导转向、后续状态、本地暂停或单 tick 预算。
-- 原 60 个 Classic 模块的技能、闪现、守卫与装备路径统一采用 accepted-only 契约：拒绝的请求不消耗状态，只有一个已接受请求占用该 tick。
-- 对改动装备 ID 的全部 Lua 使用点实施白名单，防止在英雄脚本中重新硬编码旧版 Eclipse、Sterak、Sundered Sky、Sunfire 或 Black Cleaver 系数。
-- CI 同时验证 981 个 Lua 文件、173 个现代 AIO、63 个 Classic 模块、237 个菜单、236 个 Farm 布局、240 条自动瞄准路径与 629 条官方契约。新 JADE buff、粒子和服务器确认仍为 F12 验证边界。
-
-#### Ahri
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### Alistar
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### Amumu
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
-
-#### AurelionSol
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Aurora
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Briar
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Caitlyn
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Draven
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Janna
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Jhin
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### KSante
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Locke
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-- 在生成的模式平衡数据中应用 Riot 26.16 ARAM Mayhem 造成伤害 105%、承受伤害 95%。
-
-#### Lux
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
-
-#### Malphite
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### Mel
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Neeko
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Nilah
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Orianna
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Rakan
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Rumble
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Sion
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### Skarner
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
-
-#### Teemo
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### Varus
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Velkoz
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Warwick
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Xerath
-
-- 服务器拒绝自动施法时，不消耗本地单 tick 预算、暂停或后续状态；条件仍有效时可在下一 tick 重试。
-
-#### Blitzcrank
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
-
-#### Corki
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### DrMundo
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
-
-#### Evelynn
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### Ezreal
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- 现代173名与英雄联盟经典模式63名的控制台调试选项统一到固定菜单根 `[MESH AIO] - Global Settings > AIO Console Debug`。设置一次后，切换英雄或重新加载脚本都会保留该值。
+- 加载器先通过官方别名表规范化实时运行名 `charName`，再解析英雄目录。像 Fiddlesticks 这类运行名与官方键不同的英雄不再退回到通用路径，并且加载成功与失败都会输出到控制台。
+- 全面审计了236名英雄的146处圆形非指向自动瞄准调用。其中21条会把超出射程的预测点拉回射程边缘的路径现已失败关闭，只有预测中心确实处于射程内时才会释放。
+- 官方数据按 Data Dragon 16.16.1 与客户端 16.16.8049184 重新采集，使173名英雄、868件装备与50项参考资料对齐到同一版本。173份脚本数据表也由仅使用官方缓存的生成器在16.16重新生成。
+- 当可选安装的 `[MESH]Evade` 在某一帧发布真实危险时，包括手动热键在内的所有自动行为都会把优先权交给闪避。之后再启用 Evade 也会通过0.5秒的重新探测接上。
+
+#### Brand
+
+- W 仅在预测中心确实位于射程内时释放，不再朝逃跑目标沿射程边缘投掷并落空。
+- E 不再沿用 Q 的远距离瞄准点，而是在675射程内重新选择目标，因此 Q 瞄准远处敌人时 E 不会超出射程。
 
 #### Fiddlesticks
 
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- 别名表修正了运行名与官方键不一致时加载通用路径而非专属模块的问题，专属状态机现在会真正运行。
+- 英雄联盟经典模式的乌鸦风暴只有在真正到达所保留的施法落点后才会进入引导状态。
 
-#### Gangplank
+#### Graves
 
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### Garen
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### Heimerdinger
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
-
-#### JarvanIV
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### Jax
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### Kassadin
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-
-#### Katarina
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
-
-#### Kayle
-
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- 在普攻后摇刚开始时优先尝试 E 位移，而不是 Q/W 穿插，因此不会漏掉 AA-E-AA 重置。
+- 连招 R 已从自动 R 主控选项中分离，关闭自动 R 后连招期间仍会释放 R。
 
 #### KogMaw
 
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- 移除了菜单中从未出现的隐藏自动主控开关。连招、骚扰与自动 R 各自拥有施法权，开启哪一项就执行哪一项。
+- 半自动 R 输入仍优先于自动 R 处理，手动瞄准不会被自动判断覆盖。
 
-#### Leona
+#### MasterYi
 
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- 移除了 E 上隐藏的被动、Q、R 与攻速判定条件，E 只按菜单中启用的条件释放。
+- 普攻后摇期间 W 被服务器接受后立即重置普攻并发出后续攻击指令，从而真正完成 AA-W-AA。
 
-#### MissFortune
+#### Mordekaiser
 
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
+- 不再使用 Riot 16.16 原始数据中已删除的竞技场专属 R 属性窃取0.08覆盖值。所有模式的伤害与击杀提示均按官方数值0.10计算。
 
-#### Ryze
+#### Viktor
 
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- 开启调试后，同一技能槽的施法日志按250毫秒合并，被抑制的次数并入每秒状态行，从而消除控制台刷屏。施法时机本身没有改变。
+- 在由 Evade 拥有的帧和暂停帧上跳过仅用于绘制的伤害计算，并复用状态行的字符串与表，降低每帧开销。
 
-#### Twitch
+#### Xayah
 
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
+- `Farm (MMB)` 开关现在仅以原生按键与单一存档值为准。此前残留的内部镜像值可能导致显示为关闭时功能仍在运行。
+- E 仅统计在各羽刃自身回收到达时间之前同时穿过当前线与预测线的目标，同时降低了羽刃密集时的绘制与计算开销。
 
-#### Vayne
+#### XinZhao
 
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
+- 修正了绘制缓存的过期时间计算，射程与标记显示不再停止刷新。
 
-#### Veigar
+#### Zeri
 
-- League Classic 状态机仅在服务器接受请求后才推进技能、闪现、装备与守卫连段。
-- League Classic 旧版技能的伤害、宽度、距离与重施数值固定到授权资料和 Riot F6 数据，不混用现代技能组。
-
-#### Akali
-
-- 新增 League Classic Akali 精确 Q/W/E/R 旧版状态机；低血量 W 独立工作，且不会猜测现代 E/R 重施。
-
-#### Azir
-
-- 将 Riot 26.16 Q 基础伤害更新为每级 75/95/115/135/155。
-
-#### Belveth
-
-- 固定 Riot 26.16 每级生命与 R 攻速改动，同时继续以运行时 live 属性为权威。
-
-#### Camille
-
-- 更新 Riot 26.16 W 外圈最大生命伤害、被动护盾等级区间与冷却，以及 W 冷却。
-
-#### Gwen
-
-- 固定 Riot 26.16 被动治疗比例和对英雄治疗上限，阻止旧上限回归。
-
-#### Kennen
-
-- 更新现代 R 伤害/AP 系数和抗性增益，并新增独立 Classic 精确 Q、移动 E 身体与附着 R 光环状态机。
-
-#### Nasus
-
-- 固定 Riot 26.16 Q 叠层 4/10，并继续读取实际 live 层数。
-
-#### Poppy
-
-- 应用 Riot 26.16 基础属性、Q 生命比例、非英雄上限与额外 AD 系数，以及 W 抗性改动。
-
-#### Shen
-
-- 新增 League Classic Shen：目标 Q、自身 W、575 距离 E 嘲讽冲刺，以及精确的友军目标 R 引导。
-<!-- MESH-AIO:RELEASE:v3.4.0:END -->
+- 清线 Q 此前会对同一小兵分别为补刀与推线各执行一次预测、碰撞与地形检测，现在改为复用同一结果，目标选择结果保持不变。
+<!-- MESH-AIO:RELEASE:v3.4.10:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.4.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.0)
 - [v3.3.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.3.0)
 - [v3.2.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.2.1)
 - [v3.2.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.2.0)
