@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.4.10:START -->
-## v3.4.10
+<!-- MESH-AIO:RELEASE:v3.4.12:START -->
+## v3.4.12
 
 ### 한국어
 
@@ -193,58 +193,44 @@
 
 #### 핵심 및 메뉴
 
-- 현대 173명과 League Classic 63명의 Console Debug를 고정 메뉴 루트 `[MESH AIO] - Global Settings > AIO Console Debug` 하나로 통합했습니다. 한 번 설정하면 챔피언을 바꾸거나 스크립트를 다시 불러와도 같은 값이 유지됩니다.
-- 로더가 실제 런타임 `charName`을 공식 alias 표로 정규화한 뒤 챔피언 폴더를 찾습니다. Fiddlesticks처럼 런타임 이름과 공식 키가 다른 챔피언이 전용 모듈 대신 공용 경로로 떨어지던 문제를 없앴고, 로드 성공·실패 경로를 콘솔에 남깁니다.
-- 236챔피언의 원형 논타겟 자동 조준 146곳을 전수 점검해, 예측 지점이 실제 사거리 밖일 때 사거리 경계로 끌어당겨 쏘던 21개 경로를 실패 폐쇄했습니다. 이제 사거리 안에 들어온 예측 지점에만 시전합니다.
-- 공식 데이터를 Data Dragon 16.16.1과 클라이언트 16.16.8049184로 재수집해 173챔피언·868아이템·참고자료 50종을 같은 패치로 맞췄습니다. 173개 스크립트 시트도 공식 캐시 전용 생성기로 16.16에서 다시 만들었습니다.
-- 선택 설치형 `[MESH]Evade`가 실제 위험을 게시한 틱에는 수동키를 포함한 모든 자동 동작이 회피에 우선권을 넘깁니다. Evade를 나중에 켜도 0.5초 간격 재탐색으로 연결됩니다.
+- 982개 Lua 전체를 프레임 비용 관점에서 재감사했습니다. 화면 그리기 콜백 안에서 매 프레임 문자열을 만들거나 타겟 선택·피해 계산을 반복하던 9개 모듈을 찾았고, 전부 0.05~0.15초 스냅샷 캐시 또는 1회 생성 재사용으로 바꿨습니다. 조준·시전·판단 로직은 바꾸지 않았습니다.
+- 이 감사로 프레임마다 쌓이던 임시 문자열/테이블 쓰레기가 줄어 잦은 GC 멈춤에 의한 미세 프레임 드랍이 감소합니다. 표시 내용은 동일하며 갱신 주기만 사람 눈에 구분되지 않는 스냅샷 간격으로 제한됩니다.
+- 회귀 검사기가 이제 드로우 캐시 호출 인벤토리 54곳을 고정해, 이후 작업에서 캐시 없이 화면 콜백에 계산을 되돌리면 CI가 실패합니다.
 
-#### Brand
+#### Karthus
 
-- W는 예측 중심점이 실제 사거리 안일 때만 시전합니다. 도망치는 적을 향해 사거리 끝으로 던져 빗나가던 자동 W가 사라졌습니다.
-- E는 Q용 원거리 조준점과 분리해 675 사거리 안의 적을 다시 고릅니다. Q가 먼 대상을 노리는 동안 E가 사거리 밖으로 나가지 않습니다.
+- League Classic 전용 모듈의 '죽음 무시' 남은 시간 표시가 매 프레임 문자열을 만들지 않고 0.1초 스냅샷을 재사용합니다.
+- Farm/Auto R 키 상태 줄은 네 가지 조합 문자열을 한 번만 만들어 재사용합니다. 표시 내용은 같습니다.
 
-#### Fiddlesticks
+#### Katarina
 
-- 런타임 이름이 공식 키와 달라 전용 모듈 대신 공용 경로로 로드되던 문제를 alias 표로 고쳤습니다. 이제 전용 상태기가 실제로 실행됩니다.
-- League Classic 까마귀 폭풍은 보존된 시전 도착 지점에 실제로 도달한 뒤에만 채널 상태로 넘어갑니다.
+- League Classic 전용 모듈의 Farm/Tower E 키 상태 줄이 조합별 문자열을 한 번만 만들어 재사용합니다.
 
-#### Graves
+#### MonkeyKing
 
-- 평타 백스윙이 열린 직후의 E 대시를 Q/W 위빙보다 먼저 시도해 AA-E-AA 리셋을 놓치지 않습니다.
-- Combo R을 자동 R 마스터 옵션에서 분리했습니다. 자동 R을 꺼도 Combo 중 R이 계속 나갑니다.
+- League Classic 전용 모듈의 Farm/Tower E 키 상태 줄이 조합별 문자열을 한 번만 만들어 재사용합니다.
 
-#### KogMaw
+#### Rammus
 
-- 메뉴에 없던 숨은 자동 마스터 스위치를 제거했습니다. Combo·Harass·Auto R 옵션이 각각 직접 시전을 소유하므로 켠 항목이 그대로 동작합니다.
-- 세미 R 입력은 여전히 자동 R보다 먼저 처리되어 수동 조준이 자동 판단에 밀리지 않습니다.
+- 현대 모듈의 Q/W/자동 R 상태 줄이 여덟 가지 조합 문자열을 한 번만 만들어 재사용합니다.
+- League Classic 모듈의 파워볼 남은 시간 표시가 0.05초 스냅샷을 재사용해 매 프레임 포맷을 없앴습니다.
 
-#### MasterYi
+#### Rumble
 
-- E에 걸려 있던 숨은 패시브·Q·R·공격속도 조건을 제거했습니다. 메뉴에서 켠 조건대로만 E가 나갑니다.
-- 평타 백스윙에서 W가 서버에 수락되면 즉시 평타를 리셋하고 후속 공격 명령을 보내 AA-W-AA를 실제로 완성합니다.
+- 피해 표시가 켜져 있을 때 매 프레임 수행하던 타겟 선택과 콤보 피해 계산·문자열 포맷을 0.15초 스냅샷으로 옮겼습니다. 표시 위치는 매 프레임 실제 대상 위치를 따라갑니다.
 
-#### Mordekaiser
+#### Swain
 
-- Riot 16.16 원본에서 사라진 아레나 전용 R 능력치 탈취 0.08 오버라이드를 더 이상 쓰지 않습니다. 모든 모드에서 공식 수치 0.10으로 피해와 처치 표시를 계산합니다.
+- E 회수 대상의 속박 남은 시간 표시가 0.1초 스냅샷을 재사용해 매 프레임 문자열 생성을 없앴습니다.
 
-#### Viktor
+#### Veigar
 
-- Debug를 켠 상태에서 같은 슬롯의 시전 로그를 250ms 단위로 묶고 억제된 횟수를 1초 상태 줄에 합쳐 콘솔 폭주를 없앴습니다. 시전 타이밍 자체는 바뀌지 않습니다.
-- Evade가 소유한 틱과 일시정지 틱에서는 화면 표시에만 쓰는 피해 계산을 건너뛰고, 상태 표시줄 문자열과 테이블을 재사용해 프레임 비용을 줄였습니다.
+- League Classic 전용 모듈의 콤보 피해 표시가 매 프레임 수행하던 타겟 선택·감옥 콤보 피해 계산·문자열 포맷을 0.15초 스냅샷으로 옮겼습니다. 실제 시전 판단은 바뀌지 않습니다.
 
-#### Xayah
+#### Warwick
 
-- `Farm (MMB)` 토글이 네이티브 키와 저장값 하나만 권위로 씁니다. 이전에는 내부 미러값이 남아 실제로는 꺼져 있는데 켜진 것처럼 동작하던 경우가 있었습니다.
-- E는 깃털마다 귀환 도착 시각까지 현재선과 예측선을 모두 지나는 대상만 셉니다. 깃털이 많이 깔린 구간의 표시와 계산량도 함께 줄였습니다.
-
-#### XinZhao
-
-- 화면 표시 캐시의 만료 시간 계산 오류를 고쳐 사거리·표식 표시가 갱신되지 않고 멈추던 문제를 없앴습니다.
-
-#### Zeri
-
-- 파밍 Q가 같은 미니언에 대해 예측·충돌·지형 검사를 막타용과 푸시용으로 두 번 수행하던 경로를 한 번의 결과 재사용으로 줄였습니다. 대상 선택 결과는 같습니다.
+- League Classic 전용 모듈의 처치 가능(LETHAL) 판정이 매 프레임 Q+R 피해 합산을 하지 않고 0.15초 스냅샷을 사용합니다.
+- W 지속시간 표시도 0.1초 스냅샷을 재사용해 매 프레임 포맷을 없앴습니다.
 
 ### English
 
@@ -426,58 +412,44 @@
 
 #### Core & Menu
 
-- Console Debug for all 173 modern and 63 League Classic champions now lives in one fixed menu root, `[MESH AIO] - Global Settings > AIO Console Debug`. Set it once and the value survives champion swaps and script reloads.
-- The loader normalizes the live runtime `charName` through an official alias table before resolving the champion folder. Champions whose runtime name differs from their official key, such as Fiddlesticks, no longer fall back to the shared path, and both load success and failure are printed to the console.
-- All 146 circular non-targeted auto-aim call sites across 236 champions were audited. The 21 paths that clamped an out-of-range prediction back onto the range boundary now fail closed, so these spells only fire when the predicted centre is genuinely inside range.
-- Official data was recollected at Data Dragon 16.16.1 and client 16.16.8049184, aligning 173 champions, 868 items, and 50 reference sources on one patch. The 173 script sheets are regenerated at 16.16 from an official-cache-only generator.
-- When the optional `[MESH]Evade` publishes real danger on a tick, every automatic action including manual hotkeys yields to the dodge. Enabling Evade later still connects through a 0.5 second rediscovery pass.
+- All 982 Lua files were re-audited for per-frame cost. Nine modules built strings or ran target selection and damage math inside the draw callback every frame; all of them now use 0.05-0.15 s snapshot caches or build-once reuse. Aiming, casting, and decision logic are unchanged.
+- This removes the per-frame garbage that caused frequent GC pauses and micro frame drops. Displayed content is identical; only the refresh cadence is capped at snapshot intervals indistinguishable to the eye.
+- The regression checker now pins the 54 draw-cache call sites, so any future change that moves computation back into a draw callback without a cache fails CI.
 
-#### Brand
+#### Karthus
 
-- W only fires when the predicted centre is genuinely inside range, removing the auto W that used to be thrown at the range edge toward a fleeing target and miss.
-- E now picks its own target inside 675 range instead of reusing Q's long-range anchor, so E no longer fires out of range while Q is aiming at a distant enemy.
+- The League Classic module's Death Defied countdown reuses a 0.1 s snapshot instead of formatting a new string every frame.
+- The Farm/Auto R key status line builds its four combination strings once and reuses them. The displayed content is unchanged.
 
-#### Fiddlesticks
+#### Katarina
 
-- The alias table fixes the case where the live runtime name differed from the official key, which loaded the shared path instead of the dedicated module. The dedicated state machine now actually runs.
-- League Classic Crowstorm only transitions into its channel state after it truly arrives at the preserved cast endpoint.
+- The League Classic module's Farm/Tower E key status line builds each combination string once and reuses it.
 
-#### Graves
+#### MonkeyKing
 
-- The E dash is attempted ahead of Q/W weaving right after the attack backswing opens, so the AA-E-AA reset is no longer skipped.
-- Combo R is separated from the automatic R master option, so R still fires during Combo while automatic R is off.
+- The League Classic module's Farm/Tower E key status line builds each combination string once and reuses it.
 
-#### KogMaw
+#### Rammus
 
-- The hidden automatic master switch that never appeared in the menu is gone. Combo, Harass, and Auto R each own their own casts, so whatever you enable is what runs.
-- Semi R input is still processed ahead of automatic R, so manual aiming is never overridden by the automatic decision.
+- The modern module's Q/W/Auto R status line builds its eight combination strings once and reuses them.
+- The League Classic module's Powerball countdown reuses a 0.05 s snapshot, removing the per-frame format call.
 
-#### MasterYi
+#### Rumble
 
-- The hidden passive, Q, R, and attack-speed gates on E are removed, so E fires exactly on the conditions you enabled in the menu.
-- When W is accepted by the server during the attack backswing, the attack is reset immediately and a follow-up attack order is issued, which actually completes AA-W-AA.
+- With the damage overlay enabled, the per-frame target selection, combo damage math, and string formatting moved to a 0.15 s snapshot. The overlay position still follows the target's live position every frame.
 
-#### Mordekaiser
+#### Swain
 
-- The Arena-only 0.08 R stat-steal override, which no longer exists in the Riot 16.16 source, is gone. Damage and kill indicators now use the official 0.10 value in every mode.
+- The root-remaining countdown on the E pull target reuses a 0.1 s snapshot, removing the per-frame string build.
 
-#### Viktor
+#### Veigar
 
-- With Debug on, cast logs for the same slot are grouped into 250 ms buckets and the suppressed count is folded into the 1 Hz status line, which stops the console flood. Cast timing itself is unchanged.
-- On ticks owned by Evade and on paused ticks, the draw-only damage computation is skipped and the status line strings and tables are reused, lowering per-frame cost.
+- The League Classic module's combo damage overlay moved its per-frame target selection, caged-combo damage math, and string formatting to a 0.15 s snapshot. Actual cast decisions are unchanged.
 
-#### Xayah
+#### Warwick
 
-- The `Farm (MMB)` toggle now uses the native key and a single saved value as its only authority. Previously a stale internal mirror could keep the feature acting enabled while the visible toggle was off.
-- E counts only the targets that cross both the current and predicted line up to each feather's own recall arrival time, and the draw and computation cost in dense feather situations is reduced.
-
-#### XinZhao
-
-- Fixed the draw cache expiry calculation so the range and mark overlays no longer freeze instead of refreshing.
-
-#### Zeri
-
-- Farm Q used to run prediction, collision, and wall checks twice on the same minion, once for the last hit and once for the push. It now reuses a single result, and the target selection outcome is unchanged.
+- The League Classic module's LETHAL verdict uses a 0.15 s snapshot instead of summing Q+R damage every frame.
+- The W duration display also reuses a 0.1 s snapshot, removing the per-frame format call.
 
 ### 简体中文
 
@@ -659,64 +631,51 @@
 
 #### 核心与菜单
 
-- 现代173名与英雄联盟经典模式63名的控制台调试选项统一到固定菜单根 `[MESH AIO] - Global Settings > AIO Console Debug`。设置一次后，切换英雄或重新加载脚本都会保留该值。
-- 加载器先通过官方别名表规范化实时运行名 `charName`，再解析英雄目录。像 Fiddlesticks 这类运行名与官方键不同的英雄不再退回到通用路径，并且加载成功与失败都会输出到控制台。
-- 全面审计了236名英雄的146处圆形非指向自动瞄准调用。其中21条会把超出射程的预测点拉回射程边缘的路径现已失败关闭，只有预测中心确实处于射程内时才会释放。
-- 官方数据按 Data Dragon 16.16.1 与客户端 16.16.8049184 重新采集，使173名英雄、868件装备与50项参考资料对齐到同一版本。173份脚本数据表也由仅使用官方缓存的生成器在16.16重新生成。
-- 当可选安装的 `[MESH]Evade` 在某一帧发布真实危险时，包括手动热键在内的所有自动行为都会把优先权交给闪避。之后再启用 Evade 也会通过0.5秒的重新探测接上。
+- 对全部982个Lua文件重新进行了每帧开销审计。共发现9个模块在绘制回调中每帧构建字符串或执行目标选择与伤害计算，现已全部改为0.05~0.15秒快照缓存或一次生成后复用。瞄准、施法与判断逻辑均未改变。
+- 此项审计消除了每帧产生的临时字符串/表垃圾，减少了由频繁GC暂停引起的细微掉帧。显示内容不变，仅刷新节奏被限制在肉眼无法分辨的快照间隔。
+- 回归检查器现在固定54处绘制缓存调用点，之后若有改动把计算移回未缓存的绘制回调，CI将直接失败。
 
-#### Brand
+#### Karthus
 
-- W 仅在预测中心确实位于射程内时释放，不再朝逃跑目标沿射程边缘投掷并落空。
-- E 不再沿用 Q 的远距离瞄准点，而是在675射程内重新选择目标，因此 Q 瞄准远处敌人时 E 不会超出射程。
+- 英雄联盟经典模式模块的“死亡不灭”倒计时改为复用0.1秒快照，不再每帧生成新字符串。
+- Farm/自动R按键状态行的四种组合字符串只生成一次并复用，显示内容不变。
 
-#### Fiddlesticks
+#### Katarina
 
-- 别名表修正了运行名与官方键不一致时加载通用路径而非专属模块的问题，专属状态机现在会真正运行。
-- 英雄联盟经典模式的乌鸦风暴只有在真正到达所保留的施法落点后才会进入引导状态。
+- 英雄联盟经典模式模块的 Farm/塔下E 按键状态行改为每种组合只生成一次字符串并复用。
 
-#### Graves
+#### MonkeyKing
 
-- 在普攻后摇刚开始时优先尝试 E 位移，而不是 Q/W 穿插，因此不会漏掉 AA-E-AA 重置。
-- 连招 R 已从自动 R 主控选项中分离，关闭自动 R 后连招期间仍会释放 R。
+- 英雄联盟经典模式模块的 Farm/塔下E 按键状态行改为每种组合只生成一次字符串并复用。
 
-#### KogMaw
+#### Rammus
 
-- 移除了菜单中从未出现的隐藏自动主控开关。连招、骚扰与自动 R 各自拥有施法权，开启哪一项就执行哪一项。
-- 半自动 R 输入仍优先于自动 R 处理，手动瞄准不会被自动判断覆盖。
+- 现代模块的 Q/W/自动R 状态行的八种组合字符串只生成一次并复用。
+- 英雄联盟经典模式模块的滚球倒计时改为复用0.05秒快照，去除了每帧格式化。
 
-#### MasterYi
+#### Rumble
 
-- 移除了 E 上隐藏的被动、Q、R 与攻速判定条件，E 只按菜单中启用的条件释放。
-- 普攻后摇期间 W 被服务器接受后立即重置普攻并发出后续攻击指令，从而真正完成 AA-W-AA。
+- 开启伤害显示时，原本每帧执行的目标选择、连招伤害计算与字符串格式化改为0.15秒快照。显示位置仍然每帧跟随目标实际位置。
 
-#### Mordekaiser
+#### Swain
 
-- 不再使用 Riot 16.16 原始数据中已删除的竞技场专属 R 属性窃取0.08覆盖值。所有模式的伤害与击杀提示均按官方数值0.10计算。
+- E 拉回目标的束缚剩余时间显示改为复用0.1秒快照，不再每帧生成字符串。
 
-#### Viktor
+#### Veigar
 
-- 开启调试后，同一技能槽的施法日志按250毫秒合并，被抑制的次数并入每秒状态行，从而消除控制台刷屏。施法时机本身没有改变。
-- 在由 Evade 拥有的帧和暂停帧上跳过仅用于绘制的伤害计算，并复用状态行的字符串与表，降低每帧开销。
+- 英雄联盟经典模式模块的连招伤害显示把每帧的目标选择、牢笼连招伤害计算与字符串格式化改为0.15秒快照。实际施法判断不变。
 
-#### Xayah
+#### Warwick
 
-- `Farm (MMB)` 开关现在仅以原生按键与单一存档值为准。此前残留的内部镜像值可能导致显示为关闭时功能仍在运行。
-- E 仅统计在各羽刃自身回收到达时间之前同时穿过当前线与预测线的目标，同时降低了羽刃密集时的绘制与计算开销。
-
-#### XinZhao
-
-- 修正了绘制缓存的过期时间计算，射程与标记显示不再停止刷新。
-
-#### Zeri
-
-- 清线 Q 此前会对同一小兵分别为补刀与推线各执行一次预测、碰撞与地形检测，现在改为复用同一结果，目标选择结果保持不变。
-<!-- MESH-AIO:RELEASE:v3.4.10:END -->
+- 英雄联盟经典模式模块的可击杀(LETHAL)判定改为0.15秒快照，不再每帧累加Q+R伤害。
+- W 持续时间显示同样复用0.1秒快照，去除了每帧格式化。
+<!-- MESH-AIO:RELEASE:v3.4.12:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.4.10](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.10)
 - [v3.4.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.0)
 - [v3.3.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.3.0)
 - [v3.2.1](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.2.1)
