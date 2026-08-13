@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.4.12:START -->
-## v3.4.12
+<!-- MESH-AIO:RELEASE:v3.4.13:START -->
+## v3.4.13
 
 ### 한국어
 
@@ -193,44 +193,15 @@
 
 #### 핵심 및 메뉴
 
-- 982개 Lua 전체를 프레임 비용 관점에서 재감사했습니다. 화면 그리기 콜백 안에서 매 프레임 문자열을 만들거나 타겟 선택·피해 계산을 반복하던 9개 모듈을 찾았고, 전부 0.05~0.15초 스냅샷 캐시 또는 1회 생성 재사용으로 바꿨습니다. 조준·시전·판단 로직은 바꾸지 않았습니다.
-- 이 감사로 프레임마다 쌓이던 임시 문자열/테이블 쓰레기가 줄어 잦은 GC 멈춤에 의한 미세 프레임 드랍이 감소합니다. 표시 내용은 동일하며 갱신 주기만 사람 눈에 구분되지 않는 스냅샷 간격으로 제한됩니다.
-- 회귀 검사기가 이제 드로우 캐시 호출 인벤토리 54곳을 고정해, 이후 작업에서 캐시 없이 화면 콜백에 계산을 되돌리면 CI가 실패합니다.
+- 이번 릴리즈의 공통 코어·메뉴 변경은 없습니다. 검사 도구의 Soraka 기본값 계약만 새 기본값(아군 힐 85%)으로 갱신했습니다.
+- 함께 배포되는 [MESH]Evade v1.0.14가 제이스 E 가속 게이트 Q(사거리 2000)와 제리 벽 관통 W 빔(발사 0.85초)을 공식 수치로 추적하고, 같은 틱 중복 후보 평가를 제거해 밀집 교전 구간의 프레임 피크를 줄입니다.
 
-#### Karthus
+#### Soraka
 
-- League Classic 전용 모듈의 '죽음 무시' 남은 시간 표시가 매 프레임 문자열을 만들지 않고 0.1초 스냅샷을 재사용합니다.
-- Farm/Auto R 키 상태 줄은 네 가지 조합 문자열을 한 번만 만들어 재사용합니다. 표시 내용은 같습니다.
-
-#### Katarina
-
-- League Classic 전용 모듈의 Farm/Tower E 키 상태 줄이 조합별 문자열을 한 번만 만들어 재사용합니다.
-
-#### MonkeyKing
-
-- League Classic 전용 모듈의 Farm/Tower E 키 상태 줄이 조합별 문자열을 한 번만 만들어 재사용합니다.
-
-#### Rammus
-
-- 현대 모듈의 Q/W/자동 R 상태 줄이 여덟 가지 조합 문자열을 한 번만 만들어 재사용합니다.
-- League Classic 모듈의 파워볼 남은 시간 표시가 0.05초 스냅샷을 재사용해 매 프레임 포맷을 없앴습니다.
-
-#### Rumble
-
-- 피해 표시가 켜져 있을 때 매 프레임 수행하던 타겟 선택과 콤보 피해 계산·문자열 포맷을 0.15초 스냅샷으로 옮겼습니다. 표시 위치는 매 프레임 실제 대상 위치를 따라갑니다.
-
-#### Swain
-
-- E 회수 대상의 속박 남은 시간 표시가 0.1초 스냅샷을 재사용해 매 프레임 문자열 생성을 없앴습니다.
-
-#### Veigar
-
-- League Classic 전용 모듈의 콤보 피해 표시가 매 프레임 수행하던 타겟 선택·감옥 콤보 피해 계산·문자열 포맷을 0.15초 스냅샷으로 옮겼습니다. 실제 시전 판단은 바뀌지 않습니다.
-
-#### Warwick
-
-- League Classic 전용 모듈의 처치 가능(LETHAL) 판정이 매 프레임 Q+R 피해 합산을 하지 않고 0.15초 스냅샷을 사용합니다.
-- W 지속시간 표시도 0.1초 스냅샷을 재사용해 매 프레임 포맷을 없앴습니다.
+- 기본 힐 설정을 사용자 계약대로 조정했습니다: 아군 W 힐 기준 HP를 60% → 85%(공용 기본값과 챔피언별 슬라이더 기본값 모두), 자기 HP 하한은 기존 10%를 유지합니다.
+- 자동 R이 이제 HP만 보지 않습니다. 낮은 체력의 아군(또는 소라카 자신)이 실제 전투 중일 때만 발동합니다: 최근 2.5초 안에 최대 체력 1% 이상의 실제 피해를 입었거나, 시야에 보이는 적 챔피언이 600 이내에 있을 때. 이전 900 근접 판정은 칼바람 단일 라인에서 사실상 항상 참이라 HP 전용 판정으로 퇴화했습니다.
+- 소라카 자신의 W 체력 비용(최대 체력 10%)은 전투 피해로 집계하지 않아, 힐 비용 때문에 자기 자신이 '전투 중'으로 오인돼 R이 낭비되지 않습니다.
+- 기본값 변경이 적용되려면 저장된 `mesh_soraka.bson` 설정 삭제가 필요합니다(이번 배포에서 처리).
 
 ### English
 
@@ -412,44 +383,15 @@
 
 #### Core & Menu
 
-- All 982 Lua files were re-audited for per-frame cost. Nine modules built strings or ran target selection and damage math inside the draw callback every frame; all of them now use 0.05-0.15 s snapshot caches or build-once reuse. Aiming, casting, and decision logic are unchanged.
-- This removes the per-frame garbage that caused frequent GC pauses and micro frame drops. Displayed content is identical; only the refresh cadence is capped at snapshot intervals indistinguishable to the eye.
-- The regression checker now pins the 54 draw-cache call sites, so any future change that moves computation back into a draw callback without a cache fails CI.
+- No shared core or menu changes in this release. Only the checker's Soraka default contract was updated to the new 85% ally heal default.
+- The companion [MESH]Evade v1.0.14 release tracks Jayce's Acceleration Gate Q (2000 range) and Zeri's wall-pierced W beam (0.85 s fire time) with official numbers, and removes duplicate same-tick candidate evaluations to reduce frame peaks during dense fights.
 
-#### Karthus
+#### Soraka
 
-- The League Classic module's Death Defied countdown reuses a 0.1 s snapshot instead of formatting a new string every frame.
-- The Farm/Auto R key status line builds its four combination strings once and reuses them. The displayed content is unchanged.
-
-#### Katarina
-
-- The League Classic module's Farm/Tower E key status line builds each combination string once and reuses it.
-
-#### MonkeyKing
-
-- The League Classic module's Farm/Tower E key status line builds each combination string once and reuses it.
-
-#### Rammus
-
-- The modern module's Q/W/Auto R status line builds its eight combination strings once and reuses them.
-- The League Classic module's Powerball countdown reuses a 0.05 s snapshot, removing the per-frame format call.
-
-#### Rumble
-
-- With the damage overlay enabled, the per-frame target selection, combo damage math, and string formatting moved to a 0.15 s snapshot. The overlay position still follows the target's live position every frame.
-
-#### Swain
-
-- The root-remaining countdown on the E pull target reuses a 0.1 s snapshot, removing the per-frame string build.
-
-#### Veigar
-
-- The League Classic module's combo damage overlay moved its per-frame target selection, caged-combo damage math, and string formatting to a 0.15 s snapshot. Actual cast decisions are unchanged.
-
-#### Warwick
-
-- The League Classic module's LETHAL verdict uses a 0.15 s snapshot instead of summing Q+R damage every frame.
-- The W duration display also reuses a 0.1 s snapshot, removing the per-frame format call.
+- Default heal settings follow the user contract: the ally W heal threshold moved from 60% to 85% (both the shared default and every per-ally slider default); the own-HP floor stays at 10%.
+- Automatic R no longer reads HP alone. It fires only while the low ally (or Soraka herself) is actually in combat: real damage of at least 1% max HP within the last 2.5 s, or a visible enemy champion within 600. The old 900-unit proximity test was effectively always true in the single ARAM lane, which degraded R into a pure HP check.
+- Soraka's own W health cost (10% max HP) is never counted as combat damage, so paying for heals cannot mark her as "fighting" and waste R.
+- Applying the new defaults requires deleting the saved `mesh_soraka.bson` (handled in this deployment).
 
 ### 简体中文
 
@@ -631,50 +573,22 @@
 
 #### 核心与菜单
 
-- 对全部982个Lua文件重新进行了每帧开销审计。共发现9个模块在绘制回调中每帧构建字符串或执行目标选择与伤害计算，现已全部改为0.05~0.15秒快照缓存或一次生成后复用。瞄准、施法与判断逻辑均未改变。
-- 此项审计消除了每帧产生的临时字符串/表垃圾，减少了由频繁GC暂停引起的细微掉帧。显示内容不变，仅刷新节奏被限制在肉眼无法分辨的快照间隔。
-- 回归检查器现在固定54处绘制缓存调用点，之后若有改动把计算移回未缓存的绘制回调，CI将直接失败。
+- 本次发布没有公共核心或菜单改动，仅将检查工具的 Soraka 默认值契约更新为新默认值（队友治疗 85%）。
+- 同步发布的 [MESH]Evade v1.0.14 以官方数值追踪杰斯 E 加速门 Q（射程 2000）与泽丽穿墙 W 光束（0.85 秒发射），并去除同一帧重复候选评估，降低密集团战的帧峰值。
 
-#### Karthus
+#### Soraka
 
-- 英雄联盟经典模式模块的“死亡不灭”倒计时改为复用0.1秒快照，不再每帧生成新字符串。
-- Farm/自动R按键状态行的四种组合字符串只生成一次并复用，显示内容不变。
-
-#### Katarina
-
-- 英雄联盟经典模式模块的 Farm/塔下E 按键状态行改为每种组合只生成一次字符串并复用。
-
-#### MonkeyKing
-
-- 英雄联盟经典模式模块的 Farm/塔下E 按键状态行改为每种组合只生成一次字符串并复用。
-
-#### Rammus
-
-- 现代模块的 Q/W/自动R 状态行的八种组合字符串只生成一次并复用。
-- 英雄联盟经典模式模块的滚球倒计时改为复用0.05秒快照，去除了每帧格式化。
-
-#### Rumble
-
-- 开启伤害显示时，原本每帧执行的目标选择、连招伤害计算与字符串格式化改为0.15秒快照。显示位置仍然每帧跟随目标实际位置。
-
-#### Swain
-
-- E 拉回目标的束缚剩余时间显示改为复用0.1秒快照，不再每帧生成字符串。
-
-#### Veigar
-
-- 英雄联盟经典模式模块的连招伤害显示把每帧的目标选择、牢笼连招伤害计算与字符串格式化改为0.15秒快照。实际施法判断不变。
-
-#### Warwick
-
-- 英雄联盟经典模式模块的可击杀(LETHAL)判定改为0.15秒快照，不再每帧累加Q+R伤害。
-- W 持续时间显示同样复用0.1秒快照，去除了每帧格式化。
-<!-- MESH-AIO:RELEASE:v3.4.12:END -->
+- 默认治疗设置按用户契约调整：队友 W 治疗触发血量从 60% 改为 85%（公共默认值与每位队友的滑块默认值均已更新），自身血量下限保持 10%。
+- 自动 R 不再只看血量：仅当低血队友（或索拉卡自己）确实处于战斗中才会释放——最近 2.5 秒内受到至少 1% 最大生命值的真实伤害，或可见的敌方英雄在 600 码以内。旧的 900 码近身判定在大乱斗单路中几乎永远成立，导致 R 退化为纯血量判定。
+- 索拉卡自身的 W 生命值消耗（最大生命值 10%）不计入战斗伤害，支付治疗成本不会把她误判为“战斗中”而浪费 R。
+- 新默认值生效需删除已保存的 `mesh_soraka.bson`（本次部署已处理）。
+<!-- MESH-AIO:RELEASE:v3.4.13:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.4.12](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.12)
 - [v3.4.10](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.10)
 - [v3.4.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.0)
 - [v3.3.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.3.0)
