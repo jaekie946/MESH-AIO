@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.4.17:START -->
-## v3.4.17
+<!-- MESH-AIO:RELEASE:v3.4.18:START -->
+## v3.4.18
 
 ### 한국어
 
@@ -193,13 +193,13 @@
 
 #### 핵심 및 메뉴
 
-- 이번 릴리즈의 공통 코어·메뉴 변경은 없습니다. Kalista 단일 수정입니다.
+- 이번 릴리즈는 Graves 단일 수정과 함께 배포되는 [MESH]Evade v1.0.17(원형 스킬 회피 교정)을 포함합니다.
 
-#### Kalista
+#### Graves
 
-- 한타 중 E가 증발하던 'E 실수'를 고쳤습니다(2026-08-14 칼리스타 칼바람 로그, 미니언 E 덤프 36회 실측). '만료 직전 막타' E가 조건이 뒤집혀 있어 **E가 도착하기 전에 이미 죽을 미니언**에게 발사됐고, 이 경우 막타·쿨다운 리셋 없이 표식만 터뜨리고 E가 16초 쿨에 잠겼습니다.
-- 이제 모든 미니언 목적 E 리셋(리프레시/만료 막타/다중 킬/아군 포탑/정글)은 **우리 E가 먼저 도착해 실제로 막타를 가져올 수 있을 때만**(0.25초 착탄+핑 시점 예측 체력 > 0) 발사됩니다. '만료 직전'의 의미도 교정: E가 먼저 닿지만 1초 안에 다른 피해로 죽을 미니언에게만 서두릅니다.
-- 챔피언 처형 E와 보수적 마진·실드 계산은 그대로입니다.
+- **콤보 R이 세미키에서만 나가던 문제를 고쳤습니다.** 기존 자동 R 경로는 처형(확정 킬)·카이팅(체력/거리 조건)·다중 히트(2인 이상)만 있어서, "콤보 중 R 사용"을 켜도 단일 비처형 대상에는 R이 전혀 안 나갔습니다. 이제 콤보를 누르고 R이 준비되면 주 대상(사거리 안 챔피언)에게 안전 체크를 통과할 때 R을 로테이션으로 사용합니다. Save R 홀드는 그대로 존중합니다.
+- **AA-E-AA 리셋 E가 벽에 막히던 문제를 고쳤습니다.** E는 대시라 지형 위를 넘어 유효 착지점으로 이동하는데, 기존에는 출발점~착지점 사이에 벽이 있으면 리셋 대시가 거부됐습니다. 이제 순수 AA 리셋 대시는 벽 유무와 무관하게 동작합니다(착지점 자체 유효성은 계속 검사). 벽-Q 셋업 경로의 벽 검사는 그대로입니다.
+
 ### English
 
 #### Supported Champions
@@ -380,13 +380,13 @@
 
 #### Core & Menu
 
-- No shared core or menu changes; this is a Kalista-only release.
+- Graves-only release, shipped alongside [MESH]Evade v1.0.17 (circular-skill evade corrections).
 
-#### Kalista
+#### Graves
 
-- Fixed the mid-fight "E mistakes" where E evaporated (2026-08-14 Kalista ARAM log, 36 measured minion E dumps). The "expiring last hit" trigger was inverted: it fired at minions predicted to be dead BEFORE our E could land, detonating every mark with no kill credit and no cooldown reset - leaving E on its full 16s cooldown mid-fight.
-- Every minion-purpose E reset (refresh / expiring last hit / multi-kill / allied turret / jungle) now requires that OUR E still lands first and takes the kill (predicted health > 0 at the 0.25s impact plus ping). "Expiring" now correctly means: E lands first, but the carrier dies to incoming damage within the next second if we keep waiting.
-- Champion execute E and the conservative margin/shield math are unchanged.
+- **Fixed Combo R only firing from the semi key.** The automatic R paths were kill-only (confirmed lethal), kite-only (HP/distance window), and multi-hit-only (2+ champions), so a held Combo on a single non-lethal target never spent R even with "Use R while Combo is held" ON. Held Combo now spends R in the rotation on the primary in-range champion when the safety check passes; the Save-R hold is still respected.
+- **Fixed the AA-E-AA reset E being blocked by walls.** E is a dash that moves over terrain to a valid landing, but the reset dash was refused whenever a wall sat between the origin and the landing. The pure AA reset dash now works regardless of a wall on the path (the landing point itself is still validated). The wall-Q setup path keeps its wall check.
+
 ### 简体中文
 
 #### 支持英雄
@@ -567,19 +567,19 @@
 
 #### 核心与菜单
 
-- 本次发布没有公共核心或菜单改动，仅修复 Kalista。
+- 仅 Graves 修复，与 [MESH]Evade v1.0.17（圆形技能闪避修正）一同发布。
 
-#### Kalista
+#### Graves
 
-- 修复了团战中 E 凭空消失的"E 失误"（2026-08-14 卡莉丝塔大乱斗日志，实测 36 次小兵 E 倾泻）。"即将过期的补刀" E 条件颠倒：它对**在我们的 E 到达前就会死亡**的小兵开火，引爆所有印记却拿不到击杀与冷却重置，E 在团战中被锁满 16 秒冷却。
-- 现在所有以小兵为目的的 E 重置（刷新/过期补刀/多杀/友方塔下/野怪）都要求**我们的 E 先到并真正拿到击杀**（0.25 秒弹着+延迟时刻的预测血量 > 0）。"即将过期"的含义已纠正：E 先到，但若继续等待载体将在一秒内死于其他伤害。
-- 英雄处决 E 与保守余量/护盾计算不变。
-<!-- MESH-AIO:RELEASE:v3.4.17:END -->
+- **修复了连招 R 只能用半自动键释放的问题。** 原自动 R 路径只有处决（确定击杀）、风筝（血量/距离条件）、多重命中（2人以上），因此即便开启"连招期间使用 R"，对单个非处决目标也从不放 R。现在按住连招且 R 就绪时，会在通过安全检查的前提下对射程内主目标常规使用 R；Save R 长按仍被尊重。
+- **修复了 AA-E-AA 重置 E 被墙阻挡的问题。** E 是位移，会越过地形到达有效落点，但此前只要起点与落点之间有墙，重置位移就会被拒绝。现在纯 AA 重置位移不受墙影响（落点本身仍会校验）。墙-Q 起手路径的墙检查保持不变。
+<!-- MESH-AIO:RELEASE:v3.4.18:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.4.17](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.17)
 - [v3.4.16](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.16)
 - [v3.4.15](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.15)
 - [v3.4.14](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.14)
