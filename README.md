@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.4.16:START -->
-## v3.4.16
+<!-- MESH-AIO:RELEASE:v3.4.17:START -->
+## v3.4.17
 
 ### 한국어
 
@@ -193,20 +193,13 @@
 
 #### 핵심 및 메뉴
 
-- 이번 릴리즈의 공통 코어·메뉴 변경은 없습니다.
-- 함께 배포되는 MGoD Orb v4.35.7이 칼바람 중앙 강화 식물(`Cherry_Plant_Powerup`)을 공격하지 못하던 문제를 고칩니다. 사거리 밖에서 의도적으로 걸어 들어가 치는 특수 대상인데, 주문 확인 창(~270ms)이 접근 시간보다 짧아 오더가 삼켜지고 5초 금지가 반복됐습니다. 이제 실제 접근 시간만큼 기다리고, 금지 대신 즉시 재주문합니다.
+- 이번 릴리즈의 공통 코어·메뉴 변경은 없습니다. Kalista 단일 수정입니다.
 
-#### Jhin
+#### Kalista
 
-- 평타 사거리 안 W 금지가 실제로 지켜집니다. 런타임 `attackRange`가 공식 550보다 낮게 읽혀 자동/CC/트랩/처형 W가 463~609 거리(실제 평타 사거리 안)에서 새던 것을 실측했고, 사거리 판정을 공식 550 하한으로 고정했습니다. CC W를 포함한 모든 자동 W 경로가 같은 게이트를 지납니다.
-- 재장전 중 Q: 재장전 중에는 평타가 불가능하므로 '평타 사거리 밖에서만 Q' 옵션을 적용하지 않고, W 사거리 기준으로 골라진 먼 대상 때문에 Q 사거리 안의 적을 두고도 Q가 놀던 문제를 Q 사거리 재선택으로 고쳤습니다.
-- R 적중률: 궁 탄환이 W와 같은 잔무빙 계약을 사용합니다 — 최근 방향 전환 + 예측 lead 120 이하면 정중앙 발사, 대시/그랩 대상은 강제이동 착지점 조준. 충돌·원뿔 게이트는 그대로입니다.
-
-#### Tristana
-
-- 콤보 자동 E가 오브워커의 현재 공격 대상에만 의존하지 않습니다. Farm/막타 키를 콤보와 함께 누르면 오브워커 대상이 막타 미니언으로 자주 튀는데, 그동안 E 사거리 안의 적 챔피언이 있어도 E가 나가지 않았습니다(2026-08-14 트리스타나 칼바람 로그: E 준비 + 사거리 안 챔피언 + 미시전 2~3초 구간 5회 실측). 이제 공개 대상이 부적합하면 E 사거리 안에서 가장 가까운 적 챔피언으로 직접 폴백합니다.
-- Debug를 켜면 자동 E가 거부될 때 이유(블랙리스트/대상 보호/HP 게이트/시전 거부)를 0.25초 간격으로 F12에 남깁니다. 남은 미시전 원인을 다음 로그에서 확정하기 위한 계측입니다.
-
+- 한타 중 E가 증발하던 'E 실수'를 고쳤습니다(2026-08-14 칼리스타 칼바람 로그, 미니언 E 덤프 36회 실측). '만료 직전 막타' E가 조건이 뒤집혀 있어 **E가 도착하기 전에 이미 죽을 미니언**에게 발사됐고, 이 경우 막타·쿨다운 리셋 없이 표식만 터뜨리고 E가 16초 쿨에 잠겼습니다.
+- 이제 모든 미니언 목적 E 리셋(리프레시/만료 막타/다중 킬/아군 포탑/정글)은 **우리 E가 먼저 도착해 실제로 막타를 가져올 수 있을 때만**(0.25초 착탄+핑 시점 예측 체력 > 0) 발사됩니다. '만료 직전'의 의미도 교정: E가 먼저 닿지만 1초 안에 다른 피해로 죽을 미니언에게만 서두릅니다.
+- 챔피언 처형 E와 보수적 마진·실드 계산은 그대로입니다.
 ### English
 
 #### Supported Champions
@@ -387,20 +380,13 @@
 
 #### Core & Menu
 
-- No shared core or menu changes in this release.
-- The companion MGoD Orb v4.35.7 fixes the ARAM mid empowerment plant (`Cherry_Plant_Powerup`) never being attacked: it is a deliberate walk-in special picked beyond attack range, but the order-confirm window (~270ms) was shorter than the honest approach time, so orders were swallowed into a repeating 5-second ban. Walk-in specials now get the real closing time and re-order immediately instead of the ban.
+- No shared core or menu changes; this is a Kalista-only release.
 
-#### Jhin
+#### Kalista
 
-- The inside-AA W ban is now actually enforced. The runtime `attackRange` read dropped below the official 550, so automatic/CC/trap/killsteal W leaked onto targets 463-609 away (inside real basic-attack reach, measured in the log). The gate now floors the live value at the official 550; every automatic W path, including CC W, passes through it.
-- Reload Q: basic attacks are impossible while reloading, so the "Q only outside AA" option no longer applies there, and the far mode target chosen at W range no longer starves Q - it re-scopes to an actual Q-range target.
-- R accuracy: Curtain Call shots share the W strafe-jitter contract - a fresh direction change with a prediction lead of 120 or less fires at the body center - and dashing/grabbed targets aim the forced-movement locked landing. Collision and cone gates are unchanged.
-
-#### Tristana
-
-- Combo auto-E no longer depends solely on the orbwalker's current attack target. With farm/last-hit keys held alongside Combo the published target flaps to last-hit minions, and E stayed unused even with an enemy champion inside E reach (2026-08-14 Tristana ARAM log: five measured multi-second windows). When the published target is unsuitable, E now falls back to the nearest valid enemy champion inside E reach.
-- With Debug enabled, rejected auto-E attempts log their reason (blacklist / target-blocked / HP gate / cast-rejected) to F12 at 0.25 s intervals, to pin down any remaining misses in the next log.
-
+- Fixed the mid-fight "E mistakes" where E evaporated (2026-08-14 Kalista ARAM log, 36 measured minion E dumps). The "expiring last hit" trigger was inverted: it fired at minions predicted to be dead BEFORE our E could land, detonating every mark with no kill credit and no cooldown reset - leaving E on its full 16s cooldown mid-fight.
+- Every minion-purpose E reset (refresh / expiring last hit / multi-kill / allied turret / jungle) now requires that OUR E still lands first and takes the kill (predicted health > 0 at the 0.25s impact plus ping). "Expiring" now correctly means: E lands first, but the carrier dies to incoming damage within the next second if we keep waiting.
+- Champion execute E and the conservative margin/shield math are unchanged.
 ### 简体中文
 
 #### 支持英雄
@@ -581,25 +567,20 @@
 
 #### 核心与菜单
 
-- 本次发布没有公共核心或菜单改动。
-- 同步发布的 MGoD Orb v4.35.7 修复了大乱斗中央强化植物（`Cherry_Plant_Powerup`）从不被攻击的问题：它是选择器故意在射程外选中的走近目标，但指令确认窗口（约270ms）短于实际接近时间，指令被吞掉并反复进入5秒禁用。现在走近型特殊目标使用真实接近时间，且被吞时立即重新下单而不是禁用。
+- 本次发布没有公共核心或菜单改动，仅修复 Kalista。
 
-#### Jhin
+#### Kalista
 
-- 真正落实了平A射程内禁 W。运行时 `attackRange` 读数低于官方 550，导致自动/控制/陷阱/收割 W 在 463~609 距离（实际平A射程内）漏出（日志实测）。判定现以官方 550 为下限；包括控制 W 在内的所有自动 W 路径都经过该门。
-- 装填期间的 Q：装填时无法平A，因此不再套用「仅在平A射程外用Q」选项；此前按 W 射程选出的远目标会让 Q 射程内的敌人被搁置，现改为按 Q 射程重新选目标。
-- R 命中率：大招子弹共享 W 的走位抖动契约——最近变向且预测提前量 ≤120 时直接打身体中心；冲刺/被钩目标瞄准强制位移落点。碰撞与锥形限制不变。
-
-#### Tristana
-
-- 连招自动 E 不再只依赖走砍当前攻击目标。同时按住清线/补刀键时，公开目标会频繁跳到补刀小兵，即使 E 射程内有敌方英雄也不放 E（2026-08-14 提丝塔娜大乱斗日志：实测 5 段 2~3 秒窗口）。公开目标不合适时，改为直接回退到 E 射程内最近的有效敌方英雄。
-- 开启 Debug 后，被拒绝的自动 E 会以 0.25 秒间隔在 F12 记录原因（黑名单/目标受保护/血量门槛/施法被拒），用于在下一场日志中定位剩余未施放原因。
-<!-- MESH-AIO:RELEASE:v3.4.16:END -->
+- 修复了团战中 E 凭空消失的"E 失误"（2026-08-14 卡莉丝塔大乱斗日志，实测 36 次小兵 E 倾泻）。"即将过期的补刀" E 条件颠倒：它对**在我们的 E 到达前就会死亡**的小兵开火，引爆所有印记却拿不到击杀与冷却重置，E 在团战中被锁满 16 秒冷却。
+- 现在所有以小兵为目的的 E 重置（刷新/过期补刀/多杀/友方塔下/野怪）都要求**我们的 E 先到并真正拿到击杀**（0.25 秒弹着+延迟时刻的预测血量 > 0）。"即将过期"的含义已纠正：E 先到，但若继续等待载体将在一秒内死于其他伤害。
+- 英雄处决 E 与保守余量/护盾计算不变。
+<!-- MESH-AIO:RELEASE:v3.4.17:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.4.16](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.16)
 - [v3.4.15](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.15)
 - [v3.4.14](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.14)
 - [v3.4.13](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.13)
