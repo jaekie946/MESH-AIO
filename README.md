@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.4.13:START -->
-## v3.4.13
+<!-- MESH-AIO:RELEASE:v3.4.14:START -->
+## v3.4.14
 
 ### 한국어
 
@@ -203,6 +203,19 @@
 - 소라카 자신의 W 체력 비용(최대 체력 10%)은 전투 피해로 집계하지 않아, 힐 비용 때문에 자기 자신이 '전투 중'으로 오인돼 R이 낭비되지 않습니다.
 - 기본값 변경이 적용되려면 저장된 `mesh_soraka.bson` 설정 삭제가 필요합니다(이번 배포에서 처리).
 
+#### Kalista
+
+- E 처형 피해 계산을 고쳤습니다. Hanbot 실시간 피해 결과는 대상의 현재 창 스택 수를
+  모르기 때문에 2스택 이상에서 1스택 값으로 무너졌고, 기존 min() 비교가 다중
+  스택 처형을 조용히 전부 막았습니다(2026-08-14 칼리스타 칼바람 로그). 이제 실시간
+  값은 공식 1스택 피해 대비 하향 비율로만 반영하고, 공식 스택 공식이 권위를 유지합니다.
+  E 오버레이 표시도 같은 계산을 쓰므로 함께 정상화됩니다.
+- 챔피언 처형 E("Use E on a confirmed kill")가 Q 처형처럼 키 없이 동작합니다.
+  이전에는 Combo/Harass 키를 누른 동안만 검사돼 키 사이의 처형 기회를 놓쳤습니다.
+- 처형·사망 직전 E는 1ms fast 재시도 경로를 사용합니다. 칼리스타는 대부분의 틱에
+  홉 대시 중이라 서버가 셀프 캐스트를 거부하며(로그에서 E 요청 44건 중 21건 거부),
+  한 틱 한 시전·spell lock·서버 pause 규칙은 그대로 유지됩니다.
+
 ### English
 
 #### Supported Champions
@@ -393,6 +406,19 @@
 - Soraka's own W health cost (10% max HP) is never counted as combat damage, so paying for heals cannot mark her as "fighting" and waste R.
 - Applying the new defaults requires deleting the saved `mesh_soraka.bson` (handled in this deployment).
 
+#### Kalista
+
+- Fixed the E execute damage estimate. Hanbot's live damage result does not know the target's
+  current spear count, so at 2+ stacks it collapsed toward one-spear damage and the old min()
+  silently disabled every multi-stack execute (2026-08-14 Kalista ARAM log). The live value now
+  applies only as a per-spear lowering ratio against the official one-spear total; the official
+  stacked formula stays authoritative. The E overlay uses the same estimate and is fixed with it.
+- The champion execute E ("Use E on a confirmed kill") is now keyless like the Q kill. It was
+  previously only checked inside the Combo/Harass loop, missing kill windows between key presses.
+- Execute and death-save E casts use the 1 ms fast retry path: Kalista is mid-hop on most ticks and
+  the server rejects self-casts during the dash (21 of 44 E requests rejected in the log). The
+  one-cast-per-tick budget, spell lock, and server pause rules are unchanged.
+
 ### 简体中文
 
 #### 支持英雄
@@ -582,12 +608,24 @@
 - 自动 R 不再只看血量：仅当低血队友（或索拉卡自己）确实处于战斗中才会释放——最近 2.5 秒内受到至少 1% 最大生命值的真实伤害，或可见的敌方英雄在 600 码以内。旧的 900 码近身判定在大乱斗单路中几乎永远成立，导致 R 退化为纯血量判定。
 - 索拉卡自身的 W 生命值消耗（最大生命值 10%）不计入战斗伤害，支付治疗成本不会把她误判为“战斗中”而浪费 R。
 - 新默认值生效需删除已保存的 `mesh_soraka.bson`（本次部署已处理）。
-<!-- MESH-AIO:RELEASE:v3.4.13:END -->
+
+#### Kalista
+
+- 修复了 E 处决伤害计算。Hanbot 实时伤害结果不知道目标当前的长矛层数，2 层以上时坑缩为
+  1 层伤害，旧的 min() 比较因此静默地禁用了所有多层处决（2026-08-14 卡莉斯塔大乱斗日志）。
+  现在实时值仅作为相对官方 1 层伤害的下调比例生效，官方叠层公式保持权威；E 伤害浮窗使用同一
+  估算，一并修复。
+- 英雄处决 E（“Use E on a confirmed kill”）现在像 Q 处决一样无需按键；之前只在按住
+  Combo/Harass 时检查，会错过按键间隙的击杀窗口。
+- 处决与临死自保 E 使用 1ms 快速重试路径：卡莉斯塔几乎每个 tick 都在跳跃中，服务器会拒绝
+  自施法（日志中 44 次 E 请求被拒 21 次）；每 tick 一次施法、spell lock 与服务器暂停规则不变。
+<!-- MESH-AIO:RELEASE:v3.4.14:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.4.13](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.13)
 - [v3.4.12](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.12)
 - [v3.4.10](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.10)
 - [v3.4.0](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.0)
