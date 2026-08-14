@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.4.18:START -->
-## v3.4.18
+<!-- MESH-AIO:RELEASE:v3.4.19:START -->
+## v3.4.19
 
 ### 한국어
 
@@ -193,12 +193,11 @@
 
 #### 핵심 및 메뉴
 
-- 이번 릴리즈는 Graves 단일 수정과 함께 배포되는 [MESH]Evade v1.0.17(원형 스킬 회피 교정)을 포함합니다.
+- 이번 릴리즈는 Kalista 단일 수정입니다.
 
-#### Graves
+#### Kalista
 
-- **콤보 R이 세미키에서만 나가던 문제를 고쳤습니다.** 기존 자동 R 경로는 처형(확정 킬)·카이팅(체력/거리 조건)·다중 히트(2인 이상)만 있어서, "콤보 중 R 사용"을 켜도 단일 비처형 대상에는 R이 전혀 안 나갔습니다. 이제 콤보를 누르고 R이 준비되면 주 대상(사거리 안 챔피언)에게 안전 체크를 통과할 때 R을 로테이션으로 사용합니다. Save R 홀드는 그대로 존중합니다.
-- **AA-E-AA 리셋 E가 벽에 막히던 문제를 고쳤습니다.** E는 대시라 지형 위를 넘어 유효 착지점으로 이동하는데, 기존에는 출발점~착지점 사이에 벽이 있으면 리셋 대시가 거부됐습니다. 이제 순수 AA 리셋 대시는 벽 유무와 무관하게 동작합니다(착지점 자체 유효성은 계속 검사). 벽-Q 셋업 경로의 벽 검사는 그대로입니다.
+- **E 처형 계산이 지나치게 보수적이라 확실히 죽는 대상에 E를 안 쓰던 문제를 고쳤습니다.** Rend는 창이 이미 박힌 확정 폭발(회피·충돌·빗나감 없음)인데, 유효 체력(방어막 포함)·공식 스택 공식·damagelib 하향에 더해 10 + 2% 마진까지 삼중으로 빼서 실제로 죽일 수 있는 처형을 조용히 거부했습니다. 마진을 4 + 0.5%(반올림/핑 버퍼 수준)로 낮춰, 처형 가능할 때 확실하게 E를 씁니다. E는 self-cast라 평타 도중에도 즉시 나갑니다.
 
 ### English
 
@@ -380,12 +379,11 @@
 
 #### Core & Menu
 
-- Graves-only release, shipped alongside [MESH]Evade v1.0.17 (circular-skill evade corrections).
+- Kalista-only release.
 
-#### Graves
+#### Kalista
 
-- **Fixed Combo R only firing from the semi key.** The automatic R paths were kill-only (confirmed lethal), kite-only (HP/distance window), and multi-hit-only (2+ champions), so a held Combo on a single non-lethal target never spent R even with "Use R while Combo is held" ON. Held Combo now spends R in the rotation on the primary in-range champion when the safety check passes; the Save-R hold is still respected.
-- **Fixed the AA-E-AA reset E being blocked by walls.** E is a dash that moves over terrain to a valid landing, but the reset dash was refused whenever a wall sat between the origin and the landing. The pure AA reset dash now works regardless of a wall on the path (the landing point itself is still validated). The wall-Q setup path keeps its wall check.
+- **Fixed the E execute calculation being too conservative and refusing E on genuinely-lethal targets.** Rend is a guaranteed detonation (spears already applied - no dodge, collision, or miss), yet the execute check subtracted a 10 + 2% margin on top of effective HP (shields included), the official stacked formula, and the damagelib lowering - triple-conservative, silently refusing kills E would actually land. The margin is now 4 + 0.5% (a rounding/ping buffer), so E fires confidently whenever the execute is available. E is a self-cast, so it fires instantly even mid-attack.
 
 ### 简体中文
 
@@ -567,18 +565,18 @@
 
 #### 核心与菜单
 
-- 仅 Graves 修复，与 [MESH]Evade v1.0.17（圆形技能闪避修正）一同发布。
+- 仅 Kalista 修复。
 
-#### Graves
+#### Kalista
 
-- **修复了连招 R 只能用半自动键释放的问题。** 原自动 R 路径只有处决（确定击杀）、风筝（血量/距离条件）、多重命中（2人以上），因此即便开启"连招期间使用 R"，对单个非处决目标也从不放 R。现在按住连招且 R 就绪时，会在通过安全检查的前提下对射程内主目标常规使用 R；Save R 长按仍被尊重。
-- **修复了 AA-E-AA 重置 E 被墙阻挡的问题。** E 是位移，会越过地形到达有效落点，但此前只要起点与落点之间有墙，重置位移就会被拒绝。现在纯 AA 重置位移不受墙影响（落点本身仍会校验）。墙-Q 起手路径的墙检查保持不变。
-<!-- MESH-AIO:RELEASE:v3.4.18:END -->
+- **修复了 E 处决计算过于保守、对确定可击杀目标不放 E 的问题。** 尖刃是已插入长矛的确定引爆（无闪避、碰撞或落空），但处决判定在有效血量（含护盾）、官方叠层公式与 damagelib 下调之上，又减去 10 + 2% 余量，三重保守，静默拒绝了本可击杀的处决。现将余量降为 4 + 0.5%（舍入/延迟缓冲级别），处决可行时确定放 E。E 是自我施法，因此即使在平A过程中也会立即释放。
+<!-- MESH-AIO:RELEASE:v3.4.19:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.4.18](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.18)
 - [v3.4.17](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.17)
 - [v3.4.16](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.16)
 - [v3.4.15](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.15)
