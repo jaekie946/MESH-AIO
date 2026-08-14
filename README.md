@@ -10,8 +10,8 @@
 - [최신 릴리즈 페이지 / Latest release / 最新版本页面](https://github.com/jaekie946/MESH-AIO/releases/latest) — 릴리즈 목록 대신 이 링크를 쓰면 최신 1개만 표시됩니다. Shows only the newest release. 只显示最新一个版本。
 
 <!-- MESH-AIO:UPDATES:START -->
-<!-- MESH-AIO:RELEASE:v3.4.14:START -->
-## v3.4.14
+<!-- MESH-AIO:RELEASE:v3.4.15:START -->
+## v3.4.15
 
 ### 한국어
 
@@ -193,28 +193,16 @@
 
 #### 핵심 및 메뉴
 
-- 이번 릴리즈의 공통 코어·메뉴 변경은 없습니다. 검사 도구의 Soraka 기본값 계약만 새 기본값(아군 힐 85%)으로 갱신했습니다.
-- 함께 배포되는 [MESH]Evade v1.0.14가 제이스 E 가속 게이트 Q(사거리 2000)와 제리 벽 관통 W 빔(발사 0.85초)을 공식 수치로 추적하고, 같은 틱 중복 후보 평가를 제거해 밀집 교전 구간의 프레임 피크를 줄입니다.
+- 치명적 크래시 수정: Hanbot 문서의 `EMOTE_*` 전역 상수가 이 런타임에는 존재하지 않아, 이모트 키를 누르는 순간 `sendEmote(nil)`로 챔피언 모듈의 tick 전체가 죽는 문제를 고쳤습니다(2026-08-14 애쉬 칼바람 F12 실측 — 8:40 크래시 후 Q/W 자동 사용이 게임 끝까지 멈춤). 전 챔피언 감사에서 같은 패턴을 쓰는 Ashe/Alistar/Udyr/Locke 4개 모듈을 찾아 전부 모듈 내 상수(춤 0/도발 1/웃음 2)로 교체했습니다.
+- 함께 배포되는 [MESH]Evade v1.0.15는 오브워커 이동 오더마다 반복되던 중복 후보 평가를 제거해 밀집 교전 구간의 프레임 피크(애쉬·티모 판 67ms 실측)를 줄입니다. 회피 판정 결과는 동일합니다.
 
-#### Soraka
+#### Ashe
 
-- 기본 힐 설정을 사용자 계약대로 조정했습니다: 아군 W 힐 기준 HP를 60% → 85%(공용 기본값과 챔피언별 슬라이더 기본값 모두), 자기 HP 하한은 기존 10%를 유지합니다.
-- 자동 R이 이제 HP만 보지 않습니다. 낮은 체력의 아군(또는 소라카 자신)이 실제 전투 중일 때만 발동합니다: 최근 2.5초 안에 최대 체력 1% 이상의 실제 피해를 입었거나, 시야에 보이는 적 챔피언이 600 이내에 있을 때. 이전 900 근접 판정은 칼바람 단일 라인에서 사실상 항상 참이라 HP 전용 판정으로 퇴화했습니다.
-- 소라카 자신의 W 체력 비용(최대 체력 10%)은 전투 피해로 집계하지 않아, 힐 비용 때문에 자기 자신이 '전투 중'으로 오인돼 R이 낭비되지 않습니다.
-- 기본값 변경이 적용되려면 저장된 `mesh_soraka.bson` 설정 삭제가 필요합니다(이번 배포에서 처리).
+- 이모트 크래시가 실측된 판입니다: 8:40 크래시 이후 Q/W가 전부 멈췄습니다. 위 공통 수정으로 재발하지 않으며, Q/W 결정 로직 자체는 바뀌지 않았습니다.
 
-#### Kalista
+#### Alistar / Udyr / Locke
 
-- E 처형 피해 계산을 고쳤습니다. Hanbot 실시간 피해 결과는 대상의 현재 창 스택 수를
-  모르기 때문에 2스택 이상에서 1스택 값으로 무너졌고, 기존 min() 비교가 다중
-  스택 처형을 조용히 전부 막았습니다(2026-08-14 칼리스타 칼바람 로그). 이제 실시간
-  값은 공식 1스택 피해 대비 하향 비율로만 반영하고, 공식 스택 공식이 권위를 유지합니다.
-  E 오버레이 표시도 같은 계산을 쓰므로 함께 정상화됩니다.
-- 챔피언 처형 E("Use E on a confirmed kill")가 Q 처형처럼 키 없이 동작합니다.
-  이전에는 Combo/Harass 키를 누른 동안만 검사돼 키 사이의 처형 기회를 놓쳤습니다.
-- 처형·사망 직전 E는 1ms fast 재시도 경로를 사용합니다. 칼리스타는 대부분의 틱에
-  홉 대시 중이라 서버가 셀프 캐스트를 거부하며(로그에서 E 요청 44건 중 21건 거부),
-  한 틱 한 시전·spell lock·서버 pause 규칙은 그대로 유지됩니다.
+- 같은 이모트 전역 상수 패턴을 선제 교체했습니다. 동작 변화는 없습니다.
 
 ### English
 
@@ -396,28 +384,16 @@
 
 #### Core & Menu
 
-- No shared core or menu changes in this release. Only the checker's Soraka default contract was updated to the new 85% ally heal default.
-- The companion [MESH]Evade v1.0.14 release tracks Jayce's Acceleration Gate Q (2000 range) and Zeri's wall-pierced W beam (0.85 s fire time) with official numbers, and removes duplicate same-tick candidate evaluations to reduce frame peaks during dense fights.
+- Fatal crash fix: Hanbot documents the `EMOTE_*` global constants, but this runtime does not expose them, so pressing an emote key killed the champion module's entire tick via `sendEmote(nil)` (2026-08-14 Ashe ARAM F12: after the 8:40 crash, automatic Q/W stayed dead for the rest of the game). A full-champion audit found four modules using the pattern — Ashe, Alistar, Udyr, and Locke — all now use in-module constants (dance 0 / taunt 1 / laugh 2).
+- The companion [MESH]Evade v1.0.15 removes the duplicate candidate evaluation that ran for every orbwalker move order, cutting the measured 67 ms dense-fight tick peaks. Dodge decisions are unchanged.
 
-#### Soraka
+#### Ashe
 
-- Default heal settings follow the user contract: the ally W heal threshold moved from 60% to 85% (both the shared default and every per-ally slider default); the own-HP floor stays at 10%.
-- Automatic R no longer reads HP alone. It fires only while the low ally (or Soraka herself) is actually in combat: real damage of at least 1% max HP within the last 2.5 s, or a visible enemy champion within 600. The old 900-unit proximity test was effectively always true in the single ARAM lane, which degraded R into a pure HP check.
-- Soraka's own W health cost (10% max HP) is never counted as combat damage, so paying for heals cannot mark her as "fighting" and waste R.
-- Applying the new defaults requires deleting the saved `mesh_soraka.bson` (handled in this deployment).
+- The game where the emote crash was measured: after 8:40, Q/W stopped entirely. Fixed by the shared change above; the Q/W decision logic itself is untouched.
 
-#### Kalista
+#### Alistar / Udyr / Locke
 
-- Fixed the E execute damage estimate. Hanbot's live damage result does not know the target's
-  current spear count, so at 2+ stacks it collapsed toward one-spear damage and the old min()
-  silently disabled every multi-stack execute (2026-08-14 Kalista ARAM log). The live value now
-  applies only as a per-spear lowering ratio against the official one-spear total; the official
-  stacked formula stays authoritative. The E overlay uses the same estimate and is fixed with it.
-- The champion execute E ("Use E on a confirmed kill") is now keyless like the Q kill. It was
-  previously only checked inside the Combo/Harass loop, missing kill windows between key presses.
-- Execute and death-save E casts use the 1 ms fast retry path: Kalista is mid-hop on most ticks and
-  the server rejects self-casts during the dash (21 of 44 E requests rejected in the log). The
-  one-cast-per-tick budget, spell lock, and server pause rules are unchanged.
+- Same emote global pattern replaced preemptively. No behavior change.
 
 ### 简体中文
 
@@ -599,32 +575,23 @@
 
 #### 核心与菜单
 
-- 本次发布没有公共核心或菜单改动，仅将检查工具的 Soraka 默认值契约更新为新默认值（队友治疗 85%）。
-- 同步发布的 [MESH]Evade v1.0.14 以官方数值追踪杰斯 E 加速门 Q（射程 2000）与泽丽穿墙 W 光束（0.85 秒发射），并去除同一帧重复候选评估，降低密集团战的帧峰值。
+- 致命崩溃修复：Hanbot 文档中的 `EMOTE_*` 全局常量在本运行时并不存在，按下表情键会以 `sendEmote(nil)` 杀死英雄模块的整个 tick（2026-08-14 艾希大乱斗 F12 实测——8:40 崩溃后 Q/W 自动施放直到游戏结束都不再工作）。全英雄审计发现 Ashe/Alistar/Udyr/Locke 四个模块使用该模式，现全部改为模块内常量（跳舞 0/嘲讽 1/大笑 2）。
+- 同步发布的 [MESH]Evade v1.0.15 移除了每个走砍移动指令都会重复执行的候选评估，降低密集团战的帧峰值（艾希/提莫场次实测 67ms）。闪避判定结果不变。
 
-#### Soraka
+#### Ashe
 
-- 默认治疗设置按用户契约调整：队友 W 治疗触发血量从 60% 改为 85%（公共默认值与每位队友的滑块默认值均已更新），自身血量下限保持 10%。
-- 自动 R 不再只看血量：仅当低血队友（或索拉卡自己）确实处于战斗中才会释放——最近 2.5 秒内受到至少 1% 最大生命值的真实伤害，或可见的敌方英雄在 600 码以内。旧的 900 码近身判定在大乱斗单路中几乎永远成立，导致 R 退化为纯血量判定。
-- 索拉卡自身的 W 生命值消耗（最大生命值 10%）不计入战斗伤害，支付治疗成本不会把她误判为“战斗中”而浪费 R。
-- 新默认值生效需删除已保存的 `mesh_soraka.bson`（本次部署已处理）。
+- 表情崩溃实测场次：8:40 之后 Q/W 完全停止。由上述公共修复解决，Q/W 决策逻辑本身未改动。
 
-#### Kalista
+#### Alistar / Udyr / Locke
 
-- 修复了 E 处决伤害计算。Hanbot 实时伤害结果不知道目标当前的长矛层数，2 层以上时坑缩为
-  1 层伤害，旧的 min() 比较因此静默地禁用了所有多层处决（2026-08-14 卡莉斯塔大乱斗日志）。
-  现在实时值仅作为相对官方 1 层伤害的下调比例生效，官方叠层公式保持权威；E 伤害浮窗使用同一
-  估算，一并修复。
-- 英雄处决 E（“Use E on a confirmed kill”）现在像 Q 处决一样无需按键；之前只在按住
-  Combo/Harass 时检查，会错过按键间隙的击杀窗口。
-- 处决与临死自保 E 使用 1ms 快速重试路径：卡莉斯塔几乎每个 tick 都在跳跃中，服务器会拒绝
-  自施法（日志中 44 次 E 请求被拒 21 次）；每 tick 一次施法、spell lock 与服务器暂停规则不变。
-<!-- MESH-AIO:RELEASE:v3.4.14:END -->
+- 预防性替换了相同的表情全局常量模式，无行为变化。
+<!-- MESH-AIO:RELEASE:v3.4.15:END -->
 
 ## 이전 버전 / Previous Versions / 历史版本
 
 전체 변경 내역은 각 버전의 Release 페이지에 있습니다. Full notes live on each release page. 完整更新内容见各版本的 Release 页面。
 
+- [v3.4.14](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.14)
 - [v3.4.13](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.13)
 - [v3.4.12](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.12)
 - [v3.4.10](https://github.com/jaekie946/MESH-AIO/releases/tag/v3.4.10)
